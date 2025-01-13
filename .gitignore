@@ -1,0 +1,67 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+
+# Ignorar archivos y directorios relacionados con el entorno
+.env
+.env.*
+!.env.example
+
+# Archivos de configuración de la herramienta de Composer
+composer.phar
+composer.lock
+
+# Directorios específicos de Symfony
+/var/*
+/vendor/
+
+# Archivos temporales de IDEs y editores de código
+.idea/
+/.vscode/
+
+# Archivos del entorno de Symfony
+/config/secrets/
+*.log
+*.swp
+
+# Ignorar migraciones de base de datos (si es necesario)
+migrations/
+
+# Directorios de Symfony
+/var/
+/node_modules/
+/public/build/
+/public/bundles/
+
+# Ignorar archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de PHPUnit
+phpunit.xml.dist
+
+# Logs y cachés
+/var/log/

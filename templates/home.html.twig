@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio - Fundación Mascotas{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Fundación Mascotas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
+                <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
+                <li class="nav-item"><a class="nav-link" href="#historia">Historia</a></li>
+                <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contacto">Contáctanos</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="bg-primary text-white text-center py-5">
+    <div class="container">
+        <h1>Bienvenidos a Fundación Mascotas</h1>
+        <p>Trabajamos para proteger y mejorar la vida de las mascotas en nuestra comunidad.</p>
+        <a href="#contacto" class="btn btn-light btn-lg">¡Involúcrate!</a>
+    </div>
+</section>
+
+<!-- Sección Actividades -->
+<section id="actividades" class="container my-5">
+    <h2 class="text-center mb-4">Actividades</h2>
+    <div class="row">
+        {% for actividad in actividades %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ asset(actividad.imagenDestacada) }}" class="card-img-top" alt="{{ actividad.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ actividad.titulo }}</h5>
+                    <p class="card-text">{{ actividad.descripcionCorta }}</p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">Ver más</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para cada actividad -->
+        <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imagen in actividad.imagenes %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{ asset(imagen) }}" class="d-block w-100" alt="Imagen actividad">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                        <p class="mt-4">{{ actividad.descripcionLarga }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Contáctanos -->
+<section id="contacto" class="container my-5">
+    <h2 class="text-center mb-4">Contáctanos</h2>
+    <form method="POST" action="">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</section>
+{% endblock %}

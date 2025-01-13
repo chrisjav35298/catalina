@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Fundación Mascotas{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    {% block body %}{% endblock %}
+
+    <!-- Bootstrap JS y Popper -->
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+</body>
+
+</html>
