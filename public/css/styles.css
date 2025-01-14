@@ -161,3 +161,27 @@
         max-height: 300px;
     }
 }
+
+
+#scrollTopButton {
+    display: none; /* Oculto inicialmente */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#scrollTopButton:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+}
+
+

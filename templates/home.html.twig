@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Inicio - Fundación{% endblock %}
-
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/home.js') }}"></script>
+{% endblock %}
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -13,9 +16,10 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
                 <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
-                <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contacto">Contáctanos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
+                <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
             
             </ul>
@@ -30,13 +34,13 @@
     <div class="container">
         <h1>Bienvenidos a Fundación Santa Catalina</h1>
         <p>Trabajamos para proteger y mejorar la vida de las mascotas en nuestra comunidad.</p>
-        <a href="#contacto" class="btn btn-light btn-lg">¡Involúcrate!</a>
+        <a href="#contacto" class="btn btn-light btn-lg">¡Sumate!</a>
     </div>
 </section>
 
 
 <!-- Misión -->
-<section id="noticias" class="py-5">
+<section id="mision" class="py-5">
     <div class="container">
         <h2 class="text-center">Nuestra Misión</h2>
         <p class="text-center">Nuestra fundación tiene como propósito...</p>
@@ -225,6 +229,7 @@
             </div>
         </div>
     </div>
+     <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
 </section>
 
 
@@ -328,3 +333,4 @@
     <p>&copy; {{ "now"|date("m/d/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
 </footer>
 {% endblock %}
+
