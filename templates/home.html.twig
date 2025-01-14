@@ -275,24 +275,69 @@
 
 
 <!-- Contáctanos -->
-<section id="contacto" class="bg-tone-light p-8 my-5">
-    <h2 class="text-center mb-4">Contáctanos</h2>
+<section id="contacto" class="bg-tone-light py-5">
+    <!-- Mensajes Flash -->
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <h2 class="text-center mb-4">Escribinos</h2>
     <div class="container">
-        <form method="POST" action="">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+        {{ form_start(contactForm, {'attr': {'class': 'needs-validation row g-3', 'novalidate': 'novalidate'}}) }}
+        
+        <!-- Campo Nombre -->
+        <div class="col-md-6">
+            {{ form_label(contactForm.nombre, 'Nombre', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(contactForm.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Tu nombre'}}) }}
+            <div class="invalid-feedback">
+                Por favor, ingresa tu nombre.
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+            {{ form_errors(contactForm.nombre) }}
+        </div>
+        
+        <!-- Campo Teléfono -->
+        <div class="col-md-6">
+            {{ form_label(contactForm.telefono, 'Teléfono', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(contactForm.telefono, {'attr': {'class': 'form-control', 'placeholder': ''}}) }}
+            <div class="invalid-feedback">
+                Por favor, ingresa un número de teléfono válido.
             </div>
-            <div class="mb-3">
-                <label for="mensaje" class="form-label">Mensaje</label>
-                <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+            {{ form_errors(contactForm.telefono) }}
+        </div>
+        
+        <!-- Campo Email -->
+        <div class="col-md-6">
+            {{ form_label(contactForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(contactForm.email, {'attr': {'class': 'form-control', 'placeholder': 'nombre@ejemplo.com'}}) }}
+            <div class="invalid-feedback">
+                Por favor, ingresa un email válido.
             </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-        </form>
+            {{ form_errors(contactForm.email) }}
+        </div>
+        
+        <!-- Campo Mensaje -->
+        <div class="col-md-12">
+            {{ form_label(contactForm.mensaje, 'Mensaje', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(contactForm.mensaje, {'attr': {'class': 'form-control', 'rows': '4', 'placeholder': 'Dejanos tu mensaje aquí...'}}) }}
+            <div class="invalid-feedback">
+                Por favor, escribí un mensaje.
+            </div>
+            {{ form_errors(contactForm.mensaje) }}
+        </div>
+        
+        <!-- Botón Enviar -->
+        <div class="col-12 text-center mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane"></i> Enviar
+            </button>
+        </div>
+
+        {{ form_end(contactForm) }}
     </div>
 </section>
 
@@ -330,7 +375,7 @@
 
 <!-- Footer -->
 <footer class="bg-light text-center py-3 mt-5">
-    <p>&copy; {{ "now"|date("m/d/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+    <p>&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
 </footer>
 {% endblock %}
 
