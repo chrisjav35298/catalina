@@ -36,7 +36,7 @@
 
 
 <!-- Misión -->
-<section id="novedades" class="bg-tone-light">
+<section id="noticias" class="py-5">
     <div class="container">
         <h2 class="text-center">Nuestra Misión</h2>
         <p class="text-center">Nuestra fundación tiene como propósito...</p>
@@ -131,99 +131,107 @@
 </section> #}
 
 <!-- Sección Actividades -->
-<section id="actividades" class="container my-5">
+<section id="actividades" class="my-2 py-5 container">
     <h2 class="text-center mb-4">Actividades</h2>
-    <div class="row">
+    <div class="row g-4">
         {% for actividad in actividades %}
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top" alt="{{ actividad.titulo }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ actividad.titulo }}</h5>
-                    <p class="card-text">{{ actividad.descripcionCorta }}</p>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">Ver más</button>
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-lg overflow-hidden custom-card">
+                    <!-- Imagen destacada con máximo de altura y corte -->
+                    <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
+                         style="max-height: 250px; object-fit: cover;" alt="{{ actividad.titulo }}">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
+                        <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
+                            <i class="bi bi-eye"></i> Ver más
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Modal para cada actividad -->
-        <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {% for imagen in actividad.imagenes %}
-                                    {% if imagen.ruta is not null %}
-                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                            <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" alt="Imagen actividad">
-                                        </div>
-                                    {% endif %}
-                                {% else %}
-                                    <p>No images available</p>
-                                {% endfor %}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </button>
+            <!-- Modal para cada actividad -->
+            <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                         </div>
-                        <p class="mt-4">{{ actividad.descripcionLarga }}</p>
+                        <div class="modal-body">
+                            <!-- Carrusel de imágenes -->
+                            <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for imagen in actividad.imagenes %}
+                                        {% if imagen.ruta is not null %}
+                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" 
+                                                    style="height: 500px; object-fit: cover;" alt="Imagen actividad">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            </div>
+
+                            <p class="mt-4">{{ actividad.descripcionLarga }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 </section>
 
 
-
-<!-- Novedades -->
-<section id="novedades" class="bg-tone-light my-2">
-    <div class="container">
-    <h2 class="text-center">Novedades</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="noticia1.jpg" class="card-img-top" alt="Noticia">
-                    <div class="card-body">
-                        <h5 class="card-title">Noticia 1</h5>
-                        <p class="card-text">Detalles sobre una actividad reciente...</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Más noticias -->
-        </div>
-    </div>
-</section>
-
-
 <!-- Equipo -->
-<section id="equipo" class=" container my-5">
-    <h2 class="text-center">Nuestro Equipo</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <img src="equipo1.jpg" class="rounded-circle w-100" alt="Miembro del equipo">
-            <h5 class="text-center">María Pérez</h5>
-            <p class="text-center">Fundadora</p>
+<section id="equipo" class="container my-5">
+    <h2 class="text-center mb-5">Nuestro Equipo</h2>
+    <div class="row g-4">
+        <!-- Miembro 1 -->
+        <div class="col-md-4 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">María Pérez</h5>
+                <p class="text-muted">Fundadora</p>
+            </div>
         </div>
-        <!-- Más integrantes -->
+
+        <!-- Miembro 2 -->
+        <div class="col-md-4 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Carlos Gómez</h5>
+                <p class="text-muted">Director de Tecnología</p>
+            </div>
+        </div>
+
+        <!-- Miembro 3 -->
+        <div class="col-md-4 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Laura López</h5>
+                <p class="text-muted">Gerente de Marketing</p>
+            </div>
+        </div>
     </div>
 </section>
+
 
 
 <!-- Leyes -->
 
-<section id="leyes" class="bg-tone-light my-2">
+<section id="leyes" class="my-2 py-5 bg-tone-light">
     <div class="container">
     <h2 class="text-center">Leyes de Protección Animal</h2>
     <ul>
@@ -233,52 +241,90 @@
     </div>
 </section>
 
-<!-- Contáctanos -->
-<section id="contacto" class="container my-5">
-    <h2 class="text-center mb-4">Contáctanos</h2>
-    <form method="POST" action="">
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-            <label for="mensaje" class="form-label">Mensaje</label>
-            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+
+<!-- Noticias -->
+<section id="noticias" class="mt-5 p-5">
+    <h2 class="text-center">Noticias</h2>
+    <div class="row">
+        {% for noticia in noticias %}
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-lg overflow-hidden custom-card">
+                    <!-- Imagen destacada con máximo de altura y corte -->
+                    <img src="{{ asset('uploads/' ~ noticia.imagen) }}" class="card-img-top img-fluid" 
+                         style="max-height: 250px; object-fit: cover;" alt="{{ noticia.titulo }}">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ noticia.titulo }}</h5>
+                        <p class="card-text text-muted">{{ noticia.descripcionCorta }}</p>
+                        
+                        <!-- Enlace para navegar a la página de detalle -->
+                        <a href="{{ path('app_noticia_show_publico', {'id': noticia.id}) }}" class="btn btn-primary mt-3">
+                            <i class="bi bi-arrow-right"></i> Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </section>
 
 
-<!-- mapa-->
-<section id="ubicacion" class="bg-tone-light my-2">
+<!-- Contáctanos -->
+<section id="contacto" class="bg-tone-light p-8 my-5">
+    <h2 class="text-center mb-4">Contáctanos</h2>
     <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-3 col-sm-6 my-3">
-                <h2 class="text-center mb-4">Ubicación</h2>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                    <a href="#!"></a>
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</section>
+
+
+<!-- Mapa -->
+<section id="ubicacion" class="my-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Mapa embebido -->
+            <div class="col-lg-8 col-md-8 col-sm-12 mb-4">
+                <div class="text-center mb-4">
+                    <h2>Ubicación</h2>
                 </div>
-                <div class="col-md-3 col-sm-6 my-3">
-                    <a href="#!"></a>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="col-md-3 col-sm-6 my-3">
-                    <a href="#!"></a>
+            </div>
+
+            <!-- Botón de interacción -->
+            <div class="col-lg-4 col-md-4 col-sm-12 my-3">
+                <div class="text-center mb-4">
+                    <h4>¿Cómo Llegar?</h4>
                 </div>
-                <div class="col-md-3 col-sm-6 my-3">
-                    <a href="#!"></a>
+                <div class="d-flex justify-content-center">
+                    <a href="https://www.google.com/maps?q=Ayacucho+5680,+H3503IBD+Barranqueras,+Chaco" class="btn btn-outline-primary" target="_blank">
+                        <i class="bi bi-google"></i> Ver en Google Maps
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    </section>
+</section>
 
 <!-- Footer -->
 <footer class="bg-light text-center py-3 mt-5">
-    <p>&copy; 2025 Fundación Santa Catalina. Todos los derechos reservados.</p>
+    <p>&copy; {{ "now"|date("m/d/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
 </footer>
 {% endblock %}

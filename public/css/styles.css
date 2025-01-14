@@ -54,3 +54,110 @@
     padding: 2rem 0;
     border-radius: 8px;
 }
+
+.card:hover {
+    transform: scale(1.05); 
+    transition: transform 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.custom-card {
+    /* background: linear-gradient(135deg, #f6f6f6, #e2e8f0); */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    border-radius: 10px;
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    /* background: linear-gradient(135deg, #e3edfd, #fafafa);  */
+    /* color: #fff; */
+}
+
+.custom-card:hover .card-title,
+.custom-card:hover .card-text {
+    color: #fff;
+}
+
+.custom-card .card-body {
+    position: relative;
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+
+.team-member-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* .team-member-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+} */
+
+.team-image {
+    width: 75%;
+    max-width: 200px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.team-image:hover {
+    transform: scale(1.1);
+}
+
+/* Ajuste para las cabeceras dentro de la sección del mapa */
+#ubicacion h2, #ubicacion h4 {
+    margin-bottom: 20px; /* Espacio debajo de las cabeceras */
+   
+}
+
+
+
+#ubicacion h4 {
+    font-size: 1.5rem;
+    color: #333; /* Color de texto más oscuro para un mejor contraste */
+}
+
+/* Mejorando el diseño del mapa y la sección en general */
+.map-container iframe {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#ubicacion {
+   
+    padding: 60px 0;
+}
+
+#ubicacion .btn-outline-primary {
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#ubicacion .btn-outline-primary i {
+    font-size: 1.4rem;
+}
+
+@media (max-width: 767px) {
+    /* En dispositivos móviles ajustamos el tamaño del mapa */
+    .map-container iframe {
+        max-height: 300px;
+    }
+}

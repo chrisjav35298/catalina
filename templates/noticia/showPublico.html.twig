@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ noticium.titulo }} | Noticias{% endblock %}
+
+{% block body %}   <h2 class="container text-center my-4">{{ noticium.titulo }} </h2>
+    <!-- Encabezado principal -->
+    <section id="noticia-hero" class="position-relative">
+        <div class="container py-5">
+            <!-- Fondo de imagen para crear un gran impacto -->
+            <div class="row">
+                <div class="col-lg-12 text-center text-light">
+                    <img src="{{ asset('uploads/' ~ noticium.imagen) }}" alt="{{ noticium.titulo }}" class="img-fluid rounded-3 shadow-lg" style="max-height: 500px; object-fit: cover; width: 100%; border-radius: 12px;">
+                    <h1 class="display-4 mt-3">{{ noticium.titulo }}</h1>
+                    <p class="lead mt-3">{{ noticium.descripcionCorta }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <a href="#contenido" class="btn btn-light btn-lg shadow-sm">
+                <i class="bi bi-arrow-down-circle"></i> Leer más
+            </a>
+        </div>
+    </section>
+
+    <!-- Contenido principal de la noticia -->
+    <section id="contenido" class="container my-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Descripción detallada -->
+                <div class="article-content">
+                    <h2 class="my-4">Descripción Detallada</h2>
+                    <p class="lead">{{ noticium.descripcionDetallada }}</p>
+                </div>
+
+                <!-- Llamado a la acción o enlace de regreso -->
+                <div class="my-4">
+                    <a href="{{ path('app_home') }}" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle"></i> Volver a inicio</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Sección lateral con más información -->
+                <div class="sticky-top">
+                    <div class="p-4 rounded-3 shadow bg-light mb-4">
+                        <h5 class="text-primary">Últimas noticias</h5>
+                        <ul class="list-unstyled">
+                            {% for noticia in noticium %}
+                                <li class="mb-2">
+                                    <a href="{{ path('app_noticia_show', {'id': noticia.id}) }}" class="text-decoration-none text-dark">
+                                        <i class="bi bi-arrow-right-circle"></i> {{ noticia.titulo }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
