@@ -35,12 +35,12 @@
     object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
 }
 
-.carousel-caption h5 {
-    color: #FFD700; /* Amarillo */
+.carousel-caption h4 {
+    color: #f1f88d; /* Amarillo */
 }
 
-.carousel-caption p {
-    color: #db1f1f; /* Blanco */
+.carousel-caption h5 {
+    color: #dce6ee; /* Blanco */
 }
 
 .bg-tone-light {

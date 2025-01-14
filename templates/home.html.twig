@@ -13,6 +13,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+               {% if user %}
+                    <p style="color: yellow;">Hola {{ user.email }}!</p> 
+                {# {% else %}
+                    <p>Bienvenido, invitado!</p> #}
+                {% endif %}
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
                 <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
@@ -21,7 +26,23 @@
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
-            
+         
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administrar
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">adm noticias</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades </a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a  style="color: yellow;" class="nav-link active" href="{{ path('app_logout') }}">Salir
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -54,22 +75,22 @@
         <div class="carousel-item active">
             <img src="{{ asset('img/uno.jpg') }}" class="d-block w-100" alt="Mascotas 1">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Ayuda a las Mascotas</h5>
-                <p>Haz tu parte para salvar y cuidar animales en nuestra comunidad.</p>
+                <h4>Voluntarios Bienvenidos</h4>
+                <h5>Únete a nuestro equipo de voluntarios y haz una diferencia.</h5>
             </div>
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/dos.jpg') }}" class="d-block w-100" alt="Mascotas 2">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Adopta una Mascota</h5>
-                <p>Tu nuevo mejor amigo te está esperando en nuestro centro de adopción.</p>
+                 <h4>Voluntarios Bienvenidos</h4>
+                <h5>Únete a nuestro equipo de voluntarios y haz una diferencia.</h5>
             </div>
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/tres.jpg') }}" class="d-block w-100" alt="Mascotas 3">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Voluntarios Bienvenidos</h5>
-                <p>Únete a nuestro equipo de voluntarios y haz una diferencia.</p>
+                <h4>Voluntarios Bienvenidos</h4>
+                <h5>Únete a nuestro equipo de voluntarios y haz una diferencia.</h5>
             </div>
         </div>
     </div>
@@ -82,57 +103,6 @@
         <span class="visually-hidden">Siguiente</span>
     </button>
 </section>
-{# 
-<!-- Sección Actividades -->
-<section id="actividades" class="container my-5">
-    <h2 class="text-center mb-4">Actividades</h2>
-    <div class="row">
-        {% for actividad in actividades %}
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ asset(actividad.imagenDestacada) }}" class="card-img-top" alt="{{ actividad.titulo }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ actividad.titulo }}</h5>
-                    <p class="card-text">{{ actividad.descripcionCorta }}</p>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">Ver más</button>
-                </div>
-            </div>
-        </div>
-
-<!-- Modal para cada actividad -->
-    <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {% for imagen in actividad.imagenes %}
-                                <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img src="{{ asset(imagen) }}" class="d-block w-100" alt="Imagen actividad">
-                                </div>
-                                {% endfor %}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </button>
-                        </div>
-                        <p class="mt-4">{{ actividad.descripcionLarga }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</section> #}
 
 <!-- Sección Actividades -->
 <section id="actividades" class="my-2 py-5 container">
@@ -374,8 +344,8 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-light text-center py-3 mt-5">
-    <p>&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+<footer class="bg-dark text-center py-3 mt-5">
+    <p style="color: yellow;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
 </footer>
 {% endblock %}
 
