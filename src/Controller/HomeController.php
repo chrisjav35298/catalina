@@ -41,7 +41,7 @@ class HomeController extends AbstractController
             $mailer->send($email);
 
             // Mostrar mensaje de éxito
-            $this->addFlash('success', 'Mensaje enviado correctamente.');
+            $this->addFlash('success', 'Mensaje enviado, estaremos en contacto con vos en breve!');
 
             // Redirigir para evitar reenvío de formulario
             return $this->redirectToRoute('app_home');
