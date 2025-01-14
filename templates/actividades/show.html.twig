@@ -20,12 +20,22 @@
                 <td>{{ actividade.descripcionLarga }}</td>
             </tr>
             <tr>
-                <th>ImagenDestacada</th>
+                <th>ImagenDestacada - nombre</th>
                 <td>{{ actividade.imagenDestacada }}</td>
             </tr>
             <tr>
                 <th>Imagenes</th>
-                <td>{{ actividade.imagenes }}</td>
+                <td>
+                   {% for imagen in actividade.imagenes %}
+                        {% if imagen.ruta is not null %}
+                            <img src="{{ asset('uploads/' ~ imagen.ruta) }}" alt="Imagen" style="width: 100px;">
+                        {% else %}
+                           
+                        {% endif %}
+                    {% else %}
+                        No images
+                    {% endfor %}
+                </td>
             </tr>
         </tbody>
     </table>

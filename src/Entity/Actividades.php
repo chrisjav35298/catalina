@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ActividadesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ActividadesRepository::class)]
@@ -25,8 +27,18 @@ class Actividades
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagenDestacada = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $imagenes = null;
+ 
+    /**
+     * @var Collection<int, Imagen>
+     */
+    // #[ORM\OneToMany(targetEntity: Imagen::class, mappedBy: 'Actividad')]
+    #[ORM\OneToMany(mappedBy: 'Actividad', targetEntity: Imagen::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $imagenes;
+
+    public function __construct()
+    {
+        $this->imagenes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -81,14 +93,32 @@ class Actividades
         return $this;
     }
 
-    public function getImagenes(): ?string
+    /**
+     * @return Collection<int, Imagen>
+     */
+    public function getImagenes(): Collection
     {
         return $this->imagenes;
     }
 
-    public function setImagenes(string $imagenes): static
+    public function addImagen(Imagen $imagen): static
     {
-        $this->imagenes = $imagenes;
+        if (!$this->imagenes->contains($imagen)) {
+            $this->imagenes->add($imagen);
+            $imagen->setActividad($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImagen(Imagen $imagen): static
+    {
+        if ($this->imagenes->removeElement($imagen)) {
+            // set the owning side to null (unless already changed)
+            if ($imagen->getActividad() === $this) {
+                $imagen->setActividad(null);
+            }
+        }
 
         return $this;
     }

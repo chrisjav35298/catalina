@@ -1,0 +1,56 @@
+.hero-section {
+    background-image: url('/img/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Hace que el fondo quede fijo */
+    height: 600px;
+    color: rgb(224, 146, 57); /* Asegúrate de que el texto sea visible sobre el fondo */
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        background-attachment: scroll; /* No fija el fondo en dispositivos móviles */
+    }
+}
+
+.hero-section .container {
+    padding-top: 100px; /* Ajusta el valor según lo que necesites */
+    
+}
+.hero-section h1, 
+.hero-section p, 
+.hero-section a {
+    margin-top: 50px; /* Ajusta el valor para moverlo según lo necesites */
+   
+}
+.hero-section h1 {
+    color: #f7ff86;
+}
+
+
+.carousel-item img {
+    width: 100%; /* Hace que las imágenes siempre cubran todo el ancho del contenedor */
+    height: 400px; /* Ajusta la altura a un tamaño fijo */
+    object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
+}
+
+.carousel-caption h5 {
+    color: #FFD700; /* Amarillo */
+}
+
+.carousel-caption p {
+    color: #db1f1f; /* Blanco */
+}
+
+.bg-tone-light {
+    background-color: #f8f9fa; /* Tono claro */
+    padding: 2rem 0;
+    border-radius: 8px;
+}
+
+.bg-tone-dark {
+    background-color: #dee2e6; /* Tono ligeramente más oscuro */
+    padding: 2rem 0;
+    border-radius: 8px;
+}

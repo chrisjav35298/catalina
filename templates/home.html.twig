@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inicio - Fundación Mascotas{% endblock %}
+{% block title %}Inicio - Fundación{% endblock %}
 
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Fundación Mascotas</a>
+        <a class="navbar-brand" href="#">Fundación Sta Catalina</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,23 +13,72 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
                 <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
-                <li class="nav-item"><a class="nav-link" href="#historia">Historia</a></li>
+                <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Contáctanos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
+            
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="bg-primary text-white text-center py-5">
+
+<!-- bienvenidos -->
+
+<section class="hero-section text-white text-center custom-hero">
     <div class="container">
-        <h1>Bienvenidos a Fundación Mascotas</h1>
+        <h1>Bienvenidos a Fundación Santa Catalina</h1>
         <p>Trabajamos para proteger y mejorar la vida de las mascotas en nuestra comunidad.</p>
         <a href="#contacto" class="btn btn-light btn-lg">¡Involúcrate!</a>
     </div>
 </section>
 
+
+<!-- Misión -->
+<section id="novedades" class="bg-tone-light">
+    <div class="container">
+        <h2 class="text-center">Nuestra Misión</h2>
+        <p class="text-center">Nuestra fundación tiene como propósito...</p>
+    </div>
+</section>
+
+
+<!-- Carousel Section -->
+<section id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ asset('img/uno.jpg') }}" class="d-block w-100" alt="Mascotas 1">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Ayuda a las Mascotas</h5>
+                <p>Haz tu parte para salvar y cuidar animales en nuestra comunidad.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('img/dos.jpg') }}" class="d-block w-100" alt="Mascotas 2">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Adopta una Mascota</h5>
+                <p>Tu nuevo mejor amigo te está esperando en nuestro centro de adopción.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{{ asset('img/tres.jpg') }}" class="d-block w-100" alt="Mascotas 3">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Voluntarios Bienvenidos</h5>
+                <p>Únete a nuestro equipo de voluntarios y haz una diferencia.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</section>
+{# 
 <!-- Sección Actividades -->
 <section id="actividades" class="container my-5">
     <h2 class="text-center mb-4">Actividades</h2>
@@ -46,10 +95,10 @@
             </div>
         </div>
 
-        <!-- Modal para cada actividad -->
-        <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
+<!-- Modal para cada actividad -->
+    <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -79,6 +128,109 @@
         </div>
         {% endfor %}
     </div>
+</section> #}
+
+<!-- Sección Actividades -->
+<section id="actividades" class="container my-5">
+    <h2 class="text-center mb-4">Actividades</h2>
+    <div class="row">
+        {% for actividad in actividades %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top" alt="{{ actividad.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ actividad.titulo }}</h5>
+                    <p class="card-text">{{ actividad.descripcionCorta }}</p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">Ver más</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para cada actividad -->
+        <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imagen in actividad.imagenes %}
+                                    {% if imagen.ruta is not null %}
+                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                            <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" alt="Imagen actividad">
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <p>No images available</p>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                        <p class="mt-4">{{ actividad.descripcionLarga }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+<!-- Novedades -->
+<section id="novedades" class="bg-tone-light my-2">
+    <div class="container">
+    <h2 class="text-center">Novedades</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="noticia1.jpg" class="card-img-top" alt="Noticia">
+                    <div class="card-body">
+                        <h5 class="card-title">Noticia 1</h5>
+                        <p class="card-text">Detalles sobre una actividad reciente...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Más noticias -->
+        </div>
+    </div>
+</section>
+
+
+<!-- Equipo -->
+<section id="equipo" class=" container my-5">
+    <h2 class="text-center">Nuestro Equipo</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="equipo1.jpg" class="rounded-circle w-100" alt="Miembro del equipo">
+            <h5 class="text-center">María Pérez</h5>
+            <p class="text-center">Fundadora</p>
+        </div>
+        <!-- Más integrantes -->
+    </div>
+</section>
+
+
+<!-- Leyes -->
+
+<section id="leyes" class="bg-tone-light my-2">
+    <div class="container">
+    <h2 class="text-center">Leyes de Protección Animal</h2>
+    <ul>
+        <li>Ley XX: Prohíbe el maltrato animal...</li>
+        <li>Ley YY: Regula la adopción y cuidado...</li>
+    </ul>
+    </div>
 </section>
 
 <!-- Contáctanos -->
@@ -100,4 +252,33 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </section>
+
+
+<!-- mapa-->
+<section id="ubicacion" class="bg-tone-light my-2">
+    <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-3 col-sm-6 my-3">
+                <h2 class="text-center mb-4">Ubicación</h2>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <a href="#!"></a>
+                </div>
+                <div class="col-md-3 col-sm-6 my-3">
+                    <a href="#!"></a>
+                </div>
+                <div class="col-md-3 col-sm-6 my-3">
+                    <a href="#!"></a>
+                </div>
+                <div class="col-md-3 col-sm-6 my-3">
+                    <a href="#!"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-3 mt-5">
+    <p>&copy; 2025 Fundación Santa Catalina. Todos los derechos reservados.</p>
+</footer>
 {% endblock %}

@@ -9,7 +9,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
-    {% block stylesheets %}{% endblock %}
+    <!-- Estilos personalizados -->
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {% endblock %}
 </head>
 
 <body>

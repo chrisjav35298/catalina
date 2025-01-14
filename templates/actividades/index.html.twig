@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Titulo</th>
                 <th>DescripcionCorta</th>
                 <th>DescripcionLarga</th>
                 <th>ImagenDestacada</th>
@@ -20,10 +21,12 @@
         {% for actividade in actividades %}
             <tr>
                 <td>{{ actividade.id }}</td>
+                <td>{{ actividade.titulo }}</td>
                 <td>{{ actividade.descripcionCorta }}</td>
                 <td>{{ actividade.descripcionLarga }}</td>
-                <td>{{ actividade.imagenDestacada }}</td>
-                <td>{{ actividade.imagenes }}</td>
+                <td>
+                        <img src="{{ asset('uploads/' ~ actividade.imagenDestacada ) }}" alt="Imagen" style="width: 100px;">
+                </td>
                 <td>
                     <a href="{{ path('app_actividades_show', {'id': actividade.id}) }}">show</a>
                     <a href="{{ path('app_actividades_edit', {'id': actividade.id}) }}">edit</a>

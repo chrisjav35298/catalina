@@ -1,4 +1,30 @@
-{{ form_start(form) }}
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+{{ form_start(form) }}
+    <div class="mb-4">
+        <h3 class="text-center mb-3">Detalles de la Actividad</h3>
+        {{ form_row(form.titulo, {'attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.descripcionCorta, {'attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.descripcionLarga, {'attr': {'class': 'form-control'}}) }}
+        {{ form_row(form.imagenDestacada, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    
+    <div class="mb-4">
+        <h3 class="text-center mb-3">Imágenes Relacionadas</h3>
+        <div id="form_imagenes" data-prototype="{{ form_widget(form.imagenes.vars.prototype)|e('html_attr') }}" data-index="{{ form.imagenes|length }}">
+            {% for imagenForm in form.imagenes %}
+                <div class="d-flex align-items-center mb-3">
+                    {{ form_row(imagenForm.ruta, {'attr': {'class': 'form-control me-2'}}) }}
+                    <button type="button" class="btn btn-danger" onclick="this.closest('div').remove();">Eliminar</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" class="btn btn-primary add-image">Agregar Imagen</button>
+    </div>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
+    </div>
 {{ form_end(form) }}

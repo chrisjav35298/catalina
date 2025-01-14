@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Imagen;
 use App\Entity\Actividades;
 use App\Form\ActividadesType;
-use App\Repository\ActividadesRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ActividadesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 #[Route('/actividades')]
 final class ActividadesController extends AbstractController
@@ -22,26 +26,85 @@ final class ActividadesController extends AbstractController
         ]);
     }
 
+    // #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $actividade = new Actividades();
+    //     $form = $this->createForm(ActividadesType::class, $actividade);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($actividade);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->render('actividades/new.html.twig', [
+    //         'actividade' => $actividade,
+    //         'form' => $form,
+    //     ]);
+    // }
+
+
     #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
-        $actividade = new Actividades();
-        $form = $this->createForm(ActividadesType::class, $actividade);
+        $actividad = new Actividades();
+        $form = $this->createForm(ActividadesType::class, $actividad);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($actividade);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
+            
+            // 1. Manejo de imagen destacada
+            $imagenDestacada = $form->get('imagenDestacada')->getData();
+            if ($imagenDestacada) {
+                // Crear un nombre único para la imagen destacada
+                $newFilenameDestacada = uniqid() . '.' . $imagenDestacada->guessExtension();
+    
+                // Mover el archivo al directorio de uploads
+                $imagenDestacada->move($uploadsDir, $newFilenameDestacada);
+    
+                // Establecer la ruta de la imagen destacada en la actividad
+                $actividad->setImagenDestacada($newFilenameDestacada);
+            }
+            
+            // 2. Manejo de las imágenes adicionales
+            foreach ($form->get('imagenes') as $imagenForm) {
+                /** @var UploadedFile $imagenArchivo */
+                $imagenArchivo = $imagenForm->get('ruta')->getData();
+    
+                if ($imagenArchivo) {
+                    // Crear un nombre único para la imagen
+                    $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
+    
+                    // Mover el archivo al directorio de uploads
+                    $imagenArchivo->move($uploadsDir, $newFilename);
+    
+                    // Crear una nueva imagen y asociarla a la actividad
+                    $imagen = new Imagen();
+                    $imagen->setRuta($newFilename);
+    
+                    // Agregar la imagen a la actividad
+                    $actividad->addImagen($imagen);
+    
+                    // Persistir la imagen en la base de datos
+                    $entityManager->persist($imagen);
+                }
+            }
+    
+            // Persistir la actividad después de todas las imágenes
+            $entityManager->persist($actividad);
+            $entityManager->flush(); // Ejecutar todas las operaciones en la base de datos
+    
+            return $this->redirectToRoute('app_actividades_index');
         }
-
+    
         return $this->render('actividades/new.html.twig', [
-            'actividade' => $actividade,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
-
+    
     #[Route('/{id}', name: 'app_actividades_show', methods: ['GET'])]
     public function show(Actividades $actividade): Response
     {
