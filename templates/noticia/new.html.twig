@@ -3,9 +3,11 @@
 {% block title %}New Noticia{% endblock %}
 
 {% block body %}
-    <h1>Create new Noticia</h1>
+    <div class="container">
+    <h1>Crear Nueva Noticia</h1>
 
     {{ include('noticia/_form.html.twig') }}
 
-    <a href="{{ path('app_noticia_index') }}">back to list</a>
+    <a href="{{ path('app_noticia_index') }}">Volver</a>
+    </div>
 {% endblock %}

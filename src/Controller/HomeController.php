@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Form\Model\Contacto;
@@ -24,13 +23,13 @@ class HomeController extends AbstractController
     ): Response {
         // Obtener usuario si está logueado
         $user = $this->getUser();
-    
+
         // Crear objeto de datos y formulario
         $contacto = new Contacto();
         $form = $this->createForm(ContactoType::class, $contacto);
-    
+
         $form->handleRequest($request);
-    
+
         // Manejar el envío del formulario
         if ($form->isSubmitted() && $form->isValid()) {
             // Crear email
@@ -39,22 +38,31 @@ class HomeController extends AbstractController
                 ->to('tu-email@example.com') // Cambiar por tu correo
                 ->subject('Nuevo mensaje de contacto') // Asunto del mensaje
                 ->text($contacto->getMensaje()); // Contenido
-    
+
             // Enviar el email
             $mailer->send($email);
-    
+
             // Mostrar mensaje de éxito
             $this->addFlash('success', 'Mensaje enviado, estaremos en contacto con vos en breve!');
-    
+
             // Redirigir para evitar reenvío de formulario
             return $this->redirectToRoute('app_home');
         }
-    
-        // Renderizar el template
+
+        // Consultas antes de renderizar el template
+        $actividades = $actividadesRepository->findAll(); 
+        if (empty($actividades)) {
+            $actividades = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
+        $noticias = $noticiaRepository->findAll(); 
+        if (empty($noticias)) {
+            $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
+        // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
-            'actividades' => $actividadesRepository->findAll(), // Cargar actividades
-            'noticias' => $noticiaRepository->findAll(), // Cargar noticias
+            'actividades' => $actividades, // Pasar actividades
+            'noticias' => $noticias, // Pasar noticias
             'user' => $user, // Pasar el usuario a la vista
         ]);
     }
