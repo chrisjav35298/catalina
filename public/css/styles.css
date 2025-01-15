@@ -184,4 +184,25 @@
     background-color: #0056b3; /* Color más oscuro al pasar el mouse */
 }
 
+.flotar {
+    position: fixed;
+    bottom: 20px; /* Ajusta la posición desde abajo */
+    left: 20px; /* Ajusta la posición desde la derecha */
+    background-color: #25d366; /* Color de fondo de WhatsApp */
+    border-radius: 50%; /* Redondea el borde para que sea circular */
+    padding: 15px; /* Tamaño del ícono */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease-in-out; /* Animación suave */
+}
+
+.flotar:hover {
+    transform: scale(1.1); /* Efecto de aumento de tamaño al pasar el cursor */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Efecto de sombra al hacer hover */
+}
+
+.flotar i {
+    color: white; /* Color del ícono */
+}
+
+
 

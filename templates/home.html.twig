@@ -6,18 +6,24 @@
     <script src="{{ asset('js/home.js') }}"></script>
 {% endblock %}
 {% block body %}
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Fundación Sta Catalina</a>
+        <!-- Logo con imagen -->
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" height="40" style="border-radius: 50%;  position: relative; left: -10px;">Fundación Santa Catalina
+        </a>
+
+        <!-- Botón para colapsar navbar -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Contenido del menú -->
         <div class="collapse navbar-collapse" id="navbarNav">
-               {% if user %}
-                    <p style="color: yellow;">Hola {{ user.email }}!</p> 
-                {# {% else %}
-                    <p>Bienvenido, invitado!</p> #}
-                {% endif %}
+            {% if user %}
+                <p style="color: yellow;">Hola {{ user.email }}!</p>
+            {% endif %}
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
                 <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
@@ -26,27 +32,26 @@
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
-         
+
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Administrar
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">adm noticias</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades </a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a  style="color: yellow;" class="nav-link active" href="{{ path('app_logout') }}">Salir
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administrar
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">adm noticias</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a style="color: yellow;" class="nav-link active" href="{{ path('app_logout') }}">Salir</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
+
 
 
 <!-- bienvenidos -->
@@ -342,10 +347,28 @@
         </div>
     </div>
 </section>
+<a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
+    <i class="fa-brands fa-whatsapp fa-2x"></i>
+</a>
 
 <!-- Footer -->
-<footer class="bg-dark text-center py-3 mt-5">
-    <p style="color: yellow;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+<footer class="bg-dark text-center py-5 mt-5">
+    <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+    <div>
+        <!-- Enlace a Facebook -->
+        <a href="https://www.facebook.com/tu-pagina" target="_blank" class="text-white me-3">
+            <i class="fab fa-facebook fa-2x"></i>
+        </a>
+        <!-- Enlace a Instagram -->
+        <a href="https://www.instagram.com/tu-perfil" target="_blank" class="text-white me-3">
+            <i class="fab fa-instagram fa-2x"></i>
+        </a>
+        <!-- Enlace a ws -->
+         <a href="https://wa.me/549XXXXXXXXX" target="_blank" class="text-white">
+            <i class="fab fa-whatsapp fa-2x"></i>
+        </a>
+    </div>
 </footer>
+
 {% endblock %}
 
