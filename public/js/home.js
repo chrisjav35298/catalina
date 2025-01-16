@@ -14,3 +14,42 @@ window.onscroll = function () {
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
+// JavaScript para agregar efecto más perceptible
+document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("mision");
+
+    // Usa IntersectionObserver para activar la animación
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Retrasa el inicio del efecto
+                    setTimeout(() => {
+                        entry.target.classList.add("fade-in");
+                    }, 300); // Retraso de 300ms para mayor visibilidad
+                }
+            });
+        }, 
+        { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+});
+
+// Agrega animación con CSS más lenta y notoria
+const style = document.createElement('style');
+style.innerHTML = `
+    #mision {
+        opacity: 0;
+        transform: translateY(80px); /* Mayor desplazamiento para más impacto */
+        transition: all 1.2s ease-out; /* Efecto más lento */
+    }
+
+    #mision.fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
+document.head.appendChild(style);
