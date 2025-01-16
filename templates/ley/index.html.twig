@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ley index{% endblock %}
+
+{% block body %}
+    <h1>Ley index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Descripcion</th>
+                <th>FechaSancion</th>
+                <th>FechaPromulgacion</th>
+                <th>Activo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ley in leys %}
+            <tr>
+                <td>{{ ley.id }}</td>
+                <td>{{ ley.titulo }}</td>
+                <td>{{ ley.descripcion }}</td>
+                <td>{{ ley.fechaSancion ? ley.fechaSancion|date('Y-m-d') : '' }}</td>
+                <td>{{ ley.fechaPromulgacion ? ley.fechaPromulgacion|date('Y-m-d') : '' }}</td>
+                <td>{{ ley.activo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_ley_show', {'id': ley.id}) }}">show</a>
+                    <a href="{{ path('app_ley_edit', {'id': ley.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ley_new') }}">Create new</a>
+{% endblock %}

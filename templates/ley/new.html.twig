@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ley{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Create new Ley</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.titulo, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.descripcion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.fechaSancion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.fechaPromulgacion , {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.activo, {'attr': {'class': 'form-check-input','style': 'margin: 15px;'}}) }}
+    <hr>
+    <div id="form_articulos" data-prototype="{{ form_widget(form.articulos.vars.prototype)|e('html_attr') }}">
+        {% for articulo in form.articulos %}
+            <div>
+                {{ form_row(articulo) }}
+                <button type="button" class="btn btn-danger mt-2 remove-articulo">Eliminar</button>
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" class="btn btn-primary mt-2 add-articulo">Añadir artículo</button>
+    <br>
+    <br>
+    <button type="submit" class="btn btn-success mt-3">Guardar</button>
+    <a href="{{ path('app_ley_index') }}" class="btn btn-secondary mt-3">Volver</a>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const addArticuloButton = document.querySelector('.add-articulo');
+    const collectionHolder = document.querySelector('#form_articulos');
+
+    if (collectionHolder && addArticuloButton) {
+        collectionHolder.dataset.index = collectionHolder.children.length;
+
+        addArticuloButton.addEventListener('click', () => {
+            const prototype = collectionHolder.dataset.prototype;
+            const index = collectionHolder.dataset.index;
+
+            const newForm = prototype.replace(/__name__/g, index);
+
+            collectionHolder.dataset.index = parseInt(index) + 1;
+
+            const formContainer = document.createElement('div');
+            formContainer.innerHTML = newForm;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.classList.add('btn', 'btn-danger', 'mt-2');
+            deleteButton.textContent = 'Eliminar';
+
+            deleteButton.addEventListener('click', () => formContainer.remove());
+
+            formContainer.appendChild(deleteButton);
+            collectionHolder.appendChild(formContainer);
+        });
+
+        // Agregar funcionalidad de eliminar a los formularios existentes
+        collectionHolder.querySelectorAll('.remove-articulo').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.currentTarget.parentElement.remove();
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

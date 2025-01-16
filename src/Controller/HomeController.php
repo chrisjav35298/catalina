@@ -5,6 +5,7 @@ use App\Form\Model\Contacto;
 use App\Form\ContactoType;
 use App\Repository\NoticiaRepository;
 use App\Repository\ActividadesRepository;
+use App\Repository\LeyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -19,7 +20,8 @@ class HomeController extends AbstractController
         Request $request,
         ActividadesRepository $actividadesRepository,
         NoticiaRepository $noticiaRepository,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        LeyRepository $leyRepository,
     ): Response {
         // Obtener usuario si está logueado
         $user = $this->getUser();
@@ -58,12 +60,17 @@ class HomeController extends AbstractController
         if (empty($noticias)) {
             $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
+        $leyes = $leyRepository->findAll(); 
+        if (empty($leyes)) {
+            $leyes = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
             'actividades' => $actividades, // Pasar actividades
             'noticias' => $noticias, // Pasar noticias
-            'user' => $user, // Pasar el usuario a la vista
+            'user' => $user, 
+            'leyes' => $leyes,// Pasar el usuario a la vista
         ]);
     }
 }

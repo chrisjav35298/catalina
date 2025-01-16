@@ -204,5 +204,7 @@
     color: white; /* Color del ícono */
 }
 
-
+.mb-15 {
+    margin-bottom: 15px;
+}
 
