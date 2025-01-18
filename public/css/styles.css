@@ -26,9 +26,14 @@
 }
 .hero-section h1 {
     color: #f7ff86;
+    /* text-shadow: 3px 2px 6px rgba(243, 231, 231, 0.8);  */
+}
+.hero-section h4,h5 {
+    color: #f5fab6;
+    /* text-shadow: 3px 2px 6px rgba(243, 231, 231, 0.8);  */
 }
 
-
+/* carrusel */
 .carousel-item img {
     width: 100%; /* Hace que las imágenes siempre cubran todo el ancho del contenedor */
     height: 450px; /* Ajusta la altura a un tamaño fijo */
@@ -37,14 +42,21 @@
     margin-top: 10px;
 }
 
-/* .carousel-caption h4 , h5 {
-    color: #f4fdff;
-} */
 
-/* .carousel-caption h5 {
-    color: #dce6ee; 
-} */
+.carousel-caption {
+    color: #fff; /* Texto blanco */
+    text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.8); /* Sombra negra suave */
+    font-weight: bold;
+    font-size: 2.5rem; /* Tamaño adaptable */
+}
 
+@media (min-width: 768px) {
+    .carousel-caption {
+        font-size: 2rem; 
+    }
+}
+
+/* color para algunas secciones*/
 .bg-tone-light {
     background-color: #f8f9fa; /* Tono claro */
     padding: 2rem 0;
@@ -57,17 +69,19 @@
     border-radius: 8px;
 }
 
+/* cards */
+.custom-card {
+    /* background: linear-gradient(135deg, #f6f6f6, #e2e8f0); */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    border-radius: 10px;
+}
+
 /* .card:hover {
     transform: scale(1.05); 
     transition: transform 0.3s ease;
     box-shadow: 0 8px 15px rgba(0,0,0,0.2);
 } */
 
-.custom-card {
-    /* background: linear-gradient(135deg, #f6f6f6, #e2e8f0); */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    border-radius: 10px;
-}
 
 .custom-card:hover {
     transform: translateY(-5px);
@@ -95,12 +109,17 @@
     font-size: 1rem;
 }
 
-
+/* team*/
 .team-member-card {
     background-color: #fff;
     border-radius: 15px;
     padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member-card h5 {
+    color: #333; /* Color deseado */
+    text-shadow: none; /* Anula cualquier sombra previa */
 }
 
 /* .team-member-card:hover {
@@ -119,27 +138,23 @@
     transform: scale(1.1);
 }
 
-/* Ajuste para las cabeceras dentro de la sección del mapa */
+/* mapa */
 #ubicacion h2, #ubicacion h4 {
     margin-bottom: 20px; /* Espacio debajo de las cabeceras */
    
 }
-
-
 
 #ubicacion h4 {
     font-size: 1.5rem;
     color: #333; /* Color de texto más oscuro para un mejor contraste */
 }
 
-/* Mejorando el diseño del mapa y la sección en general */
 .map-container iframe {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 #ubicacion {
-   
     padding: 60px 0;
 }
 
@@ -164,7 +179,7 @@
     }
 }
 
-
+ /* bton ir arriba */
 #scrollTopButton {
     display: none; /* Oculto inicialmente */
     position: fixed;
@@ -183,9 +198,10 @@
 }
 
 #scrollTopButton:hover {
-    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+    background-color: #0056b3; 
 }
 
+/* botn ws */
 .flotar {
     position: fixed;
     bottom: 20px; /* Ajusta la posición desde abajo */
@@ -210,6 +226,7 @@
     margin-bottom: 15px;
 }
 
+/* mision */
 #mision-image {
     width: 100px;
     height: 150px;
@@ -239,18 +256,4 @@
     transform: translateX(-50%);
     background-color: #fff; /* Fondo blanco para destacarse */
     padding: 0 0.5rem;
-}
-
-
-.carousel-caption {
-    color: #fff; /* Texto blanco */
-    text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.8); /* Sombra negra suave */
-    font-weight: bold;
-    font-size: 2.5rem; /* Tamaño adaptable */
-}
-
-@media (min-width: 768px) {
-    .carousel-caption {
-        font-size: 2rem; /* Tamaño mayor para pantallas más grandes */
-    }
 }

@@ -31,6 +31,7 @@
                 <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
+                 <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -61,8 +62,8 @@
 <section class="hero-section text-white text-center custom-hero">
     <div class="container">
         <h1>Bienvenidos a Fundación Santa Catalina</h1>
-         <h4>Personería jurídica 2167.<br>Matrícula N°2167</h4>
-        <h3>La voz y hacer valer los derechos de los animales.</h3>
+         <h5>Personería jurídica 2167.<br>Matrícula N°2167</h5>
+        <h4>La voz y hacer valer los derechos de los animales.</h4>
         
        
         
@@ -125,7 +126,10 @@
 </section>
 
 <!-- Sección Actividades -->
-<section id="actividades" class="my-2 py-5 container">
+<section class=" mb-1">
+
+<section id="actividades" class="bg-tone-light my-2 py-5">
+<div class="container">
     <h2 class="text-center mb-4">Actividades</h2>
     <div class="row g-4">
         {% for actividad in actividades %}
@@ -185,6 +189,7 @@
             </div>
         {% endfor %}
     </div>
+ </div>
 </section>
 
 
@@ -222,9 +227,8 @@
      <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
 </section>
 <hr class="custom-hr">
-<!-- Equipo legal-->
-<section class="bg-tone-light">
-<div class="container">
+<!-- Equipo colaborador -->
+<section  class="container">
     <h2 class="text-center">Equipo legal</h2>
 <div class="row g-3">
         <!-- Miembro 1 -->
@@ -426,6 +430,35 @@
     </div>
 </section>
 
+<!-- Donaciones -->
+<section id="donaciones" class="py-1 bg-light position-relative">
+    <div class="container">
+        <h2 class="text-center mt-5 fw-bold">Ayúdanos a seguir haciendo el bien</h2>
+        <p class="text-center mx-auto lead" style="max-width: 800px;">
+            Tu donación ayuda a continuar con nuestra misión de rescatar, cuidar y proteger a los perros 
+            en situación de abandono y maltrato. Cada aporte es fundamental para brindarles atención 
+            veterinaria, alimento, refugio y una oportunidad de encontrar un hogar. Agradecemos de corazón 
+            tu apoyo en esta noble causa.
+        </p>
+           <div class="text-center">
+            <!-- Imagen achicada con un tamaño fijo -->
+            <img src="{{ asset('img/donaciones.jpg') }}" alt="Perro rescatado" class="rounded-circle shadow-sm" style="width: 150px; height: 150px;">
+        </div>
+     <div class="text-center">
+            <h4 class="fw-bold">Datos para realizar la donación:</h4>
+            <div class="lead">
+                <p><strong>Alias:</strong> FundacionSantaCatalina</p>
+                <p><strong>CBU:</strong> 1234567890123456789012</p>
+                <p><strong>Cuenta Bancaria:</strong> 123-456789123-123</p>
+                <p><strong>Banco:</strong> Banco X</p>
+                <p><strong>Alias CBU para Transferencias:</strong> fundacion.catalina</p>
+                {# <p><strong>Resumen:</strong> Puedes hacer tu donación a través de una transferencia bancaria o depósito usando los datos anteriores. Te agradecemos mucho por tu generoso aporte.</p> #}
+            </div>
+        </div>
+     
+    </div>
+</section>
+
 <!-- Mapa -->
 <section id="ubicacion" class="my-5">
     <div class="container">
@@ -475,8 +508,6 @@
     </div>
 </section>
 
-
-
 <a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
     <i class="fa-brands fa-whatsapp fa-2x"></i>
 </a>
@@ -484,7 +515,7 @@
 <!-- Footer -->
 <footer class="bg-dark text-center py-5 mt-5">
     <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
-    <div>
+    <div class="d-flex justify-content-center align-items-center">
         <!-- Enlace a Facebook -->
         <a href="https://www.facebook.com/tu-pagina" target="_blank" class="text-white me-3">
             <i class="fab fa-facebook fa-2x"></i>
@@ -493,12 +524,14 @@
         <a href="https://www.instagram.com/tu-perfil" target="_blank" class="text-white me-3">
             <i class="fab fa-instagram fa-2x"></i>
         </a>
-        <!-- Enlace a ws -->
-         <a href="https://wa.me/549XXXXXXXXX" target="_blank" class="text-white">
-            <i class="fab fa-whatsapp fa-2x"></i>
+     
+        <!-- Enlace para Descargar el Estatuto con ícono -->
+        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center" download>
+            <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
         </a>
     </div>
 </footer>
+
 
 {% endblock %}
 
