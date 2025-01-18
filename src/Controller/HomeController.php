@@ -54,22 +54,24 @@ class HomeController extends AbstractController
         }
 
         // Consultas antes de renderizar el template
-        $actividades = $actividadesRepository->findAll(); 
-        if (empty($actividades)) {
-            $actividades = []; // Si no hay actividades, asegúrate de pasar un array vacío.
-        }
-        $noticias = $noticiaRepository->findAll(); 
-        if (empty($noticias)) {
-            $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
-        }
-        $leyes = $leyRepository->findAll(); 
+       $leyes = $leyRepository->findAll(); 
         if (empty($leyes)) {
             $leyes = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
-
         $equipo = $equipoRepository->findAll(); 
         if (empty($equipo)) {
             $equipo = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
+
+        // Actividades y noticias limitadas para paginar
+        $actividades = $actividadesRepository->findBy([], null, 3); // Limitar a 3
+        if (empty($actividades)) {
+            $actividades = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
+
+        $noticias = $noticiaRepository->findBy([], null, 3); 
+        if (empty($noticias)) {
+            $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
@@ -82,4 +84,22 @@ class HomeController extends AbstractController
 
         ]);
     }
+
+
+    #[Route('actpublico/', name: 'actividades_index_publico', methods: ['GET'])]
+    public function indexActividades(ActividadesRepository $actividadesRepository): Response
+    {  
+        return $this->render('actividades/indexPublico.html.twig', [
+            'actividades' => $actividadesRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/notpublico',name: 'noticias_index_publico', methods: ['GET'])]
+    public function indexNoticias(NoticiaRepository $noticiaRepository): Response
+    {
+        return $this->render('noticia/indexPublico.html.twig', [
+            'noticias' => $noticiaRepository->findAll(),
+        ]);
+    }
+
 }

@@ -5,8 +5,9 @@
     {{ parent() }}
     <script src="{{ asset('js/home.js') }}"></script>
 {% endblock %}
-{% block body %}
 
+
+{% block header %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <!-- Logo con imagen -->
@@ -54,11 +55,10 @@
         </div>
     </div>
 </nav>
+{% endblock %}
 
-
-
+{% block body %}
 <!-- bienvenidos -->
-
 <section class="hero-section text-white text-center custom-hero">
     <div class="container">
         <h1>Bienvenidos a Fundación Santa Catalina</h1>
@@ -188,6 +188,10 @@
                 </div>
             </div>
         {% endfor %}
+        <!-- Enlace para navegar a la página de detalle -->
+        <a href="{{ path('actividades_index_publico') }}" class="btn btn-primary mt-3">
+             <i class="fa-solid fa-eye"></i>Ver todas las actividades
+        </a>
     </div>
  </div>
 </section>
@@ -308,7 +312,12 @@
                 </div>
             </div>
         {% endfor %}
+         <!-- Enlace para navegar a la página de detalle -->
+        <a href="{{ path('noticias_index_publico') }}" class="btn btn-primary mt-3">
+             <i class="fa-solid fa-eye"></i>Ver todas las noticias
+        </a>
     </div>
+     
 </section>
 
 
@@ -461,26 +470,13 @@
     <i class="fa-brands fa-whatsapp fa-2x"></i>
 </a>
 
-<!-- Footer -->
-<footer class="bg-dark text-center py-5 mt-5">
-    <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
-    <div class="d-flex justify-content-center align-items-center">
-        <!-- Enlace a Facebook -->
-        <a href="https://www.facebook.com/tu-pagina" target="_blank" class="text-white me-3">
-            <i class="fab fa-facebook fa-2x"></i>
-        </a>
-        <!-- Enlace a Instagram -->
-        <a href="https://www.instagram.com/tu-perfil" target="_blank" class="text-white me-3">
-            <i class="fab fa-instagram fa-2x"></i>
-        </a>
-     
-        <!-- Enlace para Descargar el Estatuto con ícono -->
-        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center" download>
-            <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
-        </a>
-    </div>
-</footer>
-
-
 {% endblock %}
+
+{% block footer %}
+  {{ parent() }}
+{% endblock %}
+
+
+
+
 

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actividades{% endblock %}
+
+{% block body %}
+
+<!-- Sección Actividades -->
+<section class=" mb-1">
+
+<section id="actividades" class="bg-tone-light my-2 py-5">
+<div class="container">
+    <h2 class="text-center mb-4">Actividades</h2>
+    <div class="row g-4">
+        {% for actividad in actividades %}
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-lg overflow-hidden custom-card">
+                    <!-- Imagen destacada con máximo de altura y corte -->
+                    <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
+                         style="max-height: 250px; object-fit: cover;" alt="{{ actividad.titulo }}">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
+                        <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
+                            <i class="bi bi-eye"></i> Ver más
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para cada actividad -->
+            <div class="modal fade" id="modalActividad{{ actividad.id }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Carrusel de imágenes -->
+                            <div id="carouselActividad{{ actividad.id }}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for imagen in actividad.imagenes %}
+                                        {% if imagen.ruta is not null %}
+                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" 
+                                                    style="height: 500px; object-fit: cover;" alt="Imagen actividad">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselActividad{{ actividad.id }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            </div>
+
+                            <p class="mt-4">{{ actividad.descripcionLarga }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+ </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+  {{ parent() }}
+{% endblock %}
+
+
+
