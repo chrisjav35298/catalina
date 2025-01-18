@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Equipo index{% endblock %}
+{% block title %}Equipo{% endblock %}
 
 {% block body %}
-    <h1>Equipo index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container mt-4">
+        <h1 class="mb-4">Listado integrantes</h1>
+        <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
@@ -36,6 +36,11 @@
         {% endfor %}
         </tbody>
     </table>
+<div class="d-flex justify-content-between mt-4">
+    <a href="{{ path('app_equipo_new') }}" class="btn btn-primary">Crear nuevo</a>
+    <a href="{{ path('app_home') }}" class="btn btn-secondary">Volver al Inicio</a>
 
-    <a href="{{ path('app_equipo_new') }}">Create new</a>
+</div>
+{% endblock %}
+{% block footer %}
 {% endblock %}

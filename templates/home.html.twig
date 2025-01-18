@@ -12,7 +12,7 @@
     <div class="container">
         <!-- Logo con imagen -->
         <a class="navbar-brand" href="#">
-            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" height="40" style="border-radius: 50%;  position: relative; left: -10px;">Fundación Santa Catalina
+            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" height="40" style="border-radius: 50%;  position: relative; left: -10px;"> Santa Catalina
         </a>
 
         <!-- Botón para colapsar navbar -->
@@ -200,10 +200,10 @@
 <!-- Comisión Directiva -->
     <section id="equipo" class="container mt-5">
         <h2 class="text-center mb-5">Comisión directiva</h2>
-        <div class="row g-4">
+        <div class="row g-3">
             {% for miembro in equipos %}
                 {% if miembro.puesto == 'presidente' or miembro.puesto == 'secretario/a' or miembro.puesto == 'tesorero'%}
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-3 text-center">
                         <div class="team-member-card">
                             <img src="{{ asset('uploads/' ~ miembro.imagen) }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
                             <h5 class="mt-3">{{ miembro.nombre }}</h5>

@@ -1,4 +1,14 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="mb-4">
+    <h3 class="text-center mb-3"></h3>
+
+    {{ form_row(form.nombre, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.staff, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.puesto, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.imagen, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+   
+   </div>
+    <button class="btn btn-success">{{ button_label|default('Guardar') }}</button>
+   </div>
+
 {{ form_end(form) }}

@@ -3,32 +3,47 @@
 {% block title %}Equipo{% endblock %}
 
 {% block body %}
-    <h1>Equipo</h1>
+  <div class="container mt-4">
+        <h1 class="mb-4 text-center">Detalle</h1>
 
-    <table class="table">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th scope="row" class="text-end">Id</th>
                 <td>{{ equipo.id }}</td>
             </tr>
             <tr>
-                <th>Nombre</th>
+                <th scope="row" class="text-end">Nombre</th>
                 <td>{{ equipo.nombre }}</td>
             </tr>
              <tr>
-                <th>Staff</th>
+                <th scope="row" class="text-end">Staff</th>
                 <td>{{ equipo.staff }}</td>
             </tr>
             <tr>
-                <th>Puesto</th>
+                <th scope="row" class="text-end">Puesto</th>
                 <td>{{ equipo.puesto }}</td>
+            </tr>
+             <tr>
+                <th scope="row" class="text-end">Imagen</th>
+                <td>
+                    <img src="{{ asset('uploads/' ~ equipo.imagen) }}" alt="Imagen" class="img-thumbnail" style="width: 200px;">
+                </td>
             </tr>
         </tbody>
     </table>
-
+</div>
+ <div class="d-flex justify-content-between">
     <a href="{{ path('app_equipo_index') }}">back to list</a>
 
-    <a href="{{ path('app_equipo_edit', {'id': equipo.id}) }}">edit</a>
+    <a href="{{ path('app_equipo_edit', {'id': equipo.id}) }}" class="btn btn-primary"> <i class="bi bi-pencil"></i>Editar</a>
 
     {{ include('equipo/_delete_form.html.twig') }}
+</div>
+   
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

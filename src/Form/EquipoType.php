@@ -22,7 +22,7 @@ class EquipoType extends AbstractType
                     'Colaboradores' => 'colaboradores',
                 ],
                 'label' => 'Staff', // Si deseas un label para el campo
-                'placeholder' => 'Seleccionar grupo/staff', // Opcional, para mostrar la opción "Selecciona..."
+                'placeholder' => 'Seleccionar...', // Opcional, para mostrar la opción "Selecciona..."
                 'required' => true,  // Define si es obligatorio
             ])
             ->add('puesto', ChoiceType::class, [
@@ -35,7 +35,7 @@ class EquipoType extends AbstractType
                     'Colaborador' => 'colaborador/a',
                 ],
                 'label' => 'Puesto', // Si deseas un label para el campo
-                'placeholder' => 'Selecciona un puesto', // Opcional, para mostrar la opción "Selecciona..."
+                'placeholder' => 'Seleccionar...', // Opcional, para mostrar la opción "Selecciona..."
                 'required' => true,  // Define si es obligatorio
             ])
             ->add('imagen',FileType::class, [
