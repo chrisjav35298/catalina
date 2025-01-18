@@ -14,11 +14,11 @@
             {% for imagenForm in form.imagenes %}
                 <div class="d-flex align-items-center mb-3">
                     {{ form_row(imagenForm.ruta, {'attr': {'class': 'form-control me-2'}}) }}
-                    <button type="button" class="btn btn-danger" onclick="this.closest('div').remove();">Eliminar</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="this.closest('div').remove();">Eliminar</button>
                 </div>
             {% endfor %}
         </div>
-        <button type="button" class="btn btn-primary add-image">Agregar Imagen</button>
+        <button type="button" class="btn btn-primary btn-sm my-2 add-image">Agregar Imagen</button>
     </div>
 
     <div class="text-center mt-4">

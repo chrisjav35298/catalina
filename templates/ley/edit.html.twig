@@ -3,11 +3,13 @@
 {% block title %}Edit Ley{% endblock %}
 
 {% block body %}
-    <h1>Edit Ley</h1>
+<div class="container">
+    <h1>Editar Ley</h1>
 
     {{ include('ley/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_ley_index') }}">back to list</a>
+    <a href="{{ path('app_ley_index') }}"class="btn btn-secondary m-3">Volver</a>
 
     {{ include('ley/_delete_form.html.twig') }}
+</div>
 {% endblock %}

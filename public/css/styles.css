@@ -31,17 +31,19 @@
 
 .carousel-item img {
     width: 100%; /* Hace que las imágenes siempre cubran todo el ancho del contenedor */
-    height: 400px; /* Ajusta la altura a un tamaño fijo */
+    height: 450px; /* Ajusta la altura a un tamaño fijo */
     object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 
-.carousel-caption h4 {
-    color: #f1f88d; /* Amarillo */
-}
+/* .carousel-caption h4 , h5 {
+    color: #f4fdff;
+} */
 
-.carousel-caption h5 {
-    color: #dce6ee; /* Blanco */
-}
+/* .carousel-caption h5 {
+    color: #dce6ee; 
+} */
 
 .bg-tone-light {
     background-color: #f8f9fa; /* Tono claro */
@@ -97,7 +99,7 @@
 .team-member-card {
     background-color: #fff;
     border-radius: 15px;
-    padding: 20px;
+    padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -107,8 +109,8 @@
 } */
 
 .team-image {
-    width: 75%;
-    max-width: 200px;
+    width: 45%;
+    max-width: 100px;
     height: auto;
     transition: transform 0.3s ease;
 }
@@ -201,10 +203,54 @@
 }
 
 .flotar i {
-    color: white; /* Color del ícono */
+    color: white; 
 }
 
 .mb-15 {
     margin-bottom: 15px;
 }
 
+#mision-image {
+    width: 100px;
+    height: 150px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#mision-image:hover {
+    transform: scale(1.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.custom-hr {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0, 123, 255, 0), rgba(0, 123, 255, 1), rgba(0, 123, 255, 0));
+   
+    position: relative;
+}
+
+.custom-hr::before {
+    content: '\2022\2022\2022';
+    font-size: 1.5rem;
+    color: #007bff;
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff; /* Fondo blanco para destacarse */
+    padding: 0 0.5rem;
+}
+
+
+.carousel-caption {
+    color: #fff; /* Texto blanco */
+    text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.8); /* Sombra negra suave */
+    font-weight: bold;
+    font-size: 2.5rem; /* Tamaño adaptable */
+}
+
+@media (min-width: 768px) {
+    .carousel-caption {
+        font-size: 2rem; /* Tamaño mayor para pantallas más grandes */
+    }
+}

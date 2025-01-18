@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Detalle de Actividades{% endblock %}
+{% block title %}Actividad{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
@@ -34,8 +34,6 @@
                                 {% for imagen in actividade.imagenes %}
                                     {% if imagen.ruta is not null %}
                                         <img src="{{ asset('uploads/' ~ imagen.ruta) }}" alt="Imagen" class="img-thumbnail me-2 mb-2" style="width: 100px;">
-                                    {% else %}
-                                        <span class="text-muted">Sin ruta disponible</span>
                                     {% endif %}
                                 {% else %}
                                     <span class="text-muted">No hay imágenes</span>
@@ -44,7 +42,10 @@
                         </tr>
                     </tbody>
                 </table>
-
+                    <a href="{{ path('app_actividades_index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Volver a la lista
+                    </a>
+{# 
                 <div class="d-flex justify-content-between mt-3">
                     <a href="{{ path('app_actividades_index') }}" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Volver a la lista
@@ -52,8 +53,8 @@
                     <a href="{{ path('app_actividades_edit', {'id': actividade.id}) }}" class="btn btn-primary">
                         <i class="bi bi-pencil"></i> Editar
                     </a>
-                    {{ include('actividades/_delete_form.html.twig', { class: 'd-inline' }) }}
-                </div>
+                    {{ include('actividades/_delete_form.html.twig') }}
+                </div> #}
             </div>
         </div>
     </div>

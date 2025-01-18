@@ -1,4 +1,12 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="mb-4">
+<h3 class="text-center mb-3"></h3>
+    {{ form_row(form.titulo, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.descripcion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.fechaSancion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.fechaPromulgacion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.activo, {'attr': {'class': 'form-check-input','style': 'margin: 15px;'}}) }}
+ 
 {{ form_end(form) }}
+   
+    <button class="btn btn-success mb-3"> {{ button_label|default('Save') }}</button>

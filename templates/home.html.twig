@@ -61,7 +61,11 @@
 <section class="hero-section text-white text-center custom-hero">
     <div class="container">
         <h1>Bienvenidos a Fundación Santa Catalina</h1>
-        <p>Trabajamos para proteger y mejorar la vida de las mascotas en nuestra comunidad.</p>
+         <h4>Personería jurídica 2167.<br>Matrícula N°2167</h4>
+        <h3>La voz y hacer valer los derechos de los animales.</h3>
+        
+       
+        
         <a href="#contacto" class="btn btn-light btn-lg">¡Sumate!</a>
     </div>
 </section>
@@ -70,7 +74,7 @@
 <!-- Misión -->
 <section id="mision" class="py-5 bg-light position-relative">
     <div class="container">
-        <h2 class="text-center mb-4 fw-bold" >Nuestra Misión</h2>
+        <h2 class="text-center mt-5 fw-bold">Nuestra Misión</h2>
         <p class="text-center mx-auto lead" style="max-width: 800px;">
             Promover el bienestar y la dignidad de los perros en situación de abandono o maltrato en la 
             provincia del Chaco, brindando atención integral mediante rescates, cuidados veterinarios, 
@@ -79,6 +83,9 @@
             campañas de castración y el respeto por la vida animal, trabajando en colaboración con 
             comunidades y organismos para construir un entorno más compasivo y seguro para todos los perros.
         </p>
+        <div class="text-center mt-4 mb-5">
+            <img src="{{ asset('img/virgen.jpeg') }}" alt="Representación del sitio" class="rounded-circle shadow-sm" id="mision-image">
+        </div>
     </div>
 </section>
 
@@ -86,14 +93,14 @@
 <section id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('img/uno.jpg') }}" class="d-block w-100" alt="Mascotas 1">
+            <img src="{{ asset('img/un.jpeg') }}" class="d-block w-100 mt-5" alt="Mascotas 1">
             <div class="carousel-caption d-none d-md-block">
-                <h4>Voluntarios Bienvenidos</h4>
+                <h4>Donaciones Bienvenidas</h4>
                 <h5>Únete a nuestro equipo de voluntarios y haz una diferencia.</h5>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('img/dos.jpg') }}" class="d-block w-100" alt="Mascotas 2">
+            <img src="{{ asset('img/do.jpeg') }}" class="d-block w-100" alt="Mascotas 2">
             <div class="carousel-caption d-none d-md-block">
                  <h4>Voluntarios Bienvenidos</h4>
                 <h5>Únete a nuestro equipo de voluntarios y haz una diferencia.</h5>
@@ -182,15 +189,15 @@
 
 
 <!-- Equipo -->
-<section id="equipo" class="container my-5">
-    <h2 class="text-center mb-5">Nuestro Equipo</h2>
+<section id="equipo" class="container mt-5">
+    <h2 class="text-center mb-5">Comisión directiva</h2>
     <div class="row g-4">
         <!-- Miembro 1 -->
         <div class="col-md-4 text-center">
             <div class="team-member-card">
                 <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">María Pérez</h5>
-                <p class="text-muted">Fundadora</p>
+                <h5 class="mt-3">Fabiana Godoy</h5>
+                <p class="text-muted">Presidente</p>
             </div>
         </div>
 
@@ -198,8 +205,8 @@
         <div class="col-md-4 text-center">
             <div class="team-member-card">
                 <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Carlos Gómez</h5>
-                <p class="text-muted">Director de Tecnología</p>
+                <h5 class="mt-3">Silvia Montenegro</h5>
+                <p class="text-muted">Secretaria</p>
             </div>
         </div>
 
@@ -207,13 +214,88 @@
         <div class="col-md-4 text-center">
             <div class="team-member-card">
                 <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Laura López</h5>
-                <p class="text-muted">Gerente de Marketing</p>
+                <h5 class="mt-3">Jose Cavalca</h5>
+                <p class="text-muted">Tesorero</p>
             </div>
         </div>
     </div>
      <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
 </section>
+<hr class="custom-hr">
+<!-- Equipo legal-->
+<section class="bg-tone-light">
+<div class="container">
+    <h2 class="text-center">Equipo legal</h2>
+<div class="row g-3">
+        <!-- Miembro 1 -->
+        <div class="col-md-3 text-center">
+        </div>
+
+        <!-- Miembro 2 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Paola Caceres</h5>
+                <p class="text-muted">Área civil</p>
+            </div>
+        </div>
+
+        <!-- Miembro 3 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Juan Diaz</h5>
+                <p class="text-muted">Área penal</p>
+            </div>
+        </div>
+           <!-- Miembro 4 -->
+        <div class="col-md-3 text-center">
+        </div>
+    </div>
+</section>
+<hr class="custom-hr">
+<!-- Equipo colaborador -->
+<section  class="container">
+    <h2 class="text-center">Colaboradores</h2>
+    <div class="row g-3">
+        <!-- Miembro 1 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Oscar</h5>
+                <p class="text-muted">..</p>
+            </div>
+        </div>
+
+        <!-- Miembro 2 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Brahim</h5>
+                <p class="text-muted">...</p>
+            </div>
+        </div>
+
+        <!-- Miembro 3 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Mirta</h5>
+                <p class="text-muted">...</p>
+            </div>
+        </div>
+           <!-- Miembro 4 -->
+        <div class="col-md-3 text-center">
+            <div class="team-member-card">
+                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                <h5 class="mt-3">Paola</h5>
+                <p class="text-muted">...</p>
+            </div>
+        </div>
+    </div>
+     <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
+</section>
+
 
 <!-- Leyes -->
 <section id="leyes" class="my-5 py-5 bg-light">
@@ -335,7 +417,7 @@
         
         <!-- Botón Enviar -->
         <div class="col-12 text-center mt-4">
-            <button type="submit" class="btn btn-primary btn-lg">
+            <button type="submit" class="btn btn-primary btn-lm">
                 <i class="fas fa-paper-plane"></i> Enviar
             </button>
         </div>
@@ -344,37 +426,57 @@
     </div>
 </section>
 
-
 <!-- Mapa -->
 <section id="ubicacion" class="my-5">
     <div class="container">
-        <div class="row align-items-center">
-            <!-- Mapa embebido -->
-            <div class="col-lg-8 col-md-8 col-sm-12 mb-4">
-                <div class="text-center mb-4">
-                    <h2>Ubicación</h2>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar"
+        <div class="text-center mb-4">
+            <h2>Ubicación</h2>
+        </div>
+        <!-- Pestañas para las direcciones -->
+        <ul class="nav nav-tabs" id="ubicacionTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ubicacion1-tab" data-bs-toggle="tab" data-bs-target="#ubicacion1" type="button" role="tab" aria-controls="ubicacion1" aria-selected="true">
+                    Dirección 1
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ubicacion2-tab" data-bs-toggle="tab" data-bs-target="#ubicacion2" type="button" role="tab" aria-controls="ubicacion2" aria-selected="false">
+                    Dirección 2
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ubicacion3-tab" data-bs-toggle="tab" data-bs-target="#ubicacion3" type="button" role="tab" aria-controls="ubicacion3" aria-selected="false">
+                    Dirección 3
+                </button>
+            </li>
+        </ul>
+
+        <!-- Contenido de los mapas -->
+        <div class="tab-content mt-4" id="ubicacionContent">
+            <!-- Dirección 1 -->
+            <div class="tab-pane fade show active" id="ubicacion1" role="tabpanel" aria-labelledby="ubicacion1-tab">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar"
                         width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
             </div>
-
-            <!-- Botón de interacción -->
-            <div class="col-lg-4 col-md-4 col-sm-12 my-3">
-                <div class="text-center mb-4">
-                    <h4>¿Cómo Llegar?</h4>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <a href="https://www.google.com/maps?q=Ayacucho+5680,+H3503IBD+Barranqueras,+Chaco" class="btn btn-outline-primary" target="_blank">
-                        <i class="bi bi-google"></i> Ver en Google Maps
-                    </a>
-                </div>
+            <!-- Dirección 2 -->
+            <div class="tab-pane fade" id="ubicacion2" role="tabpanel" aria-labelledby="ubicacion2-tab">
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <!-- Dirección 3 -->
+            <div class="tab-pane fade" id="ubicacion3" role="tabpanel" aria-labelledby="ubicacion3-tab">
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3539.25821503352!2d-58.93473098525926!3d-27.492343924247685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x944572bca7192f7d%3A0xe25f67b87d0c59e9!2sAyacucho%205680%2C%20H3503IBD%20Barranqueras%2C%20Chaco!5e0!3m2!1ses-419!2sar!4v1666464294567!5m2!1ses-419!2sar"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
 </section>
+
+
+
 <a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
     <i class="fa-brands fa-whatsapp fa-2x"></i>
 </a>

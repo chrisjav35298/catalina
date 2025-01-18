@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ley index{% endblock %}
+{% block title %}Leyes{% endblock %}
 
 {% block body %}
-    <h1>Ley index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container mt-4">
+        <h1 class="mb-4">Listado de Leyes</h1>
+        <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Titulo</th>
@@ -23,12 +23,12 @@
                 <td>{{ ley.id }}</td>
                 <td>{{ ley.titulo }}</td>
                 <td>{{ ley.descripcion }}</td>
-                <td>{{ ley.fechaSancion ? ley.fechaSancion|date('Y-m-d') : '' }}</td>
-                <td>{{ ley.fechaPromulgacion ? ley.fechaPromulgacion|date('Y-m-d') : '' }}</td>
-                <td>{{ ley.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ ley.fechaSancion ? ley.fechaSancion|date('d-m-Y') : '' }}</td>
+                <td>{{ ley.fechaPromulgacion ? ley.fechaPromulgacion|date('d-m-Y') : '' }}</td>
+                <td>{{ ley.activo ? 'Si' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_ley_show', {'id': ley.id}) }}">show</a>
-                    <a href="{{ path('app_ley_edit', {'id': ley.id}) }}">edit</a>
+                    <a href="{{ path('app_ley_show', {'id': ley.id}) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ path('app_ley_edit', {'id': ley.id}) }}" class="btn btn-warning btn-sm">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +38,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_ley_new') }}">Create new</a>
+<div class="d-flex justify-content-between mt-4">
+    <a href="{{ path('app_ley_new') }}" class="btn btn-primary">Crear nueva ley</a>
+    <a href="{{ path('app_home') }}" class="btn btn-secondary">Volver al Inicio</a>
+</div>
 {% endblock %}

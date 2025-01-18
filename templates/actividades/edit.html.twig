@@ -3,14 +3,49 @@
 {% block title %}Editar Actividad{% endblock %}
 
 {% block body %}
+
 <div class="container">
     <h1>Editar Actividad</h1>
-
     {{ include('actividades/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_actividades_index') }}">back to list</a>
-
+ <div class="d-flex justify-content-between align-items-center mt-3">
+    <a href="{{ path('app_actividades_index') }}"  class="btn btn-secondary">Volver a la lista</a>
     {{ include('actividades/_delete_form.html.twig') }}
-
 </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const addImageButton = document.querySelector('.add-image');
+    const collectionHolder = document.querySelector('#form_imagenes');
+
+    collectionHolder.dataset.index = collectionHolder.children.length;
+
+    addImageButton.addEventListener('click', () => {
+        const prototype = collectionHolder.dataset.prototype;
+        const index = collectionHolder.dataset.index;
+
+        // Reemplaza el marcador "__name__" en el prototipo con el índice actual
+        const newForm = prototype.replace(/__name__/g, index);
+
+        // Actualiza el índice del contenedor
+        collectionHolder.dataset.index = parseInt(index) + 1;
+
+        // Crea un contenedor para el nuevo formulario y agrégalo al DOM
+        const formContainer = document.createElement('div');
+        formContainer.innerHTML = newForm;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-sm','mt-2');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.addEventListener('click', () => formContainer.remove());
+
+        formContainer.appendChild(deleteButton);
+        collectionHolder.appendChild(formContainer);
+    });
+});
+</script>
 {% endblock %}
