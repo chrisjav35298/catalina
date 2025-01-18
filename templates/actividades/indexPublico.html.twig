@@ -69,7 +69,49 @@
         {% endfor %}
     </div>
  </div>
+
+
+<nav aria-label="Paginación" class="py-3">
+    <ul class="pagination justify-content-center">
+        {# Enlace a la página anterior #}
+        {% if actividades.currentPageNumber > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(app.request.get('_route'), app.request.query.all|merge({'page': actividades.currentPageNumber - 1})) }}">
+                    Anterior
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Anterior</span>
+            </li>
+        {% endif %}
+
+        {# Enlaces a todas las páginas en el rango #}
+        {% for page in actividades.paginationData.pagesInRange %}
+            <li class="page-item {% if page == actividades.currentPageNumber %}active{% endif %}">
+                <a class="page-link" href="{{ path(app.request.get('_route'), app.request.query.all|merge({'page': page})) }}">
+                    {{ page }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {# Enlace a la página siguiente #}
+        {% if actividades.currentPageNumber < actividades.paginationData.pageCount %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(app.request.get('_route'), app.request.query.all|merge({'page': actividades.currentPageNumber + 1})) }}">
+                    Siguiente
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">Siguiente</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
 </section>
+
 {% endblock %}
 
 {% block footer %}

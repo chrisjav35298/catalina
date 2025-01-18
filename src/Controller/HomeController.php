@@ -13,6 +13,8 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 class HomeController extends AbstractController
 {
@@ -64,12 +66,22 @@ class HomeController extends AbstractController
         }
 
         // Actividades y noticias limitadas para paginar
-        $actividades = $actividadesRepository->findBy([], null, 3); // Limitar a 3
+        
+        $actividades = $actividadesRepository->findBy(
+            [], // Sin criterios adicionales de búsqueda
+            ['id' => 'DESC'], // Ordenar por ID en orden descendente (últimas primero)
+            6 // Limitar a las 6 actividades más recientes
+        );
+
         if (empty($actividades)) {
             $actividades = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
 
-        $noticias = $noticiaRepository->findBy([], null, 3); 
+        $noticias = $noticiaRepository->findBy(
+            [], // Sin criterios adicionales de búsqueda
+            ['id' => 'DESC'], // Ordenar por ID en orden descendente (últimas primero)
+            3 // Limitar a las 6 actividades más recientes
+        ); 
         if (empty($noticias)) {
             $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
@@ -85,20 +97,47 @@ class HomeController extends AbstractController
         ]);
     }
 
-
     #[Route('actpublico/', name: 'actividades_index_publico', methods: ['GET'])]
-    public function indexActividades(ActividadesRepository $actividadesRepository): Response
-    {  
+    public function indexActividades(
+        ActividadesRepository $actividadesRepository, 
+        PaginatorInterface $paginator, 
+        Request $request
+    ): Response {
+        // Obtén una consulta para las actividades
+        $queryActividades = $actividadesRepository->createQueryBuilder('a') // Usa QueryBuilder para obtener la consulta
+            ->getQuery();
+
+        // Pagina los resultados
+        $actividades = $paginator->paginate(
+            $queryActividades,                     // Consulta de actividades
+            $request->query->getInt('page', 1),    // Página actual, por defecto 1
+            6                                    // Cantidad de resultados por página
+        );
+
+        // Renderiza la plantilla con los datos paginados
         return $this->render('actividades/indexPublico.html.twig', [
-            'actividades' => $actividadesRepository->findAll(),
+            'actividades' => $actividades,
         ]);
     }
 
     #[Route('/notpublico',name: 'noticias_index_publico', methods: ['GET'])]
-    public function indexNoticias(NoticiaRepository $noticiaRepository): Response
-    {
+    public function indexNoticias(NoticiaRepository $noticiaRepository, 
+    PaginatorInterface $paginator, 
+    Request $request
+): Response {
+    // Obtén una consulta para las actividades
+    $queryNoticias = $noticiaRepository->createQueryBuilder('a') // Usa QueryBuilder para obtener la consulta
+        ->getQuery();
+
+    // Pagina los resultados
+    $noticias = $paginator->paginate(
+        $queryNoticias,                     // Consulta de actividades
+        $request->query->getInt('page', 1),    // Página actual, por defecto 1
+        6                                    // Cantidad de resultados por página
+    );
+
         return $this->render('noticia/indexPublico.html.twig', [
-            'noticias' => $noticiaRepository->findAll(),
+            'noticias' => $noticias,
         ]);
     }
 
