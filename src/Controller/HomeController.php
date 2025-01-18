@@ -5,6 +5,7 @@ use App\Form\Model\Contacto;
 use App\Form\ContactoType;
 use App\Repository\NoticiaRepository;
 use App\Repository\ActividadesRepository;
+use App\Repository\EquipoRepository;
 use App\Repository\LeyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -22,6 +23,7 @@ class HomeController extends AbstractController
         NoticiaRepository $noticiaRepository,
         MailerInterface $mailer,
         LeyRepository $leyRepository,
+        EquipoRepository $equipoRepository
     ): Response {
         // Obtener usuario si está logueado
         $user = $this->getUser();
@@ -64,13 +66,20 @@ class HomeController extends AbstractController
         if (empty($leyes)) {
             $leyes = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
+
+        $equipo = $equipoRepository->findAll(); 
+        if (empty($equipo)) {
+            $equipo = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
             'actividades' => $actividades, // Pasar actividades
             'noticias' => $noticias, // Pasar noticias
             'user' => $user, 
-            'leyes' => $leyes,// Pasar el usuario a la vista
+            'leyes' => $leyes,
+            'equipos' => $equipo, // Pasar noticias
+
         ]);
     }
 }

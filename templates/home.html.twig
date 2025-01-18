@@ -43,7 +43,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">adm noticias</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">adm leyes</a></li>
-                        
+                            <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">adm equipo</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -63,7 +63,7 @@
     <div class="container">
         <h1>Bienvenidos a Fundación Santa Catalina</h1>
          <h5>Personería jurídica 2167.<br>Matrícula N°2167</h5>
-        <h4>La voz y hacer valer los derechos de los animales.</h4>
+        <h4>Dar voz a los animales y velar por el respeto de sus derechos.</h4>
         
        
         
@@ -193,114 +193,63 @@
 </section>
 
 
-<!-- Equipo -->
-<section id="equipo" class="container mt-5">
-    <h2 class="text-center mb-5">Comisión directiva</h2>
-    <div class="row g-4">
-        <!-- Miembro 1 -->
-        <div class="col-md-4 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Fabiana Godoy</h5>
-                <p class="text-muted">Presidente</p>
-            </div>
+<!-- Comisión Directiva -->
+    <section id="equipo" class="container mt-5">
+        <h2 class="text-center mb-5">Comisión directiva</h2>
+        <div class="row g-4">
+            {% for miembro in equipos %}
+                {% if miembro.puesto == 'presidente' or miembro.puesto == 'secretario/a' or miembro.puesto == 'tesorero'%}
+                    <div class="col-md-4 text-center">
+                        <div class="team-member-card">
+                            <img src="{{ asset('uploads/' ~ miembro.imagen) }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                            <h5 class="mt-3">{{ miembro.nombre }}</h5>
+                            <p class="text-muted">{{ miembro.puesto }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
+    </section>
 
-        <!-- Miembro 2 -->
-        <div class="col-md-4 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Silvia Montenegro</h5>
-                <p class="text-muted">Secretaria</p>
-            </div>
+    <hr class="custom-hr">
+    <!-- Equipo Legal -->
+    <section  class="container">
+        <h2 class="text-center">Equipo legal</h2>
+        <div class="row g-3">
+            {% for miembro in equipos %}
+                {% if miembro.puesto == 'areaCivil' or miembro.puesto == 'areaPenal' %}
+                    <div class="col-md-3 text-center">
+                        <div class="team-member-card">
+                            <img src="{{ asset('uploads/' ~ miembro.imagen) }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                            <h5 class="mt-3">{{ miembro.nombre }}</h5>
+                            <p class="text-muted">{{ miembro.puesto }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
+    </section>
 
-        <!-- Miembro 3 -->
-        <div class="col-md-4 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Jose Cavalca</h5>
-                <p class="text-muted">Tesorero</p>
-            </div>
+    <hr class="custom-hr">
+    <!-- Colaboradores -->
+    <section  class="container">
+        <h2 class="text-center">Colaboradores</h2>
+        <div class="row g-3">
+            {% for miembro in equipos %}
+                {% if miembro.puesto == 'colaborador/a' %}
+                    <div class="col-md-3 text-center">
+                        <div class="team-member-card">
+                            <img src="{{ asset('uploads/' ~ miembro.imagen) }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
+                            <h5 class="mt-3">{{ miembro.nombre }}</h5>
+                            <p class="text-muted">{{ miembro.puesto }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-    </div>
-     <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
-</section>
-<hr class="custom-hr">
-<!-- Equipo colaborador -->
-<section  class="container">
-    <h2 class="text-center">Equipo legal</h2>
-<div class="row g-3">
-        <!-- Miembro 1 -->
-        <div class="col-md-3 text-center">
-        </div>
+    </section>
 
-        <!-- Miembro 2 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Paola Caceres</h5>
-                <p class="text-muted">Área civil</p>
-            </div>
-        </div>
-
-        <!-- Miembro 3 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Juan Diaz</h5>
-                <p class="text-muted">Área penal</p>
-            </div>
-        </div>
-           <!-- Miembro 4 -->
-        <div class="col-md-3 text-center">
-        </div>
-    </div>
-</section>
-<hr class="custom-hr">
-<!-- Equipo colaborador -->
-<section  class="container">
-    <h2 class="text-center">Colaboradores</h2>
-    <div class="row g-3">
-        <!-- Miembro 1 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Oscar</h5>
-                <p class="text-muted">..</p>
-            </div>
-        </div>
-
-        <!-- Miembro 2 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Brahim</h5>
-                <p class="text-muted">...</p>
-            </div>
-        </div>
-
-        <!-- Miembro 3 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Mirta</h5>
-                <p class="text-muted">...</p>
-            </div>
-        </div>
-           <!-- Miembro 4 -->
-        <div class="col-md-3 text-center">
-            <div class="team-member-card">
-                <img src="{{ asset('img/team1.jpg') }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
-                <h5 class="mt-3">Paola</h5>
-                <p class="text-muted">...</p>
-            </div>
-        </div>
-    </div>
-     <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
-</section>
-
-
+  <button id="scrollTopButton" onclick="scrollToTop()">↑ Inicio</button>
 <!-- Leyes -->
 <section id="leyes" class="my-5 py-5 bg-light">
     <div class="container">
@@ -433,7 +382,7 @@
 <!-- Donaciones -->
 <section id="donaciones" class="py-1 bg-light position-relative">
     <div class="container">
-        <h2 class="text-center mt-5 fw-bold">Ayúdanos a seguir haciendo el bien</h2>
+        <h2 class="text-center mt-5 fw-bold">Ayudanos a seguir haciendo el bien</h2>
         <p class="text-center mx-auto lead" style="max-width: 800px;">
             Tu donación ayuda a continuar con nuestra misión de rescatar, cuidar y proteger a los perros 
             en situación de abandono y maltrato. Cada aporte es fundamental para brindarles atención 
