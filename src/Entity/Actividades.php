@@ -21,7 +21,7 @@ class Actividades
     #[ORM\Column(length: 255)]
     private ?string $descripcionCorta = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $descripcionLarga = null;
 
     #[ORM\Column(length: 255, nullable: true)]
