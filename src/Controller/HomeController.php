@@ -41,7 +41,7 @@ class HomeController extends AbstractController
             // Crear email
             $email = (new Email())
                 ->from($contacto->getEmail()) // Correo del remitente
-                ->to('tu-email@example.com') // Cambiar por tu correo
+                ->to('fscatalina@fundacionstacatalina.wiz.com.ar') // Cambiar por tu correo
                 ->subject('Nuevo mensaje de contacto') // Asunto del mensaje
                 ->text($contacto->getMensaje()); // Contenido
 
@@ -139,6 +139,23 @@ class HomeController extends AbstractController
         return $this->render('noticia/indexPublico.html.twig', [
             'noticias' => $noticias,
         ]);
+    }
+
+    #[Route('/test-email', name: 'test_email')]
+    public function testEmail(MailerInterface $mailer): Response
+    {   
+        $email = (new Email())
+            ->from('fscatalina@fundacionstacatalina.wiz.com.ar') // Desde tu dirección de correo
+            ->to('fundacionstacatalina@gmail.com') // Cambia por tu dirección personal para verificar
+            ->subject('Prueba de correo Symfony')
+            ->text('Este es un correo de prueba enviado desde Symfony.');
+        
+        try {
+            $mailer->send($email);
+            return new Response('Correo enviado exitosamente.');
+        } catch (\Exception $e) {
+            return new Response('Error al enviar el correo: ' . $e->getMessage());
+        }
     }
 
 }
