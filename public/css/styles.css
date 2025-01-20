@@ -10,7 +10,36 @@
 
 @media (max-width: 768px) {
     .hero-section {
-        background-attachment: scroll; /* No fija el fondo en dispositivos móviles */
+        background-attachment: scroll; /* Este estilo no se suele soportar bien en móviles */
+    }
+
+    .hero-section .container {
+        padding-top: 100px; /* Ajusta el valor según lo que necesites */
+    }
+
+    .hero-section h1, 
+    .hero-section p, 
+    .hero-section a {
+        margin-top: 50px; /* Ajusta el valor para moverlo según lo necesites */
+    }
+
+    .hero-section h1 {
+        font-size: 15px; /* Reduce el tamaño de fuente para títulos */
+        color: #f0f1d6;
+    }
+
+    .hero-section h4, 
+    .hero-section h5 {
+        font-size: 12px; /* Reduce el tamaño de fuente para subtítulos */
+        color: #f5fab6;
+    }
+
+    .hero-section p {
+        font-size: 10px; /* Reduce el tamaño para los párrafos */
+    }
+
+    .hero-section a {
+        font-size: 10px; /* Ajusta el tamaño para los enlaces */
     }
 }
 
