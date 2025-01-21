@@ -150,14 +150,16 @@
             <div class="col-md-4">
                 <div class="card shadow-lg border-0 rounded-lg overflow-hidden custom-card">
                     <!-- Imagen destacada con máximo de altura y corte -->
+                    {# <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
+                         style="max-height: 200px; object-fit: cover;" alt="{{ actividad.titulo }}">
+                     #}
                     <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
-                         style="max-height: 250px; object-fit: cover;" alt="{{ actividad.titulo }}">
-                    
+                    style="max-height: 200px; object-fit: contain; background: #333333;" alt="{{ actividad.titulo }}">
                     <div class="card-body">
                         <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
                         <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
                         <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
-                            <i class="bi bi-eye"></i> Ver más
+                            <i class="fa-solid fa-eye"></i> Ver más
                         </button>
                     </div>
                 </div>
@@ -178,8 +180,10 @@
                                     {% for imagen in actividad.imagenes %}
                                         {% if imagen.ruta is not null %}
                                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" 
-                                                    style="height: 500px; object-fit: cover;" alt="Imagen actividad">
+                                                {# <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100" 
+                                                    style="height: 500px; object-fit: cover;" alt="Imagen actividad"> #}
+                                            <img src="{{ asset('uploads/' ~ imagen.ruta) }}" class="d-block w-100 img-fluid" 
+                                            style="height: auto;" alt="Imagen actividad">
                                             </div>
                                         {% endif %}
                                     {% endfor %}
@@ -195,7 +199,6 @@
                                     <span class="visually-hidden">Siguiente</span>
                                 </button>
                             </div>
-
                             <p class="mt-4">{{ actividad.descripcionLarga }}</p>
                         </div>
                     </div>
