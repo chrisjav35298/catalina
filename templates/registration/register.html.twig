@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Registrarse</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Mostrar errores generales del formulario -->
+                    {% if form_errors(registrationForm) %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(registrationForm) }}
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Formulario de registro -->
+                    {{ form_start(registrationForm) }}
+                    
+                        <!-- Campo de email -->
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.email, {
+                                'attr': {'class': 'form-control'}
+                            }) }}
+                        </div>
+                        
+                        <!-- Campo de contraseña -->
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Contraseña',
+                                'attr': {'class': 'form-control'}
+                            }) }}
+                        </div>
+                        
+                        <!-- Términos y condiciones -->
+                        <div class="mb-3 form-check">
+                            {{ form_row(registrationForm.agreeTerms, {
+                                'attr': {'class': 'form-check-input'}
+                            }) }}
+                        </div>
+                        
+                        <!-- Botón de registro -->
+                        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                    
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
