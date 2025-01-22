@@ -30,29 +30,41 @@ class HomeController extends AbstractController
         // Obtener usuario si está logueado
         $user = $this->getUser();
 
-        // Crear objeto de datos y formulario
-        $contacto = new Contacto();
-        $form = $this->createForm(ContactoType::class, $contacto);
+    // Crear objeto de datos y formulario
+    $contacto = new Contacto();
+    $form = $this->createForm(ContactoType::class, $contacto);
 
-        $form->handleRequest($request);
+    $form->handleRequest($request);
 
-        // Manejar el envío del formulario
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Crear email
-            $email = (new Email())
-                ->from($contacto->getEmail()) // Correo del remitente
-                ->to('fscatalina@fundacionstacatalina.wiz.com.ar') // Cambiar por tu correo
-                ->subject('Nuevo mensaje de contacto') // Asunto del mensaje
-                ->text($contacto->getMensaje()); // Contenido
+    // Manejar el envío del formulario
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Crear email para la fundación
+        $email = (new Email())
+            ->from($contacto->getEmail()) // Correo del remitente
+            ->to('fscatalina@fundacionstacatalina.wiz.com.ar') // Correo de la fundación
+            ->subject('Nuevo mensaje de contacto') // Asunto del mensaje
+            ->text($contacto->getMensaje()); // Contenido del mensaje enviado por el contacto
+        
+        // Enviar el email a la fundación
+        $mailer->send($email);
+        
+        // Crear email de confirmación para el remitente
+        $confirmationEmail = (new Email())
+            ->from('fscatalina@fundacionstacatalina.wiz.com.ar') // Correo oficial
+            ->to($contacto->getEmail()) // Correo del remitente
+            ->subject('Gracias por tu mensaje') // Asunto del correo
+            ->html($this->renderView('contacto/confirmacion_contacto.html.twig', [
+                'nombre' => $contacto->getNombre(), // Pasar datos si es necesario
+            ]));
+        
+        // Enviar correo de confirmación al remitente
+        $mailer->send($confirmationEmail);
 
-            // Enviar el email
-            $mailer->send($email);
+        // Mostrar mensaje de éxito
+        $this->addFlash('success', 'Mensaje enviado, estaremos en contacto con vos en breve.');
 
-            // Mostrar mensaje de éxito
-            $this->addFlash('success', 'Mensaje enviado, estaremos en contacto con vos en breve!');
-
-            // Redirigir para evitar reenvío de formulario
-            return $this->redirectToRoute('app_home');
+        // Redirigir para evitar reenvío de formulario
+        return $this->redirectToRoute('app_home');
         }
 
         // Consultas antes de renderizar el template
