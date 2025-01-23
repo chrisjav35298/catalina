@@ -12,6 +12,17 @@
     .hero-section {
         background-image: url('https://fundacionstacatalina.wiz.com.ar/catalina/public/img/bg-nuevo.webp');
         background-attachment: fixed; /* Este estilo no se suele soportar bien en móviles */
+        .carousel-caption h4 {
+            font-size: 1.2rem; /* Texto más pequeño para móviles */
+        }
+        .carousel-caption h5 {
+            font-size: 1rem; /* Texto más pequeño para móviles */
+        }
+        .carousel-caption {
+            padding: 5px 10px; /* Reducir el padding en móviles */
+            bottom: 10%; /* Mueve el texto un poco más arriba */
+        }
+    
     }
 
     .hero-section .container {
