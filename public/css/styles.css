@@ -10,7 +10,7 @@
 
 @media (max-width: 768px) {
     .hero-section {
-        background-attachment: scroll; /* Este estilo no se suele soportar bien en móviles */
+        background-attachment: fixed; /* Este estilo no se suele soportar bien en móviles */
     }
 
     .hero-section .container {
@@ -65,7 +65,7 @@
 /* carrusel */
 .carousel-item img {
     width: 100%; /* Hace que las imágenes siempre cubran todo el ancho del contenedor */
-    height: 450px; /* Ajusta la altura a un tamaño fijo */
+    height: 550px; /* Ajusta la altura a un tamaño fijo */
     object-fit: cover; /* Hace que la imagen cubra completamente el área sin distorsionarse */
     margin-bottom: 30px;
     margin-top: 10px;
