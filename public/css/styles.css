@@ -10,6 +10,7 @@
 
 @media (max-width: 768px) {
     .hero-section {
+        background-image: url('https://fundacionstacatalina.wiz.com.ar/catalina/public/img/bg-nuevo.webp');
         background-attachment: fixed; /* Este estilo no se suele soportar bien en móviles */
     }
 
