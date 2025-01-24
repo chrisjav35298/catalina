@@ -21,6 +21,14 @@ final class VideoController extends AbstractController
             'videos' => $videoRepository->findAll(),
         ]);
     }
+    #[Route('/instalaciones', name: 'app_video_publico', methods: ['GET'])]
+    public function showPublico(VideoRepository $videoRepository): Response
+    {  
+        $videos = $videoRepository->findAll();
+        return $this->render('video/showPublico.html.twig', [
+            'videos' => $videos,
+        ]);
+    }
 
     #[Route('/new', name: 'app_video_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -78,4 +86,6 @@ final class VideoController extends AbstractController
 
         return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

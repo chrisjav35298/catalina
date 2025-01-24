@@ -3,10 +3,10 @@
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Video index</h1>
-
-    <table class="table">
-        <thead>
+    <div class="container mt-4">
+        <h1 class="mb-4">Listado de videos</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Titulo</th>
@@ -36,6 +36,9 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_video_new') }}">Create new</a>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ path('app_video_new') }}" class="btn btn-primary">Crear video</a>
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">Volver al Inicio</a>
+        </div>
+    </div>
 {% endblock %}
