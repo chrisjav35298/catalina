@@ -29,26 +29,19 @@ final class EquipoController extends AbstractController
         $equipo = new Equipo();
         $form = $this->createForm(EquipoType::class, $equipo);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             //se van a tratar la subida de imagen
             $imagen = $form->get('imagen')->getData();
             if ($imagen) {
                  // Crear un nombre único para la imagen 
                 $newFilename = uniqid() . '.' . $imagen->guessExtension();
-     
                  // Mover el archivo al directorio de uploads
                 $imagen->move($uploadsDir, $newFilename);
-     
                  // Establecer la ruta de la imagen en noticia
                 $equipo->setImagen($newFilename);
-             }
-
-            
-            
+            }
             $entityManager->persist($equipo);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_equipo_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -67,12 +60,22 @@ final class EquipoController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_equipo_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Equipo $equipo, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Equipo $equipo, EntityManagerInterface $entityManager,#[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(EquipoType::class, $equipo);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            //se van a tratar la subida de imagen
+            $imagen = $form->get('imagen')->getData();
+            if ($imagen) {
+                 // Crear un nombre único para la imagen 
+                $newFilename = uniqid() . '.' . $imagen->guessExtension();
+                 // Mover el archivo al directorio de uploads
+                $imagen->move($uploadsDir, $newFilename);
+                 // Establecer la ruta de la imagen en noticia
+                $equipo->setImagen($newFilename);
+            }
+            $entityManager->persist($equipo);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_equipo_index', [], Response::HTTP_SEE_OTHER);

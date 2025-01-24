@@ -74,12 +74,26 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_noticia_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Noticia $noticium, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Noticia $noticium, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(NoticiaType::class, $noticium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+         
+            $imagen = $form->get('imagen')->getData();
+            if ($imagen) {
+                 // Crear un nombre único para la imagen 
+                $newFilename = uniqid() . '.' . $imagen->guessExtension();
+     
+                 // Mover el archivo al directorio de uploads
+                $imagen->move($uploadsDir, $newFilename);
+     
+                 // Establecer la ruta de la imagen en noticia
+                $noticium->setImagen($newFilename);
+             }
+
+            $entityManager->persist($noticium);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_noticia_index', [], Response::HTTP_SEE_OTHER);

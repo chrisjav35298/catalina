@@ -114,12 +114,58 @@ final class ActividadesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_actividades_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Actividades $actividade, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Actividades $actividade, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(ActividadesType::class, $actividade);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // 1. Manejo de la imagen destacada
+            $imagenDestacada = $form->get('imagenDestacada')->getData();
+            if ($imagenDestacada) {
+                // Eliminar la imagen anterior si existe
+                if ($actividade->getImagenDestacada() && file_exists($uploadsDir . '/' . $actividade->getImagenDestacada())) {
+                    unlink($uploadsDir . '/' . $actividade->getImagenDestacada());
+                }
+
+                // Crear un nombre único para la nueva imagen destacada
+                $newFilenameDestacada = uniqid() . '.' . $imagenDestacada->guessExtension();
+
+                // Mover el archivo al directorio de uploads
+                $imagenDestacada->move($uploadsDir, $newFilenameDestacada);
+
+                // Establecer la nueva ruta de la imagen destacada
+                $actividade->setImagenDestacada($newFilenameDestacada);
+            }
+
+            // 2. Manejo de nuevas imágenes adicionales
+            $imagenesForm = $form->get('imagenes');
+            foreach ($imagenesForm as $imagenForm) {
+                /** @var UploadedFile|null $imagenArchivo */
+                $imagenArchivo = $imagenForm->get('ruta')->getData();
+
+                if ($imagenArchivo) {
+                    // Crear un nombre único para la nueva imagen
+                    $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
+
+                    // Mover el archivo al directorio de uploads
+                    $imagenArchivo->move($uploadsDir, $newFilename);
+
+                    // Crear una nueva entidad de imagen
+                    $imagen = new Imagen();
+                    $imagen->setRuta($newFilename);
+                    $imagen->setActividad($actividade); // Asociar la imagen a la actividad
+
+                    // Agregar la nueva imagen a la actividad
+                    $actividade->addImagen($imagen);
+
+                    // Persistir la nueva imagen en la base de datos
+                    $entityManager->persist($imagen);
+                }
+            }
+
+            // Guardar los cambios realizados en la actividad
             $entityManager->flush();
 
             return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
@@ -130,6 +176,7 @@ final class ActividadesController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_actividades_delete', methods: ['POST'])]
     public function delete(Request $request, Actividades $actividade, EntityManagerInterface $entityManager): Response
