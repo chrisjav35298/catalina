@@ -32,7 +32,7 @@
                 <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
-                 <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -45,6 +45,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">adm leyes</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">adm equipo</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_video_index') }}">adm videos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

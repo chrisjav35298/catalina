@@ -299,3 +299,11 @@
     background-color: #fff; /* Fondo blanco para destacarse */
     padding: 0 0.5rem;
 }
+
+
+/* seccion videos  */
+
+.dark-bg {
+    background-color: #333; /* Gris oscuro */
+    color: white; /* Para asegurarte de que el texto se vea claro en un fondo oscuro */
+}

@@ -21,6 +21,8 @@ class NoticiaType extends AbstractType
                 'mapped' => false, // No está vinculado directamente a la entidad
                 'required' => true, // O `false`, dependiendo de tu necesidad
             ])
+            ->add('video')
+            
         ;
     }
 

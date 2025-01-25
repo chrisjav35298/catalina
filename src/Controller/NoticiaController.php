@@ -58,29 +58,49 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/{id}/publico', name: 'app_noticia_show_publico', methods: ['GET'])]
-    public function showPublico(Noticia $noticium): Response
+    public function showPublico(Noticia $noticium,NoticiaRepository $noticiaRepository): Response
     {
+        $ultimasNoticias = $noticiaRepository->findBy(
+            [], // Sin criterios adicionales de búsqueda
+            ['id' => 'DESC'], // Ordenar por ID en orden descendente (últimas primero)
+            6 // Limitar a las 6 actividades más recientes
+        );
         return $this->render('noticia/showPublico.html.twig', [
             'noticium' => $noticium,
+            'ultimasNoticias' => $ultimasNoticias
         ]);
     }
 
     #[Route('/{id}', name: 'app_noticia_show', methods: ['GET'])]
     public function show(Noticia $noticium): Response
-    {
+    {   
         return $this->render('noticia/show.html.twig', [
             'noticium' => $noticium,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_noticia_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Noticia $noticium, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Noticia $noticium, EntityManagerInterface $entityManager,#[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(NoticiaType::class, $noticium);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imagen = $form->get('imagen')->getData();
+            if ($imagen) {
+                 // Crear un nombre único para la imagen 
+                $newFilename = uniqid() . '.' . $imagen->guessExtension();
+     
+                 // Mover el archivo al directorio de uploads
+                $imagen->move($uploadsDir, $newFilename);
+     
+                 // Establecer la ruta de la imagen en noticia
+                $noticium->setImagen($newFilename);
+             }
+
+            $entityManager->persist($noticium);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('app_noticia_index', [], Response::HTTP_SEE_OTHER);
         }

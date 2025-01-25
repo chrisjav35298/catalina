@@ -3,18 +3,43 @@
 {% block title %}Videos{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
+<div class="dark-bg">
     <h1 class="text-center mb-5">Nuestro Refugio</h1>
     <div class="row justify-content-center">
         <div class="col-md-8 py-3">
             {% for video in videos %}
                 <div class="card shadow-lg border-0 rounded mb-4 mx-auto">
                     <div class="card-body p-0">
-                        <!-- Video tag with controls -->
-                        <video class="card-img-top rounded-top d-block mx-auto" style="max-width: 100%;" height="200" controls>
-                            <source src="{{ video.url }}" type="video/mp4">
-                            Tu navegador no soporta el elemento de video.
-                        </video>
+                        {% if 'youtube.com' in video.url or 'youtu.be' in video.url %}
+                            {% set embed_url = video.url %}
+                            {# Transformación de URLs de YouTube Shorts y otras #}
+                           {% if 'shorts' in embed_url %}
+                            {% set parts = embed_url | split('/') %}
+                            {% if parts|length > 1 %}
+                                {% set embed_url = parts|last %}
+                            {% else %}
+                                {% set embed_url = '' %}
+                            {% endif %}
+                            {% set embed_url = 'https://www.youtube.com/embed/' ~ embed_url %}
+                        {% endif %}
+
+                            <!-- Render video with iframe -->
+                            <iframe 
+                                class="card-img-top rounded-top d-block mx-auto" 
+                                style="max-width: 100%;" 
+                                height="315" 
+                                src="{{ embed_url }}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        {% else %}
+                            <!-- Render video using video tag -->
+                            <video class="card-img-top rounded-top d-block mx-auto" style="max-width: 100%;" height="200" controls>
+                                <source src="{{ video.url }}" type="video/mp4">
+                                Tu navegador no soporta el elemento de video.
+                            </video>
+                        {% endif %}
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ video.titulo }}</h5>
@@ -28,4 +53,24 @@
     </div>
 </div>
 {% endblock %}
-
+{% block footer %}
+<!-- Footer -->
+<footer class="bg-dark text-center py-5">
+    <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+    <div class="d-flex justify-content-center align-items-center">
+        <!-- Enlace a Facebook -->
+        <a href="https://www.facebook.com/tu-pagina" target="_blank" class="text-white me-3">
+            <i class="fab fa-facebook fa-2x"></i>
+        </a>
+        <!-- Enlace a Instagram -->
+        <a href="https://www.instagram.com/tu-perfil" target="_blank" class="text-white me-3">
+            <i class="fab fa-instagram fa-2x"></i>
+        </a>
+     
+        <!-- Enlace para Descargar el Estatuto con ícono -->
+        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center" download>
+            <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
+        </a>
+    </div>
+</footer>
+{% endblock %}
