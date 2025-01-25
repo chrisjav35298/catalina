@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+<div class="mb-4">
+<h3 class="text-center mb-3"></h3>
+    {{ form_row(form.titulo, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.descripcion, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.url, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+    {{ form_row(form.createdAt, {'attr': {'class': 'form-control','style': 'margin-bottom: 15px;'}}) }}
+{{ form_end(form) }}
+   
+    <button class="btn btn-success mb-3"> {{ button_label|default('Save') }}</button>

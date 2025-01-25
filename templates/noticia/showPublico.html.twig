@@ -2,7 +2,8 @@
 
 {% block title %}{{ noticium.titulo }} | Noticias{% endblock %}
 
-{% block body %}   <h2 class="container text-center my-4">{{ noticium.titulo }} </h2>
+{% block body %}
+    <h2 class="container text-center my-4">{{ noticium.titulo }} </h2>
     <!-- Encabezado principal -->
     <section id="noticia-hero" class="position-relative">
         <div class="container py-5">
@@ -30,6 +31,36 @@
                 <div class="article-content">
                     <h2 class="my-4">Descripción Detallada</h2>
                     <p class="lead">{{ noticium.descripcionDetallada }}</p>
+
+                    <!-- Video, solo se muestra si existe -->
+                    {% if noticium.video is not null %}
+                        <div class="my-4">
+                            <h3>Video relacionado</h3>
+                            {# Verificamos si es un video de YouTube #}
+                            {% if 'youtube.com' in noticium.video or 'youtu.be' in noticium.video %}
+                                {% set embed_url = noticium.video %}
+                                
+                                {# Para YouTube Shorts y otros casos especiales de YouTube #}
+                                {% if 'shorts' in embed_url %}
+                                    {% set parts = embed_url | split('/') %}
+                                    {% if parts|length > 1 %}
+                                        {% set embed_url = parts|last %}
+                                    {% else %}
+                                        {% set embed_url = '' %}
+                                    {% endif %}
+                                    {% set embed_url = 'https://www.youtube.com/embed/' ~ embed_url %}
+                                {% endif %}
+                                
+                                <iframe class="w-100" height="315" src="{{ embed_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {% else %}
+                                {# En caso de que no sea un video de YouTube, mostramos un video MP4 o URL directa #}
+                                <video class="w-100" height="315" controls>
+                                    <source src="{{ noticium.video }}" type="video/mp4">
+                                    Tu navegador no soporta el elemento de video.
+                                </video>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- Llamado a la acción o enlace de regreso -->
@@ -44,17 +75,15 @@
                     <div class="p-4 rounded-3 shadow bg-light mb-4">
                         <h5 class="text-primary">Últimas noticias</h5>
                         <ul class="list-unstyled">
-                            {% for noticia in noticium %}
+                            {% for noticia in ultimasNoticias %}
                                 <li class="mb-2">
-                                    <a href="{{ path('app_noticia_show', {'id': noticia.id}) }}" class="text-decoration-none text-dark">
-                                        <i class="bi bi-arrow-right-circle"></i> {{ noticia.titulo }}
-                                    </a>
+                                    <a href="{{ path('app_noticia_show_publico', {'id': noticia.id}) }}" class="text-decoration-none text-dark">
+                                        <i class="bi bi-arrow-right-circle"></i> {{ noticia.titulo }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
 
-                
                 </div>
             </div>
         </div>

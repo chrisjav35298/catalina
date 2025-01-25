@@ -32,7 +32,7 @@
                 <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
-                 <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
                 <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -45,6 +45,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">adm actividades</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">adm leyes</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">adm equipo</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_video_index') }}">adm videos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -75,17 +76,17 @@
 <!-- Misión -->
 <section id="mision" class="py-5 bg-light position-relative">
     <div class="container">
-        <h2 class="text-center mt-5 fw-bold">Nuestra Misión</h2>
-        <p class="text-center mx-auto lead" style="max-width: 800px;">
-            Promover el bienestar y la dignidad de los perros en situación de abandono o maltrato en la 
-            provincia del Chaco, brindando atención integral mediante rescates, cuidados veterinarios, 
-            protección, rehabilitación y búsqueda de hogares responsables. Fomentamos la concientización 
-            y educación sobre la tenencia responsable de mascotas, el control poblacional mediante 
-            campañas de castración y el respeto por la vida animal, trabajando en colaboración con 
-            comunidades y organismos para construir un entorno más compasivo y seguro para todos los perros.
-        </p>
+            <h2 class="text-center mt-5 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                Ayudanos a seguir haciendo el bien
+            </h2>
+            <p class="text-center mx-auto lead" style="max-width: 800px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);">
+                Tu donación ayuda a continuar con nuestra misión de rescatar, cuidar y proteger a los perros 
+                en situación de abandono y maltrato. Cada aporte es fundamental para brindarles atención 
+                veterinaria, alimento, refugio y una oportunidad de encontrar un hogar. Agradecemos de corazón 
+                tu apoyo en esta noble causa.
+            </p>
         <div class="text-center mt-4 mb-5">
-            <img src="{{ asset('img/virgen.jpeg') }}" alt="Representación del sitio" class="rounded-circle shadow-sm" id="mision-image">
+            <img src="{{ asset('img/virgen.jpeg') }}" alt="Representación del sitio" class="rounded-circle shadow-lg" id="mision-image">
         </div>
     </div>
 </section>
@@ -102,9 +103,15 @@
         </div> #}
         <div class="carousel-item active">
         <img src="{{ asset('img/entrada.jpeg') }}" class="d-block w-100" alt="Entrada">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption">
                 <h4>Bienvenidos</h4>
                 <h5>Avenida Gaboto y Ayacucho Brarranqueras</h5>
+                <a href="{{ path('app_video_publico') }}" 
+                class="btn btn-primary btn-lg mt-3"
+                title="Ver videos de nuestras instalaciones"
+                aria-label="Ver videos de nuestras instalaciones">
+                    <i class="fa-solid fa-eye"></i> Te mostramos nuestro refugio
+                </a>
             </div>
         </div>
         <div class="carousel-item">
