@@ -3,13 +3,27 @@
 {% block title %}Equipo{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container px-5 mt-4">
     <h1>Crear nuevo</h1>
 
     {{ include('equipo/_form.html.twig') }}
+
+        <div class="d-flex justify-content-end align-items-center gap-2 m-5">
+            <a href="{{ path('app_equipo_index') }}" class="btn btn-secondary">Volver a la lista</a>
+        </div>
 </div>
-    <a href="{{ path('app_equipo_index') }}">back to list</a>
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
 
 {% block javascripts %}
     {{ parent() }}

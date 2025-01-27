@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Video{% endblock %}
+{% block title %}Nuevo video{% endblock %}
 
 {% block body %}
- <div class="container">
-    <h1>Crear video</h1>
+<div class="container px-5 mt-4">
+   <h1>Crear video</h1>
 
-    {{ include('video/_form.html.twig') }}
+   {{ include('video/_form.html.twig') }}
 
-    <a href="{{ path('app_video_index') }}">back to list</a>
- </div>
+   <div class="d-flex justify-content-end align-items-center gap-2 m-5">
+               <a href="{{ path('app_video_index') }}" class="btn btn-secondary">Volver a la lista</a>
+   </div>
+</div>
+</div>
 {% endblock %}
