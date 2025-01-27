@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Ley{% endblock %}
+{% block title %}Editar Ley{% endblock %}
 
 {% block body %}
 <div class="container">
     <h1>Editar Ley</h1>
-
     {{ include('ley/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_ley_index') }}"class="btn btn-secondary m-3">Volver</a>
-
-    {{ include('ley/_delete_form.html.twig') }}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <a href="{{ path('app_ley_index') }}"  class="btn btn-secondary">Volver a la lista</a>
+        {{ include('ley/_delete_form.html.twig') }}
+    </div>
+    </div>
 </div>
 {% endblock %}
 {% block footer %}
+{{parent()}}
 {% endblock %}

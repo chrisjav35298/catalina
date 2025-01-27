@@ -9,7 +9,10 @@
      
     {{ include('actividades/_form.html.twig') }}
 
-    <a href="{{ path('app_actividades_index') }}">Volver</a>
+        <div class="d-flex justify-content-end align-items-center gap-2 m-5">
+        
+            <a href="{{ path('app_actividades_index') }}" class="btn btn-secondary">Volver a la lista</a>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

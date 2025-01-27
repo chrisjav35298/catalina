@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Video index{% endblock %}
+{% block title %}Videos{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
@@ -10,10 +10,10 @@
             <tr>
                 <th>Id</th>
                 <th>Titulo</th>
-                <th>descripcion</th>
+                <th>Descripcion</th>
                 <th>Url</th>
-                <th>fecha creación</th>
-                <th>actions</th>
+                <th>Fecha creación</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +25,8 @@
                 <td>{{ video.url }}</td>
                 <td>{{ video.createdAt ? video.createdAt|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_video_show', {'id': video.id}) }}">show</a>
-                    <a href="{{ path('app_video_edit', {'id': video.id}) }}">edit</a>
+                    <a href="{{ path('app_video_show', {'id': video.id}) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ path('app_video_edit', {'id': video.id}) }}" class="btn btn-warning btn-sm">Editar</a>
                 </td>
             </tr>
         {% else %}

@@ -26,7 +26,10 @@
     <br>
     <br>
     <button type="submit" class="btn btn-success mt-3">Guardar</button>
-    <a href="{{ path('app_ley_index') }}" class="btn btn-secondary mt-3">Volver</a>
+      <div class="d-flex justify-content-end align-items-center gap-2 m-5">
+        
+            <a href="{{ path('app_ley_index') }}" class="btn btn-secondary">Volver a la lista</a>
+        </div>
 
     {{ form_end(form) }}
 </div>
