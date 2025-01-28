@@ -84,6 +84,8 @@ final class CarruselRefugioController extends AbstractController
                 $carruselRefugio->setImage($newFilename);
              }
 
+             $entityManager->persist($carruselRefugio);
+             $entityManager->flush();
 
             return $this->redirectToRoute('app_carrusel_refugio_index', [], Response::HTTP_SEE_OTHER);
         }
