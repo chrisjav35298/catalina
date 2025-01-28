@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CarruselRefugio index{% endblock %}
+
+{% block body %}
+    <h1>CarruselRefugio index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Subtitulo</th>
+                <th>Link</th>
+                <th>IsActive</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carrusel_refugio in carrusel_refugios %}
+            <tr>
+                <td>{{ carrusel_refugio.id }}</td>
+                <td>{{ carrusel_refugio.titulo }}</td>
+                <td>{{ carrusel_refugio.subtitulo }}</td>
+                <td>{{ carrusel_refugio.link }}</td>
+                <td>{{ carrusel_refugio.isActive ? 'Yes' : 'No' }}</td>
+                 <td>{{ carrusel_refugio.image }}</td>
+                <td>
+                    <a href="{{ path('app_carrusel_refugio_show', {'id': carrusel_refugio.id}) }}">show</a>
+                    <a href="{{ path('app_carrusel_refugio_edit', {'id': carrusel_refugio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_carrusel_refugio_new') }}">Create new</a>
+{% endblock %}

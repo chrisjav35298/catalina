@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CarruselRefugio{% endblock %}
+
+{% block body %}
+<div class="container px-5 mt-4">
+    <h1>Create nuevo item</h1>
+
+    {{ include('carrusel_refugio/_form.html.twig') }}
+
+   <div class="d-flex justify-content-end align-items-center gap-2 m-5">
+               <a href="{{ path('app_carrusel_refugio_index') }}" class="btn btn-secondary">Volver a la lista</a>
+   </div>
+</div>
+{% endblock %}

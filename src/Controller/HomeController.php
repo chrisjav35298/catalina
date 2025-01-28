@@ -1,10 +1,12 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\CarruselRefugio;
 use App\Form\Model\Contacto;
 use App\Form\ContactoType;
 use App\Repository\NoticiaRepository;
 use App\Repository\ActividadesRepository;
+use App\Repository\CarruselRefugioRepository;
 use App\Repository\EquipoRepository;
 use App\Repository\LeyRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +27,8 @@ class HomeController extends AbstractController
         NoticiaRepository $noticiaRepository,
         MailerInterface $mailer,
         LeyRepository $leyRepository,
-        EquipoRepository $equipoRepository
+        EquipoRepository $equipoRepository,
+        CarruselRefugioRepository $carruselRefugioRepository,
     ): Response {
         // Obtener usuario si está logueado
         $user = $this->getUser();
@@ -97,15 +100,24 @@ class HomeController extends AbstractController
         if (empty($noticias)) {
             $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
+
+        $carruselRef = $carruselRefugioRepository->findBy(
+            [], // Sin criterios adicionales de búsqueda
+            ['id' => 'ASC'], // Ordenar por ID en orden descendente (últimas primero)
+            20 // Limitar a las 6 actividades más recientes
+        );
+        if (empty($carruselRef)) {
+            $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        };
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
-            'actividades' => $actividades, // Pasar actividades
-            'noticias' => $noticias, // Pasar noticias
+            'actividades' => $actividades, 
+            'noticias' => $noticias, 
             'user' => $user, 
             'leyes' => $leyes,
-            'equipos' => $equipo, // Pasar noticias
-
+            'equipos' => $equipo, 
+            'carruselRef' => $carruselRef,
         ]);
     }
 

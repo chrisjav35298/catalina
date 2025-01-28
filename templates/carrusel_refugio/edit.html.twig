@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CarruselRefugio{% endblock %}
+
+{% block body %}
+    <h1>Edit CarruselRefugio</h1>
+
+    {{ include('carrusel_refugio/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_carrusel_refugio_index') }}">back to list</a>
+
+    {{ include('carrusel_refugio/_delete_form.html.twig') }}
+{% endblock %}

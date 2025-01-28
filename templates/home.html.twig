@@ -46,6 +46,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">Leyes</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">Equipo</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_video_index') }}">Videos</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_carrusel_refugio_index') }}">Carrusel refugio</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -93,16 +94,9 @@
     </div>
 </section>
 
-<!-- Carousel Section -->
+{# <!-- Carousel Section -->
 <section id="carouselExample" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        {# <div class="carousel-item">
-            <img src="{{ asset('img/un.jpeg') }}" class="d-block w-100 mt-5" alt="Mascotas 1">
-            <div class="carousel-caption d-none d-md-block">
-                <h4>Tu ayuda puede cambiar vidas</h4>
-                <h5>¡Unite a nuestra causa! Rescatamos animales y les damos el cuidado que necesitan. Con tu apoyo, juntos podemos hacer mucho más.</h5>
-            </div>
-        </div> #}
         <div class="carousel-item active">
         <img src="{{ asset('img/entrada.jpeg') }}" class="d-block w-100" alt="Entrada">
             <div class="carousel-caption">
@@ -144,6 +138,37 @@
                 <h5>¡Unite a nuestra causa! Rescatamos animales y les damos el cuidado que necesitan. Con tu apoyo, juntos podemos hacer mucho más.</h5>
             </div>
         </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</section> #}
+
+<!-- Carousel Section -->
+<section id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for item in carruselRef %}
+            <div class="carousel-item {{ loop.first ? 'active' : '' }}">
+                <img src="{{ asset('uploads/' ~ item.image) }}" class="d-block w-100" alt="Carousel Image">
+                <div class="carousel-caption {{ loop.first ? '' : 'd-none d-md-block' }}">
+                    <h4>{{ item.titulo }}</h4>
+                    <h5>{{ item.subtitulo }}</h5>
+                    {% if item.link %}
+                        <a href="{{ item.link }}" 
+                            class="btn btn-primary btn-lg mt-3"
+                            title="{{ item.titulo }}"
+                            aria-label="{{ item.subtitulo }}">
+                            <i class="fa-solid fa-eye"></i> {{ item.buttonText|default('Acceder para conocer más!!') }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
