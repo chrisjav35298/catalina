@@ -65,13 +65,25 @@ final class CarruselRefugioController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_carrusel_refugio_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CarruselRefugio $carruselRefugio, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, CarruselRefugio $carruselRefugio, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(CarruselRefugioType::class, $carruselRefugio);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+
+            $imagen = $form->get('imagen')->getData();
+            if ($imagen) {
+                 // Crear un nombre único para la imagen 
+                $newFilename = uniqid() . '.' . $imagen->guessExtension();
+     
+                 // Mover el archivo al directorio de uploads
+                $imagen->move($uploadsDir, $newFilename);
+     
+                 // Establecer la ruta de la imagen en noticia
+                $carruselRefugio->setImage($newFilename);
+             }
+
 
             return $this->redirectToRoute('app_carrusel_refugio_index', [], Response::HTTP_SEE_OTHER);
         }

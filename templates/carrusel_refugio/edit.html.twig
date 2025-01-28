@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit CarruselRefugio{% endblock %}
+{% block title %}Editar{% endblock %}
 
 {% block body %}
-    <h1>Edit CarruselRefugio</h1>
-
+<div class="container">
+    <h1>Editar Item</h1>
     {{ include('carrusel_refugio/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <a href="{{ path('app_carrusel_refugio_index') }}" class="btn btn-secondary mx-5">Volver a la lista</a>
+        {{ include('carrusel_refugio/_delete_form.html.twig') }}
+    </div>
+</div>
 
-    <a href="{{ path('app_carrusel_refugio_index') }}">back to list</a>
-
-    {{ include('carrusel_refugio/_delete_form.html.twig') }}
 {% endblock %}

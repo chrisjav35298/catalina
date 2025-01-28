@@ -3,16 +3,16 @@
 {% block title %}CarruselRefugio index{% endblock %}
 
 {% block body %}
-    <h1>CarruselRefugio index</h1>
-
-    <table class="table">
-        <thead>
+<div class="container mt-4">
+    <h1 class="mb-4">Listado de items</h1>
+    <table class="table table-striped table-bordered">
+    <thead class="thead-dark">
             <tr>
                 <th>Id</th>
                 <th>Titulo</th>
                 <th>Subtitulo</th>
                 <th>Link</th>
-                <th>IsActive</th>
+                <th>Esta activo?</th>
                 <th>Image</th>
                 <th>actions</th>
             </tr>
@@ -24,11 +24,13 @@
                 <td>{{ carrusel_refugio.titulo }}</td>
                 <td>{{ carrusel_refugio.subtitulo }}</td>
                 <td>{{ carrusel_refugio.link }}</td>
-                <td>{{ carrusel_refugio.isActive ? 'Yes' : 'No' }}</td>
-                 <td>{{ carrusel_refugio.image }}</td>
+                <td>{{ carrusel_refugio.isActive ? 'Si' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_carrusel_refugio_show', {'id': carrusel_refugio.id}) }}">show</a>
-                    <a href="{{ path('app_carrusel_refugio_edit', {'id': carrusel_refugio.id}) }}">edit</a>
+                    <img src="{{ asset('uploads/' ~ carrusel_refugio.image) }}" alt="Image" class="img-thumbnail" style="width: 100px;">
+                </td>
+                <td>
+                    <a href="{{ path('app_carrusel_refugio_show', {'id': carrusel_refugio.id}) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ path('app_carrusel_refugio_edit', {'id': carrusel_refugio.id}) }}" class="btn btn-warning btn-sm">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +40,9 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_carrusel_refugio_new') }}">Create new</a>
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{{ path('app_carrusel_refugio_new') }}" class="btn btn-primary">Crear nuevo</a>
+        <a href="{{ path('app_home') }}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+</div>
 {% endblock %}

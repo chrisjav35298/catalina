@@ -3,17 +3,16 @@
 {% block title %}CarruselRefugio{% endblock %}
 
 {% block body %}
-    <h1>CarruselRefugio</h1>
-
-    <table class="table">
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">Detalle</h1>
+        <div class="card">
+        <div class="card-body">
+        <table class="table table-bordered">
+      
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ carrusel_refugio.id }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ carrusel_refugio.image }}</td>
             </tr>
             <tr>
                 <th>Titulo</th>
@@ -28,15 +27,30 @@
                 <td>{{ carrusel_refugio.link }}</td>
             </tr>
             <tr>
-                <th>IsActive</th>
-                <td>{{ carrusel_refugio.isActive ? 'Yes' : 'No' }}</td>
+                <th>Esta activo?</th>
+                <td>{{ carrusel_refugio.isActive ? 'Si' : 'No' }}</td>
+            </tr>
+            <tr>
+            <th>Imagen</th>
+                <td>
+                    <img src="{{ asset('uploads/' ~ carrusel_refugio.image) }}" alt="Image" class="img-thumbnail" style="width: 300px;">
+                </td>
             </tr>
         </tbody>
     </table>
+ </div>
+        <div class="d-flex justify-content-between">
+            <a href="{{ path('app_carrusel_refugio_index') }}" class="btn btn-secondary">Volver a la lista</a>
 
-    <a href="{{ path('app_carrusel_refugio_index') }}">back to list</a>
+            <a href="{{ path('app_carrusel_refugio_edit', {'id': carrusel_refugio.id}) }}" class="btn btn-primary"> <i class="bi bi-pencil"></i>Editar</a>
 
-    <a href="{{ path('app_carrusel_refugio_edit', {'id': carrusel_refugio.id}) }}">edit</a>
-
-    {{ include('carrusel_refugio/_delete_form.html.twig') }}
+          {{ include('carrusel_refugio/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+{% block footer %}
+{{parent()}}
+{% endblock %}
+
