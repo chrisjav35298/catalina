@@ -9,10 +9,12 @@ use App\Repository\CarruselRefugioRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/carrusel/refugio')]
+#[IsGranted('ROLE_ADMIN')]
 final class CarruselRefugioController extends AbstractController
 {
     #[Route(name: 'app_carrusel_refugio_index', methods: ['GET'])]
@@ -24,6 +26,7 @@ final class CarruselRefugioController extends AbstractController
     }
 
     #[Route('/new', name: 'app_carrusel_refugio_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $carruselRefugio = new CarruselRefugio();
@@ -65,6 +68,7 @@ final class CarruselRefugioController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_carrusel_refugio_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, CarruselRefugio $carruselRefugio, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(CarruselRefugioType::class, $carruselRefugio);
@@ -97,6 +101,7 @@ final class CarruselRefugioController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_carrusel_refugio_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, CarruselRefugio $carruselRefugio, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$carruselRefugio->getId(), $request->getPayload()->getString('_token'))) {

@@ -9,11 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/noticia')]
+
 final class NoticiaController extends AbstractController
 {
     #[Route(name: 'app_noticia_index', methods: ['GET'])]
@@ -25,6 +27,7 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/new', name: 'app_noticia_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $noticium = new Noticia();
@@ -72,6 +75,7 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_noticia_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Noticia $noticium): Response
     {   
         return $this->render('noticia/show.html.twig', [
@@ -80,6 +84,7 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_noticia_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Noticia $noticium, EntityManagerInterface $entityManager,#[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {  
         $form = $this->createForm(NoticiaType::class, $noticium);
@@ -106,6 +111,7 @@ final class NoticiaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_noticia_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Noticia $noticium, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$noticium->getId(), $request->getPayload()->getString('_token'))) {

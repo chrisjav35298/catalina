@@ -11,11 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/actividades')]
+#[IsGranted('ROLE_ADMIN')]
 final class ActividadesController extends AbstractController
 {
     #[Route(name: 'app_actividades_index', methods: ['GET'])]
@@ -29,6 +31,7 @@ final class ActividadesController extends AbstractController
 
 
     #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $actividade = new Actividades();
@@ -90,6 +93,7 @@ final class ActividadesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_actividades_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Actividades $actividade, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
         $form = $this->createForm(ActividadesType::class, $actividade);
@@ -155,6 +159,7 @@ final class ActividadesController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_actividades_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Actividades $actividade, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$actividade->getId(), $request->getPayload()->getString('_token'))) {
