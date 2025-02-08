@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{# <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -9,6 +9,43 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {% endblock %}
+</head> #}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Metaetiquetas para SEO -->
+    <meta name="description" content="Fundación Santa Catalina - Trabajamos para el bienestar de las mascotas y la comunidad en la provincia del Chaco, Argentina.">
+    <meta name="keywords" content="fundación, mascotas, adopción, bienestar animal, ayuda, rescate, Chaco, Argentina">
+    <meta name="author" content="Fundación Santa Catalina">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph para compartir en redes sociales -->
+    <meta property="og:title" content="Fundación Santa Catalina">
+    <meta property="og:description" content="Únete a nuestra causa y ayúdanos a mejorar la vida de los animales necesitados en Chaco, Argentina.">
+    <meta property="og:image" content="{{ asset('img/logoCanva.png') }}">
+    <meta property="og:url" content="{{ path('app_home') }}">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fundación Santa Catalina">
+    <meta name="twitter:description" content="Trabajamos para el bienestar de los animales y la comunidad en Chaco, Argentina.">
+    <meta name="twitter:image" content="{{ asset('img/logoCanva.png') }}">
+    
+    <title>{% block title %}Fundación Mascotas{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
     <!-- Estilos personalizados -->
     {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">

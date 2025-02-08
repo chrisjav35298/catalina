@@ -20,7 +20,7 @@ class ActividadesType extends AbstractType
         ->add('imagenDestacada', FileType::class, [
             'label' => 'Imagen Destacada',
             'mapped' => false, // No está vinculado directamente a la entidad
-            'required' => true, // O `false`, dependiendo de tu necesidad
+            'required' => false, // O `false`, dependiendo de tu necesidad
         ])
         ->add('imagenes', CollectionType::class, [
             'entry_type' => ImagenType::class,
@@ -28,7 +28,7 @@ class ActividadesType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
-            'label' => '.',
+            'label' => '',
         ]);
     }
 

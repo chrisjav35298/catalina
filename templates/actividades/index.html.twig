@@ -25,7 +25,7 @@
                     <td>{{ actividade.descripcionCorta }}</td>
                     <td>{{ actividade.descripcionLarga }}</td>
                     <td>
-                        <img src="{{ asset('uploads/' ~ actividade.imagenDestacada ) }}" alt="Imagen de {{ actividade.titulo }}" style="width: 100px; height: auto; object-fit: cover;">
+                        <img src="{{ asset('uploads/' ~ actividade.imagenDestacada ) }}" alt="Imagen de {{ actividade.titulo }}" style="width: 70px; height: auto; object-fit: cover;">
                     </td>
                     <td>
                         <a href="{{ path('app_actividades_show', {'id': actividade.id}) }}" class="btn btn-info btn-sm">Ver</a>

@@ -26,32 +26,13 @@ final class ActividadesController extends AbstractController
         ]);
     }
 
-    // #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $actividade = new Actividades();
-    //     $form = $this->createForm(ActividadesType::class, $actividade);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($actividade);
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('actividades/new.html.twig', [
-    //         'actividade' => $actividade,
-    //         'form' => $form,
-    //     ]);
-    // }
 
 
     #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
     {
-        $actividad = new Actividades();
-        $form = $this->createForm(ActividadesType::class, $actividad);
+        $actividade = new Actividades();
+        $form = $this->createForm(ActividadesType::class, $actividade);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
@@ -66,35 +47,29 @@ final class ActividadesController extends AbstractController
                 $imagenDestacada->move($uploadsDir, $newFilenameDestacada);
     
                 // Establecer la ruta de la imagen destacada en la actividad
-                $actividad->setImagenDestacada($newFilenameDestacada);
+                $actividade->setImagenDestacada($newFilenameDestacada);
             }
             
             // 2. Manejo de las imágenes adicionales
             foreach ($form->get('imagenes') as $imagenForm) {
-                /** @var UploadedFile $imagenArchivo */
+                /** @var UploadedFile|null $imagenArchivo */
                 $imagenArchivo = $imagenForm->get('ruta')->getData();
-    
-                if ($imagenArchivo) {
-                    // Crear un nombre único para la imagen
+            
+                // SOLO procesar si hay una imagen válida
+                if ($imagenArchivo instanceof UploadedFile) {
                     $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
-    
-                    // Mover el archivo al directorio de uploads
                     $imagenArchivo->move($uploadsDir, $newFilename);
-    
-                    // Crear una nueva imagen y asociarla a la actividad
+            
                     $imagen = new Imagen();
                     $imagen->setRuta($newFilename);
-    
-                    // Agregar la imagen a la actividad
-                    $actividad->addImagen($imagen);
-    
-                    // Persistir la imagen en la base de datos
+                    $actividade->addImagen($imagen);
+            
                     $entityManager->persist($imagen);
                 }
             }
     
-            // Persistir la actividad después de todas las imágenes
-            $entityManager->persist($actividad);
+
+            $entityManager->persist($actividade);
             $entityManager->flush(); // Ejecutar todas las operaciones en la base de datos
     
             return $this->redirectToRoute('app_actividades_index');
@@ -102,6 +77,7 @@ final class ActividadesController extends AbstractController
     
         return $this->render('actividades/new.html.twig', [
             'form' => $form->createView(),
+            'actividade' => $actividade,
         ]);
     }
     

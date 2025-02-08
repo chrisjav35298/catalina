@@ -19,7 +19,7 @@ class NoticiaType extends AbstractType
             ->add('imagen',FileType::class, [
                 'label' => 'Imagen Destacada',
                 'mapped' => false, // No está vinculado directamente a la entidad
-                'required' => true, // O `false`, dependiendo de tu necesidad
+                'required' => false, // O `false`, dependiendo de tu necesidad
             ])
             ->add('video')
             

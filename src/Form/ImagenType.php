@@ -14,7 +14,7 @@ class ImagenType extends AbstractType
         $builder
         ->add('ruta', FileType::class, [
             'label' => 'Subir imagen',
-            'required' => true,
+            'required' => false,
             'mapped' => false, // Esto asegura que no se mapee automáticamente a la entidad
         ]);
     }

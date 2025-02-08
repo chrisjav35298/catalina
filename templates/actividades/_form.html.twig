@@ -4,6 +4,14 @@
         {{ form_row(form.titulo, {'attr': {'class': 'form-control'}}) }}
         {{ form_row(form.descripcionCorta, {'attr': {'class': 'form-control'}}) }}
         {{ form_row(form.descripcionLarga, {'attr': {'class': 'form-control'}}) }}
+        <div class="mb-3"> <label><strong>Imagen Destacada Actual:</strong></label> 
+            {% if actividade.imagenDestacada %} 
+            {# <p>{{ actividade.imagenDestacada }}</p> #} 
+            <img src="{{ asset('uploads/' ~ actividade.imagenDestacada) }}" 
+            class="rounded" alt="Imagen actual" style="max-width: 70px;"> 
+            {% else %} <p>No hay imagen</p> 
+            {% endif %}
+        </div>
         {{ form_row(form.imagenDestacada, {'attr': {'class': 'form-control'}}) }}
     </div>
     
