@@ -20,7 +20,9 @@
                     
                     <div class="card-body">
                         <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
-                        <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
+                        {# <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p> #}
+                        <p class="card-text text-muted">{{ actividad.descripcionCorta|convert_encoding('UTF-8', 'ISO-8859-1') }}</p>
+
                         <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
                             <i class="bi bi-eye"></i> Ver más
                         </button>
