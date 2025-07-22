@@ -1,5 +1,17 @@
+/*al cargar la img grande*/
+#loader {
+    position: relative;
+    background-color: #1e1e1e; /* Gris oscuro */
+    width: 100%;
+    height: 400px; /* o el alto que necesites */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .hero-section {
-    background-image: url('https://fundacionstacatalina.wiz.com.ar/catalina/public/img/header-bg-small.jpg');
+    background-image: url('https://fundacionstacatalina.wiz.com.ar/catalina/public/img/header-bg-webp.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -74,6 +86,7 @@
     color: #f5fab6;
     /* text-shadow: 3px 2px 6px rgba(243, 231, 231, 0.8);  */
 }
+
 
 /* carrusel */
 .carousel-item img {

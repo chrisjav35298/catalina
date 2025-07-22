@@ -20,7 +20,7 @@
                     
                     <div class="card-body">
                         <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
-                        <p class="card-text text-muted">{{ actividad.descripcionCorta|convert_encoding('ISO-8859-1', 'UTF-8') }}</p>
+                        <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
 
                         {# <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p> #}
                         <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
@@ -35,7 +35,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h5>
+                            <h4 class="modal-title" id="modalActividadLabel{{ actividad.id }}">{{ actividad.titulo }}</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                         </div>
                         <div class="modal-body">
