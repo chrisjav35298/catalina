@@ -1,10 +1,73 @@
+// document.addEventListener("DOMContentLoaded", function () {
+//     const loader = document.getElementById("loader");
+//     const hero = document.querySelector('.hero-section');
 
-window.addEventListener("load", function () {
+//     // Detectar si estamos en móvil
+//     const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+//     // Seleccionamos imagen según el tamaño de pantalla
+//     const backgroundImage = isMobile 
+//         ? '/img/bg-nuevo.webp' 
+//         : '/img/header-bg-webp.webp';
+
+//     const img = new Image();
+//     img.src = backgroundImage;
+
+//     img.onload = function () {
+//         hero.style.backgroundImage = `url('${img.src}')`;
+
+//         if (loader) {
+//             loader.style.opacity = "0";
+//             setTimeout(() => loader.style.display = "none", 300);
+//         }
+//     };
+
+//     // Fallback de 4 segundos
+//     setTimeout(() => {
+//         if (loader && loader.style.display !== "none") {
+//             loader.style.opacity = "0";
+//             loader.style.display = "none";
+//         }
+//     }, 4000);
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
     const loader = document.getElementById("loader");
-    if (loader) {
-        loader.style.display = "none";
+    const hero = document.querySelector('.hero-section');
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const backgroundImage = isMobile 
+        ? '/img/bg-nuevo.webp' 
+        : '/img/header-bg-webp.webp';
+
+    const img = new Image();
+    img.src = backgroundImage;
+
+    // Si la imagen ya está cargada (usualmente desde caché), aplicar directamente
+    if (img.complete) {
+        hero.style.backgroundImage = `url('${img.src}')`;
+        if (loader) {
+            loader.style.display = "none";
+        }
+    } else {
+        img.onload = function () {
+            hero.style.backgroundImage = `url('${img.src}')`;
+            if (loader) {
+                loader.style.opacity = "0";
+                setTimeout(() => loader.style.display = "none", 200);
+            }
+        };
+
+        // Fallback de seguridad
+        setTimeout(() => {
+            if (loader && loader.style.display !== "none") {
+                loader.style.opacity = "0";
+                loader.style.display = "none";
+            }
+        }, 3000);
     }
 });
+
 
 // Obtener referencia al botón
 const scrollTopButton = document.getElementById('scrollTopButton');

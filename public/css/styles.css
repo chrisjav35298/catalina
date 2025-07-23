@@ -1,9 +1,25 @@
-/*al cargar la img grande*/
+/*al cargar la img grande
 #loader {
-    position: relative;
-    background-color: #1e1e1e; /* Gris oscuro */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: #1e1e1e; 
     width: 100%;
-    height: 400px; /* o el alto que necesites */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.9); /* semitransparente */
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
