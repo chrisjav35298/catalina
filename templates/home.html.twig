@@ -62,6 +62,10 @@
 
 {% block body %}
 
+<audio id="audioBienvenida">
+    <source src="{{ asset('audio/navida2.mp3') }}" type="audio/mpeg">
+</audio>
+
 <!-- loader -->
 {# 
 <div id="loader">
@@ -71,7 +75,9 @@
 </div> #}
 
 <!-- bienvenidos -->
-
+<div class="text-center py-2" style="background:#8b0000;color:white;">
+    🎄 Fundación Santa Catalina les desea felices fiestas 🐾
+</div>
 <section class="hero-section text-white text-center custom-hero">
 
     <div id="loader">
@@ -436,7 +442,6 @@
             <p><i class="fa fa-phone"></i> <strong>Línea directa:</strong> <a href="tel:+543624855001">+54 3624 855001</a></p>
         </div>
         </div>
-     
     </div>
 </section>
 

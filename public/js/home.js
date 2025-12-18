@@ -124,3 +124,16 @@ style.innerHTML = `
     }
 `;
 document.head.appendChild(style);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const audio = document.getElementById('audioBienvenida');
+    if (!audio) return;
+
+    const playAudioOnce = () => {
+        audio.play();
+        document.removeEventListener('click', playAudioOnce);
+    };
+
+    document.addEventListener('click', playAudioOnce);
+});
