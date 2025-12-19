@@ -336,32 +336,3 @@
     background-color: #333; /* Gris oscuro */
     color: white; /* Para asegurarte de que el texto se vea claro en un fondo oscuro */
 }
-
-
-.btn-donar {
-  position: fixed;
-  bottom: 90px;
-  left: 20px;
-  z-index: 50;   
-  font-size: 1.1rem;
-}
-
-
-@media (max-width: 576px) {
-    .btn-donar {
-        bottom: 70px;
-    }
-
-    .flotar {
-        bottom: 15px;
-    }
-}
-
-
-
-
-.banner-navidad {
-    position: relative;
-    z-index: 100; /* 👈 por encima de botones */
-    background:#8b0000;color:white;
-}
