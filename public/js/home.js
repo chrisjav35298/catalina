@@ -145,21 +145,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let started = false;
 
-    const startAudioOnce = () => {
+    document.addEventListener('click', function firstClick() {
         if (!started) {
             audio.play().catch(() => {});
             started = true;
         }
-        document.removeEventListener('click', startAudioOnce);
-    };
+        document.removeEventListener('click', firstClick);
+    });
 
-    document.addEventListener('click', startAudioOnce);
+    // 👇 oculto al inicio
+    toggleBtn.style.display = 'none';
 
-    toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation(); // 👈 no relanza el play global
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 150) {
+            toggleBtn.style.display = 'flex';
+        } else {
+            toggleBtn.style.display = 'none';
+        }
+    });
 
+    toggleBtn.addEventListener('click', function () {
         if (audio.paused) {
-            audio.play();
+            audio.play().catch(() => {});
             toggleBtn.textContent = '🔊 Música';
         } else {
             audio.pause();
