@@ -340,9 +340,28 @@
 
 .btn-donar {
   position: fixed;
-  bottom: 100px;
+  bottom: 90px;
   left: 20px;
-  z-index: 1000;
+  z-index: 50;   
   font-size: 1.1rem;
-  
+}
+
+
+@media (max-width: 576px) {
+    .btn-donar {
+        bottom: 70px;
+    }
+
+    .flotar {
+        bottom: 15px;
+    }
+}
+
+
+
+
+.banner-navidad {
+    position: relative;
+    z-index: 100; /* 👈 por encima de botones */
+    background:#8b0000;color:white;
 }
