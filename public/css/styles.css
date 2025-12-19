@@ -336,3 +336,12 @@
     background-color: #333; /* Gris oscuro */
     color: white; /* Para asegurarte de que el texto se vea claro en un fondo oscuro */
 }
+
+
+#audioToggle {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 50;
+    opacity: 0.85;
+}

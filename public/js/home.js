@@ -126,14 +126,44 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     const audio = document.getElementById('audioBienvenida');
+//     if (!audio) return;
+
+//     const playAudioOnce = () => {
+//         audio.play();
+//         document.removeEventListener('click', playAudioOnce);
+//     };
+
+//     document.addEventListener('click', playAudioOnce);
+// });
 document.addEventListener('DOMContentLoaded', function () {
     const audio = document.getElementById('audioBienvenida');
-    if (!audio) return;
+    const toggleBtn = document.getElementById('audioToggle');
 
-    const playAudioOnce = () => {
-        audio.play();
-        document.removeEventListener('click', playAudioOnce);
+    if (!audio || !toggleBtn) return;
+
+    let started = false;
+
+    const startAudioOnce = () => {
+        if (!started) {
+            audio.play().catch(() => {});
+            started = true;
+        }
+        document.removeEventListener('click', startAudioOnce);
     };
 
-    document.addEventListener('click', playAudioOnce);
+    document.addEventListener('click', startAudioOnce);
+
+    toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation(); // 👈 no relanza el play global
+
+        if (audio.paused) {
+            audio.play();
+            toggleBtn.textContent = '🔊 Música';
+        } else {
+            audio.pause();
+            toggleBtn.textContent = '🔇 Silencio';
+        }
+    });
 });
