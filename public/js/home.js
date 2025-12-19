@@ -174,3 +174,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+document.addEventListener('visibilitychange', function () {
+    const audio = document.getElementById('audioBienvenida');
+    if (!audio) return;
+
+    if (document.hidden) {
+        audio.pause();
+    }
+});
