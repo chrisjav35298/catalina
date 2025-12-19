@@ -336,3 +336,13 @@
     background-color: #333; /* Gris oscuro */
     color: white; /* Para asegurarte de que el texto se vea claro en un fondo oscuro */
 }
+
+
+.btn-donar {
+  position: fixed;
+  bottom: 100px;
+  left: 20px;
+  z-index: 1000;
+  font-size: 1.1rem;
+  
+}
