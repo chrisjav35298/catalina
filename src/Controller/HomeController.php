@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\ComunidadRepository;
 
 
 class HomeController extends AbstractController
@@ -29,6 +30,8 @@ class HomeController extends AbstractController
         LeyRepository $leyRepository,
         EquipoRepository $equipoRepository,
         CarruselRefugioRepository $carruselRefugioRepository,
+        ComunidadRepository $comunidadRepository,
+
     ): Response {
         // Obtener usuario si está logueado
         $user = $this->getUser();
@@ -109,6 +112,15 @@ class HomeController extends AbstractController
         if (empty($carruselRef)) {
             $noticias = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         };
+
+        $comunidad = $comunidadRepository->findBy(
+            [], // Sin criterios adicionales de búsqueda
+            ['id' => 'DESC'], // Ordenar por ID en orden descendente (últimas primero)
+            3 // Limitar a las 6 actividades más recientes
+        ); 
+        if (empty($comunidad)) {
+            $comunidad = []; // Si no hay actividades, asegúrate de pasar un array vacío.
+        }
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
@@ -118,6 +130,8 @@ class HomeController extends AbstractController
             'leyes' => $leyes,
             'equipos' => $equipo, 
             'carruselRef' => $carruselRef,
+            'comunidad' => $comunidad,
+
         ]);
     }
 

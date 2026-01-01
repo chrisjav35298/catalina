@@ -29,6 +29,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
                 <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
+                <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
                 <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
                 <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
                 <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
@@ -45,6 +46,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">Noticias</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">Actividades</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">Leyes</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_comunidad_index') }}">Comunidad</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">Equipo</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_video_index') }}">Videos</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_carrusel_refugio_index') }}">Carrusel refugio</a></li>
@@ -62,12 +64,12 @@
 
 {% block body %}
 
-<audio id="audioBienvenida">
+{# <audio id="audioBienvenida">
     <source src="{{ asset('audio/navida2.mp3') }}" type="audio/mpeg">
 </audio>
 <button id="audioToggle" class="btn btn-light btn-sm">
     🔊 Música
-</button>
+</button> #}
 
 <!-- loader -->
 {# 
@@ -78,9 +80,9 @@
 </div> #}
 
 <!-- bienvenidos -->
-<div class="text-center py-2" style="background:#8b0000;color:white;">
-    🎄 Fundación Santa Catalina les desea felices fiestas 🐾
-</div>
+{# <div class="text-center py-2" style="background:#8b0000;color:white;">
+    Fundación Santa Catalina les desea felices fiestas 🐾
+</div> #}
 <section class="hero-section text-white text-center custom-hero">
 
     <div id="loader">
@@ -225,6 +227,40 @@
  </div>
 </section>
 
+<!-- Comunidad -->
+{% if comunidad is not empty %}
+<section id="comunidad" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Comunidad</h2>
+        <p class="text-center text-muted mb-5">
+            Contenidos audiovisuales y mensajes difundidos en distintos espacios digitales,
+            relacionados con la protección y el bienestar animal.
+        </p>
+
+        {% for item in comunidad %}
+            <div class="row align-items-center mb-5">
+                <!-- Video -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="ratio ratio-16x9 shadow rounded">
+                        <iframe
+                            src="https://www.facebook.com/plugins/video.php?href={{ item.videoUrl|url_encode }}"
+                            allowfullscreen
+                            loading="lazy"
+                            style="border:0;">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Texto -->
+                <div class="col-md-6">
+                {# <h5 class="text-primary mb-3">Contenido audiovisual de difusión</h5> #}
+                    <p>{{ item.descripcion }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
 <!-- Comisión Directiva -->
     <section id="equipo" class="container mt-5">
