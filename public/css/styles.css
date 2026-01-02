@@ -345,3 +345,22 @@
     z-index: 50;
     opacity: 0.85;
 }
+
+
+
+/* Forzar mayor altura del embed de Facebook */
+#comunidad .ratio {
+    min-height: 380px;
+}
+
+/* Ajuste específico para móviles */
+@media (max-width: 768px) {
+    #comunidad .ratio {
+        min-height: 420px;
+    }
+
+    #comunidad iframe {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}

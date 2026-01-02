@@ -240,7 +240,7 @@
         {% for item in comunidad %}
             <div class="row align-items-center mb-5">
                 <!-- Video -->
-                <div class="col-md-6 mb-4 mb-md-0">
+                {# <div class="col-md-6 mb-4 mb-md-0">
                     <div class="ratio ratio-16x9 shadow rounded">
                         <iframe
                             src="https://www.facebook.com/plugins/video.php?href={{ item.videoUrl|url_encode }}"
@@ -249,7 +249,21 @@
                             style="border:0;">
                         </iframe>
                     </div>
-                </div>
+                </div> #}
+
+
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div class="ratio ratio-16x9">
+                <iframe
+                    src="https://www.facebook.com/plugins/video.php?href={{ item.videoUrl|url_encode }}&show_text=false"
+                    allowfullscreen
+                    loading="lazy"
+                    style="border:0;">
+                </iframe>
+            </div>
+        </div>
+
+
 
                 <!-- Texto -->
                 <div class="col-md-6">
