@@ -364,3 +364,29 @@
         height: 100% !important;
     }
 }
+
+
+.video-overlay-btn {
+    position: absolute;
+
+    /* 👇 lo subimos y lo separamos */
+    bottom: 55px;
+    right: 14px;
+
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+
+    backdrop-filter: blur(4px);
+    opacity: 0.75;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.video-overlay-btn:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.65);
+}
