@@ -30,6 +30,9 @@ class Comunidad
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $plataforma = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,10 +99,22 @@ class Comunidad
     }
 
     #[ORM\PrePersist]
-public function setCreatedAtValue(): void
-{
-    if ($this->createdAt === null) {
-        $this->createdAt = new \DateTimeImmutable();
+    public function setCreatedAtValue(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
-}
+
+    public function getPlataforma(): ?string
+    {
+        return $this->plataforma;
+    }
+
+    public function setPlataforma(string $plataforma): self
+    {
+        $this->plataforma = $plataforma;
+        return $this;
+    }
+
 }

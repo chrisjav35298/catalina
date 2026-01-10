@@ -12,6 +12,7 @@
                 <th>Titulo</th>
                 <th>Descripcion</th>
                 <th>VideoUrl</th>
+                <th>Plataforma</th>
                 <th>Activo</th>
                 <th>CreatedAt</th>
                 <th>actions</th>
@@ -24,6 +25,8 @@
                 <td>{{ comunidad.titulo }}</td>
                 <td>{{ comunidad.descripcion }}</td>
                 <td>{{ comunidad.videoUrl }}</td>
+                <td>{{ comunidad.plataforma}}</td>
+
                 <td>{{ comunidad.activo ? 'Yes' : 'No' }}</td>
                 <td>{{ comunidad.createdAt ? comunidad.createdAt|date('Y-m-d') : '' }}</td>
                 <td>

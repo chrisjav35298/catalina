@@ -182,3 +182,14 @@ document.addEventListener('visibilitychange', function () {
         audio.pause();
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.instgrm) {
+        window.instgrm.Embeds.process();
+    } else {
+        setTimeout(() => {
+            if (window.instgrm) window.instgrm.Embeds.process();
+        }, 1500);
+    }
+});

@@ -390,3 +390,51 @@
     opacity: 1;
     background: rgba(0, 0, 0, 0.65);
 }
+
+
+.instagram-media {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+}
+
+
+/* Contenedor IG: centrado y prolijo */
+.ig-wrapper {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+/* En mobile forzamos que ocupe casi todo */
+@media (max-width: 768px) {
+    .ig-wrapper {
+        max-width: 100%;
+    }
+
+    .ig-wrapper .instagram-media {
+        width: 100% !important;
+        min-width: unset !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Botón overlay igual al estilo del de Facebook */
+.ig-overlay-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-decoration: none;
+    backdrop-filter: blur(4px);
+    opacity: 0.85;
+    z-index: 10;
+}
+
+.ig-overlay-btn:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.65);
+}

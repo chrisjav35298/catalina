@@ -3,8 +3,7 @@
 {% block title %}Inicio - Fundación{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/home.js') }}"></script>
-    <script >
-    </script>
+    <script async src="https://www.instagram.com/embed.js"></script>
 {% endblock %}
 
 
@@ -228,7 +227,7 @@
 </section>
 
 <!-- Comunidad -->
-{% if comunidad is not empty %}
+{# {% if comunidad is not empty %}
 <section id="comunidad" class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-4">Comunidad</h2>
@@ -260,7 +259,72 @@
 
                 <!-- Texto -->
                 <div class="col-md-6">
-                    {# <h5 class="text-primary mb-3">Contenido audiovisual de difusión</h5> #}
+                    {# <h5 class="text-primary mb-3">Contenido audiovisual de difusión</h5> 
+                    <p>{{ item.descripcion }}</p>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %} #}
+
+<!-- Comunidad -->
+{% if comunidad is not empty %}
+<section id="comunidad" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Comunidad</h2>
+        <p class="text-center text-muted mb-5">
+            Contenidos audiovisuales y mensajes difundidos en distintos espacios digitales,
+            relacionados con la protección y el bienestar animal.
+        </p>
+
+        {% for item in comunidad %}
+            <div class="row align-items-center mb-5">
+
+                <!-- Video -->
+                <div class="col-md-6 mb-4 mb-md-0 position-relative">
+
+                    {# ===== FACEBOOK ===== #}
+                    {% if item.plataforma == 'facebook' %}
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="https://www.facebook.com/plugins/video.php?href={{ item.videoUrl|url_encode }}&show_text=false"
+                                allowfullscreen
+                                loading="lazy"
+                                style="border:0;">
+                            </iframe>
+                        </div>
+
+                        <a href="{{ item.videoUrl }}"
+                           target="_blank"
+                           class="video-overlay-btn d-md-none">
+                            Ver en Facebook
+                        </a>
+
+                    {# ===== INSTAGRAM ===== #}
+                  {% elseif item.plataforma == 'instagram' %}
+
+    <div class="ig-wrapper position-relative">
+
+        <blockquote class="instagram-media"
+            data-instgrm-permalink="{{ item.videoUrl }}"
+            data-instgrm-version="14">
+        </blockquote>
+
+        <a href="{{ item.videoUrl }}"
+           target="_blank"
+           class="ig-overlay-btn d-md-none">
+            Ver en Instagram
+        </a>
+    </div>
+
+{% endif %}
+
+                </div>
+
+                <!-- Texto -->
+                <div class="col-md-6">
                     <p>{{ item.descripcion }}</p>
                 </div>
 
