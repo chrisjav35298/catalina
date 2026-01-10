@@ -116,7 +116,7 @@ class HomeController extends AbstractController
         $comunidad = $comunidadRepository->findBy(
             [], // Sin criterios adicionales de búsqueda
             ['id' => 'DESC'], // Ordenar por ID en orden descendente (últimas primero)
-            3 // Limitar a las 6 actividades más recientes
+            5 // Limitar a las 6 actividades más recientes
         ); 
         if (empty($comunidad)) {
             $comunidad = []; // Si no hay actividades, asegúrate de pasar un array vacío.
