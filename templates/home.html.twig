@@ -605,7 +605,21 @@
         </div>
     </div>
 </section>
-
+<!-- Toast Nueva Actividad -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastNueva" class="toast align-items-center text-bg-warning border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body">
+                🐾 ¡Nueva actividad publicada!
+                <a href="/actividad/{{ actividades[0].id ?? '' }}" class="text-dark fw-bold">Ver</a>
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+<script>
+    const fechaActividad = "{{ actividades[0].fecha|date('Y-m-d') }}";
+</script>
 <a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
     <i class="fa-brands fa-whatsapp fa-2x"></i>
 </a>

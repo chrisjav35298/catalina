@@ -27,6 +27,8 @@ class Actividades
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagenDestacada = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $fecha = null;
  
     /**
      * @var Collection<int, Imagen>
@@ -122,4 +124,16 @@ class Actividades
 
         return $this;
     }
+
+    public function getFecha(): ?\DateTimeInterface
+    {
+        return $this->fecha;
+    }
+
+    public function setFecha(?\DateTimeInterface $fecha): self
+    {
+        $this->fecha = $fecha;
+        return $this;
+    }
+
 }

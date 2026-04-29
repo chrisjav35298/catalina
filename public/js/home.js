@@ -193,3 +193,29 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const hoy = new Date();
+    const fecha = new Date(fechaActividad);
+
+    const diferenciaMs = hoy - fecha;
+    const dias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+
+    const hayNueva = dias <= 6;
+
+    if (hayNueva) {
+        const toastEl = document.getElementById('toastNueva');
+
+        if (toastEl) {
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+
+            const link = toastEl.querySelector('a');
+            if (link) {
+                link.href = "#actividades";
+            }
+        }
+    }
+
+});
