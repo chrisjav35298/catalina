@@ -286,11 +286,14 @@
                 <div class="col-md-6 mb-4 mb-md-0 position-relative">
 
                     {% if not item.embed and item.thumbnail %}
-                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener">
+                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener" class="d-block position-relative text-decoration-none">
                             <img
                                 src="{{ asset('uploads/comunidad/' ~ item.thumbnail) }}"
                                 alt="{{ item.titulo }}"
                                 class="img-fluid rounded shadow-sm w-100">
+                            <span class="position-absolute top-50 start-50 translate-middle bg-dark bg-opacity-75 text-white px-4 py-3 rounded-pill fw-semibold shadow-lg fs-5">
+                                Ver video
+                            </span>
                         </a>
 
                     {# ===== FACEBOOK ===== #}
@@ -326,11 +329,14 @@
                             </a>
                         </div>
                     {% elseif item.thumbnail %}
-                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener">
+                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener" class="d-block position-relative text-decoration-none">
                             <img
                                 src="{{ asset('uploads/comunidad/' ~ item.thumbnail) }}"
                                 alt="{{ item.titulo }}"
                                 class="img-fluid rounded shadow-sm w-100">
+                            <span class="position-absolute top-50 start-50 translate-middle bg-dark bg-opacity-75 text-white px-4 py-3 rounded-pill fw-semibold shadow-lg fs-5">
+                                Acceder al video
+                            </span>
                         </a>
                     {% endif %}
 
@@ -642,7 +648,5 @@
 {% block footer %}
   {{ parent() }}
 {% endblock %}
-
-
 
 
