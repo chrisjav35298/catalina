@@ -285,8 +285,16 @@
                 <!-- Video -->
                 <div class="col-md-6 mb-4 mb-md-0 position-relative">
 
+                    {% if not item.embed and item.thumbnail %}
+                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener">
+                            <img
+                                src="{{ asset('uploads/comunidad/' ~ item.thumbnail) }}"
+                                alt="{{ item.titulo }}"
+                                class="img-fluid rounded shadow-sm w-100">
+                        </a>
+
                     {# ===== FACEBOOK ===== #}
-                    {% if item.plataforma == 'facebook' %}
+                    {% elseif item.plataforma == 'facebook' %}
                         <div class="ratio ratio-16x9">
                             <iframe
                                 src="https://www.facebook.com/plugins/video.php?href={{ item.videoUrl|url_encode }}&show_text=false"
@@ -303,23 +311,28 @@
                         </a>
 
                     {# ===== INSTAGRAM ===== #}
-                  {% elseif item.plataforma == 'instagram' %}
+                    {% elseif item.plataforma == 'instagram' %}
+                        <div class="ig-wrapper position-relative">
+                            <blockquote class="instagram-media"
+                                data-instgrm-permalink="{{ item.videoUrl }}"
+                                data-instgrm-version="14">
+                            </blockquote>
 
-    <div class="ig-wrapper position-relative">
-
-        <blockquote class="instagram-media"
-            data-instgrm-permalink="{{ item.videoUrl }}"
-            data-instgrm-version="14">
-        </blockquote>
-
-        <a href="{{ item.videoUrl }}"
-           target="_blank"
-           class="ig-overlay-btn d-md-none">
-            Ver en Instagram
-        </a>
-    </div>
-
-{% endif %}
+                            <a href="{{ item.videoUrl }}"
+                               target="_blank"
+                               class="ig-overlay-btn d-md-none"
+                               rel="noopener">
+                                Ver en Instagram
+                            </a>
+                        </div>
+                    {% elseif item.thumbnail %}
+                        <a href="{{ item.videoUrl }}" target="_blank" rel="noopener">
+                            <img
+                                src="{{ asset('uploads/comunidad/' ~ item.thumbnail) }}"
+                                alt="{{ item.titulo }}"
+                                class="img-fluid rounded shadow-sm w-100">
+                        </a>
+                    {% endif %}
 
                 </div>
 
@@ -629,7 +642,6 @@
 {% block footer %}
   {{ parent() }}
 {% endblock %}
-
 
 
 

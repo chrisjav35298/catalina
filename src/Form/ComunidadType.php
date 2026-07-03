@@ -4,10 +4,13 @@ namespace App\Form;
 
 use App\Entity\Comunidad;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\File;
 
 class ComunidadType extends AbstractType
 {
@@ -31,9 +34,31 @@ class ComunidadType extends AbstractType
                 'label' => 'Plataforma del video',
             ])
             ->add('activo')
+            ->add('embed', CheckboxType::class, [
+                'label' => 'Incrustar video',
+                'required' => false,
+                'help' => 'Desmarque esta opción para mostrar una miniatura con enlace al video.',
+            ])
             // ->add('createdAt', null, [
             //     'widget' => 'single_text',
             // ])
+            ->add('thumbnail', FileType::class, [
+                'label' => 'Miniatura del video',
+                'mapped' => false,
+                'required' => false,
+                'help' => 'Suba una imagen si el video no puede incrustarse.',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Seleccione una imagen válida.',
+                    ]),
+                ],
+            ])
         ;
     }
 

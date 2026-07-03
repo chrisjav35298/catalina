@@ -33,6 +33,36 @@ class Comunidad
     #[ORM\Column(length: 20)]
     private ?string $plataforma = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumbnail = null;
+    
+    #[ORM\Column]
+    private bool $embed = true;
+
+    public function isEmbed(): bool
+    {
+        return $this->embed;
+    }
+
+    public function setEmbed(bool $embed): self
+    {
+        $this->embed = $embed;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): self
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -3,40 +3,79 @@
 {% block title %}Comunidad{% endblock %}
 
 {% block body %}
-    <h1>Comunidad</h1>
+<div class="container mt-4">
 
-    <table class="table">
+    <h1>{{ comunidad.titulo }}</h1>
+
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ comunidad.id }}</td>
             </tr>
+
             <tr>
-                <th>Titulo</th>
+                <th>Título</th>
                 <td>{{ comunidad.titulo }}</td>
             </tr>
+
             <tr>
-                <th>Descripcion</th>
-                <td>{{ comunidad.descripcion }}</td>
+                <th>Descripción</th>
+                <td>{{ comunidad.descripcion|nl2br }}</td>
             </tr>
+
             <tr>
-                <th>VideoUrl</th>
-                <td>{{ comunidad.videoUrl }}</td>
+                <th>Video</th>
+                <td>
+                    <a href="{{ comunidad.videoUrl }}" target="_blank">
+                        {{ comunidad.videoUrl }}
+                    </a>
+                </td>
             </tr>
+
+            <tr>
+                <th>Miniatura</th>
+                <td>
+                    {% if comunidad.thumbnail %}
+                        <a href="{{ comunidad.videoUrl }}" target="_blank">
+                            <img
+                                src="{{ asset('uploads/comunidad/' ~ comunidad.thumbnail) }}"
+                                alt="{{ comunidad.titulo }}"
+                                class="img-fluid rounded shadow"
+                                style="max-width:400px;">
+                        </a>
+                    {% else %}
+                        <span class="text-muted">No hay miniatura</span>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>Incrustar video</th>
+                <td>{{ comunidad.embed ? 'Sí' : 'No' }}</td>
+            </tr>
+
             <tr>
                 <th>Activo</th>
-                <td>{{ comunidad.activo ? 'Yes' : 'No' }}</td>
+                <td>{{ comunidad.activo ? 'Sí' : 'No' }}</td>
             </tr>
+
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ comunidad.createdAt ? comunidad.createdAt|date('Y-m-d') : '' }}</td>
+                <th>Creado</th>
+                <td>{{ comunidad.createdAt ? comunidad.createdAt|date('d/m/Y') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_comunidad_index') }}">back to list</a>
+    <a class="btn btn-secondary" href="{{ path('app_comunidad_index') }}">
+        Volver
+    </a>
 
-    <a href="{{ path('app_comunidad_edit', {'id': comunidad.id}) }}">edit</a>
+    <a class="btn btn-primary" href="{{ path('app_comunidad_edit', {'id': comunidad.id}) }}">
+        Editar
+    </a>
 
     {{ include('comunidad/_delete_form.html.twig') }}
+
+</div>
 {% endblock %}
