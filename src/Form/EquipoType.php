@@ -28,6 +28,7 @@ class EquipoType extends AbstractType
             ->add('puesto', ChoiceType::class, [
                 'choices'  => [
                     'Presidente' => 'presidente',
+                    'Vice Presidente' => 'vicepresidente',
                     'Secretario/a' => 'secretario/a',
                     'Tesorero' => 'tesorero',
                     'Área civil' => 'areaCivil',
