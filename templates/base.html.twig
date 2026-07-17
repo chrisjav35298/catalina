@@ -44,6 +44,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     
     <!-- Estilos personalizados -->
@@ -52,59 +55,49 @@
     {% endblock %}
 </head>
 
-{% block header %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <!-- Logo con imagen -->
-        <a class="navbar-brand" href="{{ path('app_home') }}">
-            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" height="40" style="border-radius: 50%;  position: relative; left: -10px;">Fundación Santa Catalina
-        </a>
-
-        <!-- Botón para colapsar navbar -->
-        {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button> #}
-    </div>
-</nav>
-{% endblock %}
-
-
 <body>
+    {% block header %}
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="{{ path('app_home') }}">
+                <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" class="brand-logo">
+                <span>Fundación Santa Catalina</span>
+            </a>
+        </div>
+    </nav>
+    {% endblock %}
+
     {% block body %}{% endblock %}
+
+    {% block footer %}
+    <footer class="site-footer text-center">
+        <div class="container">
+            <p class="mb-3 fw-semibold">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+            <p class="mb-4">
+                <span class="footer-pill">
+                    <i class="fas fa-phone-alt"></i>
+                    <a href="tel:+543624855001" class="text-decoration-none">+54 3624 855001</a>
+                </span>
+            </p>
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                <a href="https://m.facebook.com/100087527208725/" target="_blank" rel="noopener" class="text-white">
+                    <i class="fab fa-facebook fa-2x"></i>
+                </a>
+                <a href="https://www.instagram.com/fundacion_stacatalina" target="_blank" rel="noopener" class="text-white">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+                <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-inline-flex align-items-center gap-2" download>
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Descargar Estatuto</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
 
     <!-- Bootstrap JS y Popper -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
     {% block javascripts %}{% endblock %}
 </body>
-
-{% block footer %}
-<!-- Footer -->
-<footer class="bg-dark text-center py-5 mt-5">
-    <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
-    
-      <!-- Teléfono de contacto -->
-    <p class="text-white mb-4">
-        <i class="fas fa-phone-alt me-2"></i>
-        <a href="tel:+543624855001" class="text-white text-decoration-none">+54 3624 855001</a>
-    </p>
-    
-    <div class="d-flex justify-content-center align-items-center">
-        <!-- Enlace a Facebook -->
-        <a href="https://m.facebook.com/100087527208725/" target="_blank" class="text-white me-3">
-            <i class="fab fa-facebook fa-2x"></i>
-        </a>
-        <!-- Enlace a Instagram -->
-        <a href="https://www.instagram.com/fundacion_stacatalina" target="_blank" class="text-white me-3">
-            <i class="fab fa-instagram fa-2x"></i>
-        </a>
-     
-        <!-- Enlace para Descargar el Estatuto con ícono -->
-        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center" download>
-            <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
-        </a>
-    </div>
-</footer>
-{% endblock %}
-
 </html>

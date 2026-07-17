@@ -8,54 +8,57 @@
 
 
 {% block header %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-xl navbar-light navbar-custom sticky-top py-3">
     <div class="container">
-        <!-- Logo con imagen -->
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" height="40" style="border-radius: 50%;  position: relative; left: -10px;"> Santa Catalina
+        <a class="navbar-brand d-flex align-items-center gap-3" href="{{ path('app_home') }}">
+            <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" class="brand-logo">
+            <span>Fundación Santa Catalina</span>
         </a>
 
-        <!-- Botón para colapsar navbar -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir navegación">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Contenido del menú -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse pt-3 pt-xl-0" id="navbarNav">
             {% if user %}
-                <p style="color: yellow;">Hola {{ user.email }}!</p>
+                <p class="welcome-badge d-xl-none">Hola {{ user.email }}!</p>
             {% endif %}
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
-                <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
-                <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
-                <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
-                <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
-                <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contacto">Escribinos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#donaciones">Donaciones</a></li>
-                <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
+            <div class="nav-pill-group d-flex flex-column flex-xl-row align-items-xl-center gap-2 ms-xl-auto">
+                <ul class="navbar-nav align-items-xl-center">
+                    <li class="nav-item"><a class="nav-link" href="#mision">Misión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#actividades">Actividades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#leyes">Leyes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
 
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Administrar
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">Noticias</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">Actividades</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">Leyes</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_comunidad_index') }}">Comunidad</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">Equipo</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_video_index') }}">Videos</a></li>
-                            <li><a class="dropdown-item" href="{{ path('app_carrusel_refugio_index') }}">Carrusel refugio</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a style="color: yellow;" class="nav-link active" href="{{ path('app_logout') }}">Salir</a>
-                    </li>
-                {% endif %}
-            </ul>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Administrar
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{{ path('app_noticia_index') }}">Noticias</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_actividades_index') }}">Actividades</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_ley_index') }}">Leyes</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_comunidad_index') }}">Comunidad</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_equipo_index') }}">Equipo</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_video_index') }}">Videos</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_carrusel_refugio_index') }}">Carrusel refugio</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <div class="d-flex flex-column flex-sm-row gap-2 nav-cta-group">
+                    <a class="btn btn-outline-primary btn-nav-action" href="#contacto">Escribinos</a>
+                    <a class="btn btn-primary btn-nav-action" href="#donaciones">Donaciones</a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-link nav-logout" href="{{ path('app_logout') }}">Salir</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -82,21 +85,20 @@
 {# <div class="text-center py-2" style="background:#8b0000;color:white;">
     Fundación Santa Catalina les desea felices fiestas 🐾
 </div> #}
-<section class="hero-section text-white text-center custom-hero">
-
-    <div id="loader">
-        <div class="spinner-border text-warning" role="status" style="width: 4rem; height: 4rem;">
-            <span class="visually-hidden">Cargando...</span>
-        </div>
-    </div>
+<section class="hero-section">
     <div class="container">
-        <h1>Bienvenidos a Fundación Santa Catalina</h1>
-         <h5>Personería jurídica 2167.<br>Matrícula N°2167</h5>
-        <h4>Dar voz a los animales y velar por el respeto de sus derechos.</h4>
-        
-       
-        
-        <a href="#contacto" class="btn btn-light btn-lg">¡Sumate!</a>
+        <div class="hero-card">
+            <span class="hero-kicker">Dar voz a los animales y velar por el respeto de sus derechos.</span>
+            <h4 class="hero-title">Bienvenidos a Fundación Santa Catalina</h4>
+            <p class="hero-meta">Personería jurídica 2167 · Matrícula N°2167</p>
+            <p class="hero-text">
+                Trabajamos para rescatar, proteger y acompañar a perros en situación de abandono o maltrato, promoviendo una comunidad más compasiva, responsable y comprometida con la vida animal.
+            </p>
+            <div class="hero-actions">
+                <a href="#donaciones" class="btn btn-primary btn-lg">Quiero ayudar</a>
+                <a href="#actividades" class="btn btn-outline-primary btn-lg">Ver actividades</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -155,23 +157,24 @@
 <!-- Sección Actividades -->
 <section class=" mb-1">
 
-<section id="actividades" class="bg-tone-light my-2 py-5">
+<section id="actividades" class="activities-section section-soft my-2 py-5">
 <div class="container">
-    <h2 class="text-center mb-4">Últimas actividades</h2>
-    <div class="row g-4">
+    <div class="section-heading">
+        <span class="section-badge">Vida del refugio</span>
+        <h2>Últimas actividades</h2>
+        <p>
+            Compartimos campañas, rescates y acciones concretas que sostienen el trabajo diario de la fundación.
+        </p>
+    </div>
+    <div class="row">
         {% for actividad in actividades %}
-            <div class="col-md-4">
-                <div class="card shadow-lg border-0 rounded-lg overflow-hidden custom-card">
-                    <!-- Imagen destacada con máximo de altura y corte -->
-                    {# <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
-                         style="max-height: 200px; object-fit: cover;" alt="{{ actividad.titulo }}">
-                     #}
-                    <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid" 
-                    style="max-height: 200px; object-fit: contain; background: #333333;" alt="{{ actividad.titulo }}">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card activity-card h-100 shadow-sm border-0">
+                    <img src="{{ asset('uploads/' ~ actividad.imagenDestacada ) }}" class="card-img-top img-fluid activity-card-image" alt="{{ actividad.titulo }}">
                     <div class="card-body">
-                        <h5 class="card-title text-primary">{{ actividad.titulo }}</h5>
+                        <h5 class="card-title">{{ actividad.titulo }}</h5>
                         <p class="card-text text-muted">{{ actividad.descripcionCorta }}</p>
-                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
+                        <button class="btn btn-primary mt-auto align-self-start" data-bs-toggle="modal" data-bs-target="#modalActividad{{ actividad.id }}">
                             <i class="fa-solid fa-eye"></i> Ver más
                         </button>
                     </div>
@@ -218,9 +221,10 @@
                 </div>
             </div>
         {% endfor %}
-        <!-- Enlace para navegar a la página de detalle -->
-        <a href="{{ path('actividades_index_publico') }}" class="btn btn-primary mt-3">
-             <i class="fa-solid fa-eye"></i>Ver todas las actividades
+    </div>
+    <div class="text-center mt-2">
+        <a href="{{ path('actividades_index_publico') }}" class="btn btn-outline-primary">
+             <i class="fa-solid fa-eye"></i> Ver todas las actividades
         </a>
     </div>
  </div>
@@ -648,5 +652,3 @@
 {% block footer %}
   {{ parent() }}
 {% endblock %}
-
-
