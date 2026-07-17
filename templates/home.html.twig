@@ -8,7 +8,7 @@
 
 
 {% block header %}
-<nav class="navbar navbar-expand-xl navbar-light navbar-custom sticky-top py-3">
+<nav class="navbar navbar-expand-xl navbar-light navbar-custom navbar-compact sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-3" href="{{ path('app_home') }}">
             <img src="{{ asset('img/logoCanva.png') }}" alt="Fundación Sta Catalina" class="brand-logo">
@@ -19,7 +19,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse pt-3 pt-xl-0" id="navbarNav">
+        <div class="collapse navbar-collapse pt-2 pt-xl-0" id="navbarNav">
             {% if user %}
                 <p class="welcome-badge d-xl-none">Hola {{ user.email }}!</p>
             {% endif %}
@@ -85,11 +85,11 @@
 {# <div class="text-center py-2" style="background:#8b0000;color:white;">
     Fundación Santa Catalina les desea felices fiestas 🐾
 </div> #}
-<section class="hero-section">
+<section class="hero-section hero-fit">
     <div class="container">
         <div class="hero-card">
             <span class="hero-kicker">Dar voz a los animales y velar por el respeto de sus derechos.</span>
-            <h4 class="hero-title">Bienvenidos a Fundación Santa Catalina</h4>
+            <h1 class="hero-title">Bienvenidos a Fundación Santa Catalina</h1>
             <p class="hero-meta">Personería jurídica 2167 · Matrícula N°2167</p>
             <p class="hero-text">
                 Trabajamos para rescatar, proteger y acompañar a perros en situación de abandono o maltrato, promoviendo una comunidad más compasiva, responsable y comprometida con la vida animal.
