@@ -1,0 +1,103 @@
+{# templates/configuracion/editar.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración General{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <div class="d-flex align-items-center mb-4">
+                <h2 class="fw-bold mb-0">
+                    <i class="fas fa-cogs me-2 text-secondary"></i> Configuración General del Sitio
+                </h2>
+            </div>
+
+            {# Mensajes flash #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="fas fa-check-circle me-2"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {# Card 1: Contacto Institucional #}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h5 class="card-title mb-0 text-primary fw-semibold">
+                        <i class="fas fa-address-book me-2"></i> Contacto y Datos Generales
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form_row(form.telefonoContacto) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.emailContacto) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Card 2: WhatsApp Flotante #}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h5 class="card-title mb-0 text-success fw-semibold">
+                        <i class="fab fa-whatsapp me-2"></i> Botón Flotante de WhatsApp
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            {{ form_row(form.whatsappNumero) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form_row(form.whatsappMensaje) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Card 3: Datos Bancarios y Donaciones #}
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-white py-3 border-bottom">
+                    <h5 class="card-title mb-0 text-secondary fw-semibold">
+                        <i class="fas fa-donate me-2"></i> Datos Bancarios para Donaciones
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form_row(form.bancoNombre) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.cuit) }}
+                        </div>
+                        <div class="col-md-8">
+                            {{ form_row(form.cbu) }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(form.aliasDonaciones) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Botón de Guardado Final #}
+            <div class="d-flex justify-content-end mb-5">
+                <button type="submit" class="btn btn-primary btn-lg px-4 shadow-sm">
+                    <i class="fas fa-save me-2"></i> Guardar Ajustes
+                </button>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

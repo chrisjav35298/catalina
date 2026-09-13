@@ -50,6 +50,7 @@
                             <li><a class="dropdown-item" href="{{ path('app_video_index') }}">Videos</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_carrusel_refugio_index') }}">Carrusel refugio</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_social_network_index') }}">Redes sociales</a></li>
+                            <li><a class="dropdown-item" href="{{ path('app_configuracion_edit') }}">Configuración</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -548,31 +549,60 @@
 </section>
 
 <!-- Donaciones -->
-<section id="donaciones" class="py-1 bg-light position-relative">
+<section id="donaciones" class="py-5 bg-light position-relative">
     <div class="container">
-        <h2 class="text-center mt-5 fw-bold">Ayudanos a seguir haciendo el bien</h2>
+        <h2 class="text-center mt-2 fw-bold">Ayudanos a seguir haciendo el bien</h2>
         <p class="text-center mx-auto lead" style="max-width: 800px;">
             Tu donación ayuda a continuar con nuestra misión de rescatar, cuidar y proteger a los perros 
             en situación de abandono y maltrato. Cada aporte es fundamental para brindarles atención 
             veterinaria, alimento, refugio y una oportunidad de encontrar un hogar. Agradecemos de corazón 
             tu apoyo en esta noble causa.
         </p>
-           <div class="text-center">
-            <!-- Imagen achicada con un tamaño fijo -->
-            <img src="{{ asset('img/donaciones.jpg') }}" alt="Perro rescatado" class="rounded-circle shadow-sm" style="width: 150px; height: 150px;">
+
+        <div class="text-center my-4">
+            <!-- Imagen con tamaño fijo y ajuste de proporción -->
+            <img src="{{ asset('img/donaciones.jpg') }}" alt="Perro rescatado" class="rounded-circle shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
         </div>
-     <div class="text-center">
-            <h4 class="fw-bold">Datos para realizar la donación:</h4>
-            <div class="lead">
-                <p><strong>Fundacion Santa Catalina</strong> </p>
-                {# <p><strong>CUIT:</strong> </p> #}
-                <p><strong>Entidad:</strong> Nuevo Banco del Chaco</p>
-                <p><strong>CBU:</strong> 3110015911000008491031</p>
+
+        <div class="text-center">
+            <h4 class="fw-bold mb-3">Datos para realizar la donación:</h4>
+            
+            <div class="lead mb-4">
+                <p class="mb-1"><strong>Fundación Santa Catalina</strong></p>
+                
+                {% if config.cuit is defined and config.cuit %}
+                    <p class="mb-1"><strong>CUIT:</strong> {{ config.cuit }}</p>
+                {% endif %}
+
+                {% if config.bancoNombre is defined and config.bancoNombre %}
+                    <p class="mb-1"><strong>Entidad:</strong> {{ config.bancoNombre }}</p>
+                {% endif %}
+
+                {% if config.cbu is defined and config.cbu %}
+                    <p class="mb-1"><strong>CBU/CVU:</strong> {{ config.cbu }}</p>
+                {% endif %}
+
+                {% if config.aliasDonaciones is defined and config.aliasDonaciones %}
+                    <p class="mb-1">
+                        <strong>Alias:</strong> 
+                        <span class="badge bg-success text-white fs-6 px-2 py-1">{{ config.aliasDonaciones }}</span>
+                    </p>
+                {% endif %}
             </div>
-        <div class="lead">
-            <p><strong>Teléfonos de contacto</strong></p>
-            <p><i class="fa fa-phone"></i> <strong>Línea directa:</strong> <a href="tel:+543624855001">+54 3624 855001</a></p>
-        </div>
+
+            {# Teléfono de contacto dinámico #}
+            {% if config.telefonoContacto is defined and config.telefonoContacto %}
+                <div class="lead">
+                    <p class="fw-bold mb-1">Teléfonos de contacto</p>
+                    <p>
+                        <i class="fas fa-phone-alt me-1 text-primary"></i> 
+                        <strong>Línea directa:</strong> 
+                        <a href="tel:{{ config.telefonoContacto|replace({' ': '', '-': '', '(': '', ')': ''}) }}" class="text-decoration-none">
+                            {{ config.telefonoContacto }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -640,10 +670,20 @@
 <script>
     const fechaActividad = "{{ actividades[0].fecha|date('Y-m-d') }}";
 </script>
-<a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
+{# <a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
     <i class="fa-brands fa-whatsapp fa-2x"></i>
-</a>
-
+</a> #}
+{# Botón flotante de WhatsApp #}
+{% if config.whatsappNumero %}
+    {% set ws_texto = config.whatsappMensaje|default('Hola! Quisiera más información')|url_encode %}
+    <a href="https://api.whatsapp.com/send?phone={{ config.whatsappNumero }}&text={{ ws_texto }}" 
+       class="flotar" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp fa-2x"></i>
+    </a>
+{% endif %}
 {% endblock %}
 
 {% block footer %}
