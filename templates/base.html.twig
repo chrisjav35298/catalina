@@ -81,26 +81,32 @@
 {% block footer %}
 <!-- Footer -->
 <footer class="bg-dark text-center py-5 mt-5">
-    <p style="color: white;">&copy; {{ "now"|date("d/m/Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
+    <p class="text-white mb-2">&copy; {{ "now"|date("Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
     
-      <!-- Teléfono de contacto -->
+    <!-- Teléfono de contacto -->
     <p class="text-white mb-4">
         <i class="fas fa-phone-alt me-2"></i>
         <a href="tel:+543624855001" class="text-white text-decoration-none">+54 3624 855001</a>
     </p>
     
-    <div class="d-flex justify-content-center align-items-center">
-        <!-- Enlace a Facebook -->
-        <a href="https://m.facebook.com/100087527208725/" target="_blank" class="text-white me-3">
-            <i class="fab fa-facebook fa-2x"></i>
-        </a>
-        <!-- Enlace a Instagram -->
-        <a href="https://www.instagram.com/fundacion_stacatalina" target="_blank" class="text-white me-3">
-            <i class="fab fa-instagram fa-2x"></i>
-        </a>
+    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+        {% for red in redesSociales|default([]) %}
+            <a href="{{ red.url }}" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="text-white text-decoration-none fs-4"
+               title="{{ red.nombre }}"
+               aria-label="{{ red.nombre }}">
+                {% if red.icono %}
+                    <i class="{{ red.icono }}"></i>
+                {% else %}
+                    <span class="badge bg-secondary">{{ red.nombre }}</span>
+                {% endif %}
+            </a>
+        {% endfor %}
      
         <!-- Enlace para Descargar el Estatuto con ícono -->
-        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center" download>
+        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center ms-2" download>
             <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
         </a>
     </div>

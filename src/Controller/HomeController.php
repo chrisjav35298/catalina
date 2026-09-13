@@ -2,21 +2,22 @@
 namespace App\Controller;
 
 use App\Entity\CarruselRefugio;
-use App\Form\Model\Contacto;
 use App\Form\ContactoType;
-use App\Repository\NoticiaRepository;
+use App\Form\Model\Contacto;
 use App\Repository\ActividadesRepository;
 use App\Repository\CarruselRefugioRepository;
+use App\Repository\ComunidadRepository;
 use App\Repository\EquipoRepository;
 use App\Repository\LeyRepository;
+use App\Repository\NoticiaRepository;
+use App\Repository\SocialNetworkRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Knp\Component\Pager\PaginatorInterface;
-use App\Repository\ComunidadRepository;
 
 
 class HomeController extends AbstractController
@@ -31,6 +32,7 @@ class HomeController extends AbstractController
         EquipoRepository $equipoRepository,
         CarruselRefugioRepository $carruselRefugioRepository,
         ComunidadRepository $comunidadRepository,
+        SocialNetworkRepository $socialNetworkRepository
 
     ): Response {
         // Obtener usuario si está logueado
@@ -121,6 +123,10 @@ class HomeController extends AbstractController
         if (empty($comunidad)) {
             $comunidad = []; // Si no hay actividades, asegúrate de pasar un array vacío.
         }
+        $redesSociales = $socialNetworkRepository->findAll();
+        if (empty($redesSociales)) {
+            $redesSociales = []; 
+        }   
         // Renderizar el template con los datos obtenidos
         return $this->render('home.html.twig', [
             'contactForm' => $form->createView(), // Pasar la vista del formulario
@@ -131,6 +137,7 @@ class HomeController extends AbstractController
             'equipos' => $equipo, 
             'carruselRef' => $carruselRef,
             'comunidad' => $comunidad,
+            'redesSociales' => $redesSociales,
 
         ]);
     }

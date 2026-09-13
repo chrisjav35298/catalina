@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SocialNetwork index{% endblock %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <h1>SocialNetwork index</h1>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Url</th>
+                <th>Icono</th>
+                <th>IsActive</th>
+                <th>OrdenVisualizacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for social_network in social_networks %}
+            <tr>
+                <td>{{ social_network.id }}</td>
+                <td>{{ social_network.nombre }}</td>
+                <td>{{ social_network.url }}</td>
+                <td>{{ social_network.icono }}</td>
+                <td>{{ social_network.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ social_network.ordenVisualizacion }}</td>
+                <td>
+                    <a href="{{ path('app_social_network_show', {'id': social_network.id}) }}">show</a>
+                    <a href="{{ path('app_social_network_edit', {'id': social_network.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_social_network_new') }}">Create new</a>
+</div>
+{% endblock %}

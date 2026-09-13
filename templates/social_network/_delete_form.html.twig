@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_social_network_delete', {'id': social_network.id}) }}" onsubmit="return confirm('¿Estás seguro de que querés eliminar este registro?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ social_network.id) }}">
+    <button class="btn btn-danger">
+        <i class="fas fa-trash-alt me-1"></i> Eliminar
+    </button>
+</form>
