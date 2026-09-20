@@ -361,7 +361,7 @@
         <h2 class="text-center mb-5">Comisión directiva</h2>
         <div class="row g-3">
             {% for miembro in equipos %}
-                {% if miembro.puesto == 'presidente' or miembro.puesto == 'secretario/a' or miembro.puesto == 'tesorero'%}
+                {% if miembro.puesto == 'presidente' or miembro.puesto == 'secretario/a' or miembro.puesto == 'tesorero' or miembro.puesto == 'vicepresidente'%}
                     <div class="col-md-3 text-center">
                         <div class="team-member-card">
                             <img src="{{ asset('uploads/' ~ miembro.imagen) }}" class="rounded-circle w-75 shadow-lg team-image" alt="Miembro del equipo">
