@@ -6,6 +6,7 @@ const puestoSelect = document.getElementById('equipo_puesto');
 const opciones = {
     comisionDirectiva: [
         { value: 'presidente', text: 'Presidente' },
+        { value: 'vicepresidente', text: 'Vice presidente' },
         { value: 'secretario/a', text: 'Secretario/a' },
         { value: 'tesorero', text: 'Tesorero' }
     ],
