@@ -19,7 +19,13 @@ final class DocumentoInstitucionalController extends AbstractController
 {
     #[Route(name: 'app_documento_institucional_index', methods: ['GET'])]
     public function index(DocumentoInstitucionalRepository $documentoInstitucionalRepository): Response
-    {
+    {   
+        if (
+            !$this->isGranted('ROLE_ADMIN') &&
+            !$this->isGranted('ROLE_DOCUMENTOS_INSTITUCIONALES')
+        ) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->render('documento_institucional/index.html.twig', [
             'documento_institucionals' => $documentoInstitucionalRepository->findAll(),
         ]);

@@ -77,48 +77,241 @@
 
     {% block javascripts %}{% endblock %}
 </body>
-
 {% block footer %}
-<!-- Footer -->
-<footer class="bg-dark text-center py-5 mt-5">
-    <p class="text-white mb-2">&copy; {{ "now"|date("Y") }} Fundación Santa Catalina. Todos los derechos reservados.</p>
-    
-    <!-- Teléfono de contacto -->
-    {# <p class="text-white mb-4">
-        <i class="fas fa-phone-alt me-2"></i>
-        <a href="tel:+543624855001" class="text-white text-decoration-none">+54 3624 855001</a>
-    </p> #}
-    {% if config.telefonoContacto %}
-    <p class="text-white mb-4">
-        <i class="fas fa-phone-alt me-2"></i>
-        <a href="tel:{{ config.telefonoContacto|replace({' ': '', '-': ''}) }}" class="text-white text-decoration-none">
-            {{ config.telefonoContacto }}
-        </a>
-    </p>
-{% endif %}
-    
-    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
-        {% for red in redesSociales|default([]) %}
-            <a href="{{ red.url }}" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="text-white text-decoration-none fs-4"
-               title="{{ red.nombre }}"
-               aria-label="{{ red.nombre }}">
-                {% if red.icono %}
-                    <i class="{{ red.icono }}"></i>
-                {% else %}
-                    <span class="badge bg-secondary">{{ red.nombre }}</span>
-                {% endif %}
-            </a>
-        {% endfor %}
-        
-        <!-- Enlace a Documentos Institucionales en el Footer -->
-        <a href="{{ path('app_documento_institucional_index') }}" class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
-            <i class="fa-solid fa-file-lines me-2 text-warning"></i> Documentación Institucional
-        </a>
-    </div>
-</footer>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center py-5 mt-5">
+
+        <p class="text-white mb-2">
+            &copy; {{ "now"|date("Y") }} Fundación Santa Catalina.
+            Todos los derechos reservados.
+        </p>
+
+        <!-- Teléfono de contacto -->
+        {% if config.telefonoContacto %}
+            <p class="text-white mb-4">
+                <i class="fas fa-phone-alt me-2"></i>
+                <a href="tel:{{ config.telefonoContacto|replace({' ': '', '-': ''}) }}"
+                   class="text-white text-decoration-none">
+                    {{ config.telefonoContacto }}
+                </a>
+            </p>
+        {% endif %}
+
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+
+            <!-- Redes sociales -->
+            {% for red in redesSociales|default([]) %}
+                <a href="{{ red.url }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-white text-decoration-none fs-4"
+                   title="{{ red.nombre }}"
+                   aria-label="{{ red.nombre }}">
+
+                    {% if red.icono %}
+                        <i class="{{ red.icono }}"></i>
+                    {% else %}
+                        <span class="badge bg-secondary">
+                            {{ red.nombre }}
+                        </span>
+                    {% endif %}
+
+                </a>
+            {% endfor %}
+
+
+            <!-- Documentación Institucional -->
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DOCUMENTOS_INSTITUCIONALES') %}
+
+                {# Usuario autorizado: acceso directo #}
+                <a href="{{ path('app_documento_institucional_index') }}"
+                   class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
+
+                    <i class="fa-solid fa-file-lines me-2 text-warning"></i>
+                    Documentación Institucional
+
+                </a>
+
+            {% else %}
+
+                {# Usuario no autorizado: mostrar modal de login #}
+                <button type="button"
+                        class="btn btn-outline-light btn-sm d-inline-flex align-items-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalLoginDocumentos">
+
+                    <i class="fa-solid fa-file-lines me-2 text-warning"></i>
+                    Documentación Institucional
+
+                </button>
+
+            {% endif %}
+
+        </div>
+    </footer>
+
+
+    {# ============================================================
+       MODAL DE ACCESO A DOCUMENTACIÓN INSTITUCIONAL
+       Solo se muestra para usuarios sin los roles correspondientes.
+       ============================================================ #}
+
+    {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_DOCUMENTOS_INSTITUCIONALES') %}
+
+        <div class="modal fade"
+             id="modalLoginDocumentos"
+             tabindex="-1"
+             aria-labelledby="modalLoginDocumentosLabel"
+             aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered">
+
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+
+                        <h5 class="modal-title text-dark"
+                            id="modalLoginDocumentosLabel">
+
+                            <i class="fa-solid fa-lock me-2 text-dark"></i>
+                            Acceso restringido
+
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Cerrar">
+                        </button>
+
+                    </div>
+
+
+                    <!-- Formulario de login -->
+                    <form method="post"
+                          action="{{ path('app_login') }}">
+
+                        <input type="hidden"
+                               name="_login_context"
+                               value="documentos">
+
+                        <input type="hidden"
+                               name="_return_url"
+                               value="{{ app.request.uri }}">
+
+                        <input type="hidden"
+                               name="_target_path"
+                               value="{{ path('app_documento_institucional_index') }}">
+
+
+                        <!-- Body -->
+                        <div class="modal-body">
+
+                            {% if app.request.query.get('documentos_login_error') %}
+
+                                <div class="alert alert-danger">
+                                    Las credenciales ingresadas no son correctas.
+                                </div>
+
+                            {% endif %}
+
+                            <p class="text-muted mb-4">
+                                Ingrese sus credenciales para acceder a la
+                                documentación institucional.
+                            </p>
+
+
+                            <!-- Email -->
+                            <div class="mb-3 text-start">
+
+                                <label for="modal_email"
+                                       class="form-label">
+                                    Email
+                                </label>
+
+                                <input type="email"
+                                       class="form-control"
+                                       id="modal_email"
+                                       name="_username"
+                                       required
+                                       autocomplete="username">
+
+                            </div>
+
+
+                            <!-- Contraseña -->
+                            <div class="mb-3 text-start">
+
+                                <label for="modal_password"
+                                       class="form-label">
+                                    Contraseña
+                                </label>
+
+                                <input type="password"
+                                       class="form-control"
+                                       id="modal_password"
+                                       name="_password"
+                                       required
+                                       autocomplete="current-password">
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Footer del modal -->
+                        <div class="modal-footer">
+
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                <i class="fa-solid fa-right-to-bracket me-1"></i>
+                                Iniciar sesión
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+    {# ============================================================
+       Volver a abrir el modal cuando el login falla
+       ============================================================ #}
+
+    {% if app.request.query.get('documentos_login_error') %}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+
+                const modalElement = document.getElementById('modalLoginDocumentos');
+
+                if (modalElement) {
+                    const modal = new bootstrap.Modal(modalElement);
+                    modal.show();
+                }
+
+            });
+        </script>
+
+    {% endif %}
+
 {% endblock %}
 
 </html>
