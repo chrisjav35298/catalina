@@ -112,10 +112,10 @@
                 {% endif %}
             </a>
         {% endfor %}
-     
-        <!-- Enlace para Descargar el Estatuto con ícono -->
-        <a href="{{ asset('docs/estatuto.pdf') }}" class="btn btn-light d-flex align-items-center ms-2" download>
-            <i class="fas fa-file-pdf me-2"></i> Descargar Estatuto
+        
+        <!-- Enlace a Documentos Institucionales en el Footer -->
+        <a href="{{ path('app_documento_institucional_index') }}" class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
+            <i class="fa-solid fa-file-lines me-2 text-warning"></i> Documentación Institucional
         </a>
     </div>
 </footer>

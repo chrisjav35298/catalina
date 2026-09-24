@@ -6,6 +6,7 @@ use App\Entity\Articulo;
 use App\Form\ArticuloType;
 use App\Repository\ArticuloRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ final class ArticuloController extends AbstractController
     }
 
     #[Route('/new', name: 'app_articulo_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $articulo = new Articulo();
@@ -43,6 +45,7 @@ final class ArticuloController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_articulo_show', methods: ['GET'])]
+        #[IsGranted('ROLE_ADMIN')]
     public function show(Articulo $articulo): Response
     {
         return $this->render('articulo/show.html.twig', [
@@ -51,6 +54,7 @@ final class ArticuloController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_articulo_edit', methods: ['GET', 'POST'])]
+        #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Articulo $articulo, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ArticuloType::class, $articulo);
@@ -69,6 +73,7 @@ final class ArticuloController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_articulo_delete', methods: ['POST'])]
+        #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Articulo $articulo, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$articulo->getId(), $request->getPayload()->getString('_token'))) {

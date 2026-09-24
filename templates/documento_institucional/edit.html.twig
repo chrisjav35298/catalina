@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DocumentoInstitucional{% endblock %}
+
+{% block body %}
+    <h1>Edit DocumentoInstitucional</h1>
+
+    {{ include('documento_institucional/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_documento_institucional_index') }}">back to list</a>
+
+    {{ include('documento_institucional/_delete_form.html.twig') }}
+{% endblock %}

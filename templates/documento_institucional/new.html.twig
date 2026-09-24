@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New DocumentoInstitucional{% endblock %}
+
+{% block body %}
+<div class="container px-5 mt-4">
+    <h1>Create new DocumentoInstitucional</h1>
+
+    {{ include('documento_institucional/_form.html.twig') }}
+
+    <a href="{{ path('app_documento_institucional_index') }}">back to list</a>
+</div>
+{% endblock %}

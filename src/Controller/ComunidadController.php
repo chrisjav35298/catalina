@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/comunidad')]
 final class ComunidadController extends AbstractController
@@ -26,6 +27,7 @@ final class ComunidadController extends AbstractController
     }
 
     #[Route('/new', name: 'app_comunidad_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $comunidad = new Comunidad();
@@ -55,6 +57,7 @@ final class ComunidadController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_comunidad_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Comunidad $comunidad, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ComunidadType::class, $comunidad);
@@ -74,6 +77,7 @@ final class ComunidadController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_comunidad_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, Comunidad $comunidad, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$comunidad->getId(), $request->getPayload()->getString('_token'))) {
