@@ -28,24 +28,41 @@
         <input
             type="hidden"
             name="_token"
-            value="{{ csrf_token('publicar_' ~ actividade.id) }}"
-        >
+            value="{{ csrf_token('publicar_' ~ actividade.id) }}" >
 
+       
         <div class="mb-3">
-            <label for="red_social" class="form-label">
-                Publicar en
-            </label>
+            <label class="form-label">Publicar en</label>
 
-            <select
-                name="red_social"
-                id="red_social"
-                class="form-select"
-                required
-            >
-                <option value="instagram">Instagram</option>
-                <option value="facebook">Facebook</option>
-            </select>
+            <div class="form-check">
+                <input
+                    type="checkbox"
+                    name="redes[]"
+                    id="red_facebook"
+                    value="facebook"
+                    class="form-check-input"
+                    checked
+                >
+                <label class="form-check-label" for="red_facebook">
+                    Facebook
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input
+                    type="checkbox"
+                    name="redes[]"
+                    id="red_instagram"
+                    value="instagram"
+                    class="form-check-input"
+                    checked
+                >
+                <label class="form-check-label" for="red_instagram">
+                    Instagram
+                </label>
+            </div>
         </div>
+
 
 
         <button type="submit" class="btn btn-success">

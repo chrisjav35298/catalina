@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Service\FacebookPublisher;
+use App\Service\PublicadorMultired;
 
 #[Route('/actividades')]
 #[IsGranted('ROLE_ADMIN')]
@@ -183,30 +184,89 @@ final class ActividadesController extends AbstractController
         methods: ['GET', 'POST']
     )]
   
-public function confirmarPublicacion(
-    Request $request,
-    Actividades $actividade,
-    PublicadorRedesSociales $publicadorRedesSociales,
-    InstagramPublisher $instagramPublisher,
-    FacebookPublisher $facebookPublisher
-): Response {
-    if ($request->isMethod('POST')) {
-        if (!$this->isCsrfTokenValid(
-            'publicar_' . $actividade->getId(),
-            $request->request->get('_token')
-        )) {
-            throw $this->createAccessDeniedException(
-                'Token CSRF inválido.'
-            );
-        }
+    #[Route(
+        '/{id}/confirmar-publicacion',
+        name: 'app_actividades_confirmar_publicacion',
+        methods: ['GET', 'POST']
+    )]
+    public function confirmarPublicacion(
+        Request $request,
+        Actividades $actividade,
+        PublicadorRedesSociales $publicadorRedesSociales,
+        PublicadorMultired $publicadorMultired
+    ): Response {
+        if ($request->isMethod('POST')) {
+            if (!$this->isCsrfTokenValid(
+                'publicar_' . $actividade->getId(),
+                $request->request->get('_token')
+            )) {
+                throw $this->createAccessDeniedException(
+                    'Token CSRF inválido.'
+                );
+            }
 
-        $datos = $publicadorRedesSociales->prepararPublicacion($actividade);
+            $redes = $request->request->all('redes');
 
-        if (empty($datos['imagen'])) {
-            $this->addFlash(
-                'danger',
-                'No se puede publicar: la actividad no tiene una imagen destacada.'
+            $redesValidas = ['facebook', 'instagram'];
+            $redes = array_values(array_unique($redes));
+
+            if (
+                empty($redes)
+                || array_diff($redes, $redesValidas)
+            ) {
+                $this->addFlash(
+                    'danger',
+                    'Seleccioná al menos una red social válida.'
+                );
+
+                return $this->redirectToRoute(
+                    'app_actividades_confirmar_publicacion',
+                    ['id' => $actividade->getId()]
+                );
+            }
+
+            $datos = $publicadorRedesSociales->prepararPublicacion(
+                $actividade
             );
+
+            if (empty($datos['imagen'])) {
+                $this->addFlash(
+                    'danger',
+                    'No se puede publicar: la actividad no tiene una imagen destacada.'
+                );
+
+                return $this->redirectToRoute(
+                    'app_actividades_index'
+                );
+            }
+
+            $resultados = $publicadorMultired->publicar(
+                $redes,
+                $datos['imagen'],
+                $datos['texto']
+            );
+
+            foreach ($resultados as $red => $resultado) {
+                if ($resultado['ok']) {
+                    $this->addFlash(
+                        'success',
+                        sprintf(
+                            'Publicación enviada correctamente a %s. ID: %s',
+                            ucfirst($red),
+                            $resultado['id'] ?? 'no informado'
+                        )
+                    );
+                } else {
+                    $this->addFlash(
+                        'danger',
+                        sprintf(
+                            'No se pudo publicar en %s: %s',
+                            ucfirst($red),
+                            $resultado['error']
+                        )
+                    );
+                }
+            }
 
             return $this->redirectToRoute(
                 'app_actividades_index',
@@ -215,61 +275,18 @@ public function confirmarPublicacion(
             );
         }
 
-        
-        $redSocial = $request->request->get('red_social');
+        $datos = $publicadorRedesSociales->prepararPublicacion(
+            $actividade
+        );
 
-        try {
-            if ($redSocial === 'instagram') {
-                $resultado = $instagramPublisher->publicarImagen(
-                    $datos['imagen'],
-                    $datos['texto']
-                );
-
-                $this->addFlash(
-                    'success',
-                    'La publicación se envió correctamente a Instagram. ID: '
-                    . $resultado['id']
-                );
-            } elseif ($redSocial === 'facebook') {
-                $resultado = $facebookPublisher->publicarImagen(
-                    $datos['imagen'],
-                    $datos['texto']
-                );
-
-                $this->addFlash(
-                    'success',
-                    'La publicación se envió correctamente a Facebook. ID: '
-                    . $resultado['id']
-                );
-            } else {
-                throw new \InvalidArgumentException(
-                    'Seleccioná una red social válida.'
-                );
-            }
-        } catch (\Throwable $e) {
-            $this->addFlash(
-                'danger',
-                'No se pudo publicar en '
-                . ($redSocial === 'facebook' ? 'Facebook' : 'Instagram')
-                . ': ' . $e->getMessage()
-            );
-        }
-
-
-        return $this->redirectToRoute(
-            'app_actividades_index',
-            [],
-            Response::HTTP_SEE_OTHER
+        return $this->render(
+            'actividades/confirmar_publicacion.html.twig',
+            [
+                'actividade' => $actividade,
+                'datos' => $datos,
+            ]
         );
     }
-
-    $datos = $publicadorRedesSociales->prepararPublicacion($actividade);
-
-    return $this->render('actividades/confirmar_publicacion.html.twig', [
-        'actividade' => $actividade,
-        'datos' => $datos,
-    ]);
-}
 
 
     #[Route('/{id}', name: 'app_actividades_delete', methods: ['POST'])]
