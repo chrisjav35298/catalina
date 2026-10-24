@@ -41,7 +41,6 @@ final class ActividadesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $publicarEnRedes = $form->get('publicarEnRedes')->getData();
 
             // Imagen destacada.
             $imagenDestacada = $form->get('imagenDestacada')->getData();
@@ -76,14 +75,6 @@ final class ActividadesController extends AbstractController
             $entityManager->persist($actividade);
             $entityManager->flush();
 
-            if ($publicarEnRedes) {
-                return $this->redirectToRoute(
-                    'app_actividades_confirmar_publicacion',
-                    ['id' => $actividade->getId()],
-                    Response::HTTP_SEE_OTHER
-                );
-            }
-
             return $this->redirectToRoute(
                 'app_actividades_index',
                 [],
@@ -116,8 +107,6 @@ final class ActividadesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $publicarEnRedes = $form->get('publicarEnRedes')->getData();
-
             // Imagen destacada.
             $imagenDestacada = $form->get('imagenDestacada')->getData();
 
@@ -159,14 +148,6 @@ final class ActividadesController extends AbstractController
             }
 
             $entityManager->flush();
-
-            if ($publicarEnRedes) {
-                return $this->redirectToRoute(
-                    'app_actividades_confirmar_publicacion',
-                    ['id' => $actividade->getId()],
-                    Response::HTTP_SEE_OTHER
-                );
-            }
 
             return $this->redirectToRoute(
                 'app_actividades_index',
@@ -288,7 +269,7 @@ public function confirmarPublicacion(
     }
 
 
-#[Route('/meta/instagram-test', name: 'app_meta_instagram_test', methods: ['GET'])]
+
 public function probarInstagram(): Response
 {
     $userId = $_ENV['META_INSTAGRAM_USER_ID'] ?? null;
