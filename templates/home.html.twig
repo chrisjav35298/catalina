@@ -677,20 +677,18 @@
 <script>
     const fechaActividad = "{{ actividades[0].fecha|date('Y-m-d') }}";
 </script>
-{# <a href="https://api.whatsapp.com/send?phone=+5493624725447&text=Hola%20quisiera%20más%20información%20sobre%20la%20fundación%20%21." class="flotar" target="_blank">
-    <i class="fa-brands fa-whatsapp fa-2x"></i>
-</a> #}
-{# Botón flotante de WhatsApp #}
-{% if config.whatsappNumero %}
-    {% set ws_texto = config.whatsappMensaje|default('Hola! Quisiera más información')|url_encode %}
-    <a href="https://api.whatsapp.com/send?phone={{ config.whatsappNumero }}&text={{ ws_texto }}" 
-       class="flotar" 
-       target="_blank" 
-       rel="noopener noreferrer"
-       aria-label="Contactar por WhatsApp">
-        <i class="fa-brands fa-whatsapp fa-2x"></i>
-    </a>
-{% endif %}
+
+    {# Botón flotante de WhatsApp
+    {% if config.whatsappNumero %}
+        {% set ws_texto = config.whatsappMensaje|default('Hola! Quisiera más información')|url_encode %}
+        <a href="https://api.whatsapp.com/send?phone={{ config.whatsappNumero }}&text={{ ws_texto }}" 
+        class="flotar" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp">
+            <i class="fa-brands fa-whatsapp fa-2x"></i>
+        </a>
+    {% endif %} #}
 {% endblock %}
 
 {% block footer %}

@@ -100,25 +100,25 @@
 
         <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
 
-            <!-- Redes sociales -->
-            {% for red in redesSociales|default([]) %}
-                <a href="{{ red.url }}"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="text-white text-decoration-none fs-4"
-                   title="{{ red.nombre }}"
-                   aria-label="{{ red.nombre }}">
+<!-- Redes sociales -->
+    {% for red in redesSociales|default([]) %}
+        <a href="{{ red.url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="text-white text-decoration-none fs-2"
+           title="{{ red.nombre }}"
+           aria-label="{{ red.nombre }}">
 
-                    {% if red.icono %}
-                        <i class="{{ red.icono }}"></i>
-                    {% else %}
-                        <span class="badge bg-secondary">
-                            {{ red.nombre }}
-                        </span>
-                    {% endif %}
+            {% if red.icono %}
+                <i class="{{ red.icono }}"></i>
+            {% else %}
+                <span class="badge bg-secondary fs-6">
+                    {{ red.nombre }}
+                </span>
+            {% endif %}
 
-                </a>
-            {% endfor %}
+        </a>
+    {% endfor %}
 
 
             <!-- Documentación Institucional -->
