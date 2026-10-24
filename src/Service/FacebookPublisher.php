@@ -23,6 +23,7 @@ class FacebookPublisher
                 'body' => [
                     'url' => $imagenUrl,
                     'message' => $texto,
+                    'published' => 'true',
                     'access_token' => $this->accessToken,
                 ],
             ]
