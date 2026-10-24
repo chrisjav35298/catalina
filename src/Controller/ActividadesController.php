@@ -1,89 +1,102 @@
 <?php
 
 namespace App\Controller;
-
+use App\Service\InstagramPublisher;
 use App\Entity\Imagen;
 use App\Entity\Actividades;
 use App\Form\ActividadesType;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ActividadesRepository;
+use App\Service\PublicadorRedesSociales;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 #[Route('/actividades')]
 #[IsGranted('ROLE_ADMIN')]
 final class ActividadesController extends AbstractController
 {
     #[Route(name: 'app_actividades_index', methods: ['GET'])]
-    public function index(ActividadesRepository $actividadesRepository): Response
-    {
+    public function index(
+        ActividadesRepository $actividadesRepository
+    ): Response {
         return $this->render('actividades/index.html.twig', [
             'actividades' => $actividadesRepository->findAll(),
         ]);
     }
 
-
-
     #[Route('/new', name: 'app_actividades_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function new(Request $request, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
-    {
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        #[Autowire('%uploads_directory%')] string $uploadsDir
+    ): Response {
         $actividade = new Actividades();
+
         $form = $this->createForm(ActividadesType::class, $actividade);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            // 1. Manejo de imagen destacada
+            $publicarEnRedes = $form->get('publicarEnRedes')->getData();
+
+            // Imagen destacada.
             $imagenDestacada = $form->get('imagenDestacada')->getData();
-            if ($imagenDestacada) {
-                // Crear un nombre único para la imagen destacada
-                $newFilenameDestacada = uniqid() . '.' . $imagenDestacada->guessExtension();
-    
-                // Mover el archivo al directorio de uploads
+
+            if ($imagenDestacada instanceof UploadedFile) {
+                $newFilenameDestacada = uniqid() . '.' .
+                    $imagenDestacada->guessExtension();
+
                 $imagenDestacada->move($uploadsDir, $newFilenameDestacada);
-    
-                // Establecer la ruta de la imagen destacada en la actividad
+
                 $actividade->setImagenDestacada($newFilenameDestacada);
             }
-            
-            // 2. Manejo de las imágenes adicionales
+
+            // Imágenes adicionales.
             foreach ($form->get('imagenes') as $imagenForm) {
-                /** @var UploadedFile|null $imagenArchivo */
                 $imagenArchivo = $imagenForm->get('ruta')->getData();
-            
-                // SOLO procesar si hay una imagen válida
+
                 if ($imagenArchivo instanceof UploadedFile) {
-                    $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
+                    $newFilename = uniqid() . '.' .
+                        $imagenArchivo->guessExtension();
+
                     $imagenArchivo->move($uploadsDir, $newFilename);
-            
+
                     $imagen = new Imagen();
                     $imagen->setRuta($newFilename);
+
                     $actividade->addImagen($imagen);
-            
                     $entityManager->persist($imagen);
                 }
             }
-    
 
             $entityManager->persist($actividade);
-            $entityManager->flush(); // Ejecutar todas las operaciones en la base de datos
-    
-            return $this->redirectToRoute('app_actividades_index');
+            $entityManager->flush();
+
+            if ($publicarEnRedes) {
+                return $this->redirectToRoute(
+                    'app_actividades_confirmar_publicacion',
+                    ['id' => $actividade->getId()],
+                    Response::HTTP_SEE_OTHER
+                );
+            }
+
+            return $this->redirectToRoute(
+                'app_actividades_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
-    
+
         return $this->render('actividades/new.html.twig', [
             'form' => $form->createView(),
             'actividade' => $actividade,
         ]);
     }
-    
+
     #[Route('/{id}', name: 'app_actividades_show', methods: ['GET'])]
     public function show(Actividades $actividade): Response
     {
@@ -93,80 +106,228 @@ final class ActividadesController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_actividades_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function edit(Request $request, Actividades $actividade, EntityManagerInterface $entityManager, #[Autowire('%uploads_directory%')] string $uploadsDir): Response
-    {
+    public function edit(
+        Request $request,
+        Actividades $actividade,
+        EntityManagerInterface $entityManager,
+        #[Autowire('%uploads_directory%')] string $uploadsDir
+    ): Response {
         $form = $this->createForm(ActividadesType::class, $actividade);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $publicarEnRedes = $form->get('publicarEnRedes')->getData();
 
-            // 1. Manejo de la imagen destacada
+            // Imagen destacada.
             $imagenDestacada = $form->get('imagenDestacada')->getData();
-            if ($imagenDestacada) {
-                // Eliminar la imagen anterior si existe
-                if ($actividade->getImagenDestacada() && file_exists($uploadsDir . '/' . $actividade->getImagenDestacada())) {
-                    unlink($uploadsDir . '/' . $actividade->getImagenDestacada());
-                }
 
-                // Crear un nombre único para la nueva imagen destacada
-                $newFilenameDestacada = uniqid() . '.' . $imagenDestacada->guessExtension();
+            if ($imagenDestacada instanceof UploadedFile) {
+                $imagenAnterior = $actividade->getImagenDestacada();
 
-                // Mover el archivo al directorio de uploads
+                $newFilenameDestacada = uniqid() . '.' .
+                    $imagenDestacada->guessExtension();
+
                 $imagenDestacada->move($uploadsDir, $newFilenameDestacada);
 
-                // Establecer la nueva ruta de la imagen destacada
                 $actividade->setImagenDestacada($newFilenameDestacada);
+
+                // Eliminar la imagen anterior después de guardar la nueva.
+                if (
+                    $imagenAnterior
+                    && is_file($uploadsDir . '/' . $imagenAnterior)
+                ) {
+                    unlink($uploadsDir . '/' . $imagenAnterior);
+                }
             }
 
-            // 2. Manejo de nuevas imágenes adicionales
-            $imagenesForm = $form->get('imagenes');
-            foreach ($imagenesForm as $imagenForm) {
-                /** @var UploadedFile|null $imagenArchivo */
+            // Nuevas imágenes adicionales.
+            foreach ($form->get('imagenes') as $imagenForm) {
                 $imagenArchivo = $imagenForm->get('ruta')->getData();
 
-                if ($imagenArchivo) {
-                    // Crear un nombre único para la nueva imagen
-                    $newFilename = uniqid() . '.' . $imagenArchivo->guessExtension();
+                if ($imagenArchivo instanceof UploadedFile) {
+                    $newFilename = uniqid() . '.' .
+                        $imagenArchivo->guessExtension();
 
-                    // Mover el archivo al directorio de uploads
                     $imagenArchivo->move($uploadsDir, $newFilename);
 
-                    // Crear una nueva entidad de imagen
                     $imagen = new Imagen();
                     $imagen->setRuta($newFilename);
-                    $imagen->setActividad($actividade); // Asociar la imagen a la actividad
 
-                    // Agregar la nueva imagen a la actividad
                     $actividade->addImagen($imagen);
-
-                    // Persistir la nueva imagen en la base de datos
                     $entityManager->persist($imagen);
                 }
             }
 
-            // Guardar los cambios realizados en la actividad
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
+            if ($publicarEnRedes) {
+                return $this->redirectToRoute(
+                    'app_actividades_confirmar_publicacion',
+                    ['id' => $actividade->getId()],
+                    Response::HTTP_SEE_OTHER
+                );
+            }
+
+            return $this->redirectToRoute(
+                'app_actividades_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('actividades/edit.html.twig', [
             'actividade' => $actividade,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
+    #[Route(
+        '/{id}/publicacion-preview',
+        name: 'app_actividades_publicacion_preview',
+        methods: ['GET']
+    )]
+    public function previewPublicacion(
+        Actividades $actividade,
+        PublicadorRedesSociales $publicadorRedesSociales
+    ): Response {
+        $datos = $publicadorRedesSociales->prepararPublicacion($actividade);
+
+        return $this->json($datos);
+    }
+
+    #[Route(
+        '/{id}/confirmar-publicacion',
+        name: 'app_actividades_confirmar_publicacion',
+        methods: ['GET', 'POST']
+    )]
+  
+public function confirmarPublicacion(
+    Request $request,
+    Actividades $actividade,
+    PublicadorRedesSociales $publicadorRedesSociales,
+    InstagramPublisher $instagramPublisher
+): Response {
+    if ($request->isMethod('POST')) {
+        if (!$this->isCsrfTokenValid(
+            'publicar_' . $actividade->getId(),
+            $request->request->get('_token')
+        )) {
+            throw $this->createAccessDeniedException(
+                'Token CSRF inválido.'
+            );
+        }
+
+        $datos = $publicadorRedesSociales->prepararPublicacion($actividade);
+
+        if (empty($datos['imagen'])) {
+            $this->addFlash(
+                'danger',
+                'No se puede publicar: la actividad no tiene una imagen destacada.'
+            );
+
+            return $this->redirectToRoute(
+                'app_actividades_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
+        }
+
+        try {
+            $resultado = $instagramPublisher->publicarImagen(
+                $datos['imagen'],
+                $datos['texto']
+            );
+
+            $this->addFlash(
+                'success',
+                'La publicación se envió correctamente a Instagram. ID: '
+                . $resultado['id']
+            );
+        } catch (\Throwable $e) {
+            $this->addFlash(
+                'danger',
+                'No se pudo publicar en Instagram: ' . $e->getMessage()
+            );
+        }
+
+        return $this->redirectToRoute(
+            'app_actividades_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
+    }
+
+    $datos = $publicadorRedesSociales->prepararPublicacion($actividade);
+
+    return $this->render('actividades/confirmar_publicacion.html.twig', [
+        'actividade' => $actividade,
+        'datos' => $datos,
+    ]);
+}
+
 
     #[Route('/{id}', name: 'app_actividades_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
-    public function delete(Request $request, Actividades $actividade, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$actividade->getId(), $request->getPayload()->getString('_token'))) {
+    public function delete(
+        Request $request,
+        Actividades $actividade,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if ($this->isCsrfTokenValid(
+            'delete' . $actividade->getId(),
+            $request->getPayload()->getString('_token')
+        )) {
             $entityManager->remove($actividade);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_actividades_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'app_actividades_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
     }
+
+
+#[Route('/meta/instagram-test', name: 'app_meta_instagram_test', methods: ['GET'])]
+public function probarInstagram(): Response
+{
+    $userId = $_ENV['META_INSTAGRAM_USER_ID'] ?? null;
+    $token = $_ENV['META_INSTAGRAM_ACCESS_TOKEN'] ?? null;
+
+    if (!$userId || !$token) {
+        return $this->json([
+            'ok' => false,
+            'mensaje' => 'Faltan las credenciales de Instagram.',
+        ], 500);
+    }
+
+    $url = 'https://graph.instagram.com/'
+        . rawurlencode($userId)
+        . '?fields=id,username&access_token='
+        . urlencode($token);
+
+    $respuesta = file_get_contents($url);
+
+    if ($respuesta === false) {
+        return $this->json([
+            'ok' => false,
+            'mensaje' => 'No se pudo conectar con la API de Instagram.',
+        ], 502);
+    }
+
+    $datos = json_decode($respuesta, true);
+
+    if (isset($datos['error'])) {
+        return $this->json([
+            'ok' => false,
+            'mensaje' => $datos['error']['message'] ?? 'Meta rechazó la solicitud.',
+        ], 400);
+    }
+
+    return $this->json([
+        'ok' => true,
+        'instagram' => $datos,
+    ]);
+}
+
 }

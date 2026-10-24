@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ActividadesType extends AbstractType
 {
@@ -29,6 +30,11 @@ class ActividadesType extends AbstractType
             'allow_delete' => true,
             'by_reference' => false,
             'label' => '',
+        ])
+        ->add('publicarEnRedes', CheckboxType::class, [
+            'label' => 'Publicar también en Facebook e Instagram',
+            'mapped' => false,
+            'required' => false,
         ]);
     }
 

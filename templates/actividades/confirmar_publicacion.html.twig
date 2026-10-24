@@ -1,0 +1,46 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmar publicación{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Confirmar publicación</h1>
+
+    <p>Revisá el contenido antes de continuar.</p>
+
+    <div class="card p-3 mb-4">
+        <h3>{{ datos.titulo }}</h3>
+
+        <p style="white-space: pre-line">{{ datos.texto }}</p>
+
+        {% if datos.imagen %}
+            <img
+                src="{{ datos.imagen }}"
+                alt="Imagen de la actividad"
+                class="img-fluid rounded"
+                style="max-width: 400px"
+            >
+        {% endif %}
+    </div>
+
+    <form method="post">
+        <input
+            type="hidden"
+            name="_token"
+            value="{{ csrf_token('publicar_' ~ actividade.id) }}"
+        >
+
+        <button type="submit" class="btn btn-success">
+            Confirmar y publicar
+        </button>
+
+        <a
+            href="{{ path('app_actividades_edit', {id: actividade.id}) }}"
+            class="btn btn-secondary"
+        >
+            Volver a editar
+        </a>
+    </form>
+</div>
+{% endblock %}
