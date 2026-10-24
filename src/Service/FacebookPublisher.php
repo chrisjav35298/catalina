@@ -2,42 +2,60 @@
 
 namespace App\Service;
 
+use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FacebookPublisher
 {
     public function __construct(
-        private HttpClientInterface $httpClient,
-        private string $pageId,
-        private string $accessToken,
+        private readonly HttpClientInterface $httpClient,
+        private readonly string $pageId,
+        private readonly string $accessToken,
+        private readonly string $apiVersion = 'v20.0', // Versión válida de la Graph API
     ) {
     }
 
+    /**
+     * @throws \RuntimeException
+     */
     public function publicarImagen(string $imagenUrl, string $texto): array
     {
-        $respuesta = $this->httpClient->request(
-            'POST',
-            'https://graph.facebook.com/v26.0/'
-                . rawurlencode($this->pageId) . '/photos',
-            [
+        $endpoint = sprintf(
+            'https://graph.facebook.com/%s/%s/photos',
+            $this->apiVersion,
+            rawurlencode($this->pageId)
+        );
+
+        try {
+            $respuesta = $this->httpClient->request('POST', $endpoint, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->accessToken,
+                ],
                 'body' => [
                     'url' => $imagenUrl,
                     'message' => $texto,
                     'published' => 'true',
-                    'access_token' => $this->accessToken,
                 ],
-            ]
-        );
+            ]);
 
-        $resultado = $respuesta->toArray(false);
-
-        if (
-            $respuesta->getStatusCode() >= 400
-            || empty($resultado['id'])
-        ) {
+            $statusCode = $respuesta->getStatusCode();
+            $resultado = $respuesta->toArray(false);
+        } catch (ExceptionInterface $e) {
             throw new \RuntimeException(
-                $resultado['error']['message']
-                    ?? 'Facebook no pudo publicar la imagen.'
+                'Error de conexión con la Graph API de Facebook: ' . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
+
+        if ($statusCode >= 400 || empty($resultado['id'])) {
+            $mensajeError = $resultado['error']['message'] 
+                ?? 'Facebook no pudo publicar la imagen.';
+            
+            $codigoError = $resultado['error']['code'] ?? $statusCode;
+
+            throw new \RuntimeException(
+                sprintf('Error de Facebook [%s]: %s', $codigoError, $mensajeError)
             );
         }
 
