@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Service\FacebookPublisher;
 
 #[Route('/actividades')]
 #[IsGranted('ROLE_ADMIN')]
@@ -186,7 +187,8 @@ public function confirmarPublicacion(
     Request $request,
     Actividades $actividade,
     PublicadorRedesSociales $publicadorRedesSociales,
-    InstagramPublisher $instagramPublisher
+    InstagramPublisher $instagramPublisher,
+    FacebookPublisher $facebookPublisher
 ): Response {
     if ($request->isMethod('POST')) {
         if (!$this->isCsrfTokenValid(
@@ -213,23 +215,46 @@ public function confirmarPublicacion(
             );
         }
 
-        try {
-            $resultado = $instagramPublisher->publicarImagen(
-                $datos['imagen'],
-                $datos['texto']
-            );
+        
+        $redSocial = $request->request->get('red_social');
 
-            $this->addFlash(
-                'success',
-                'La publicación se envió correctamente a Instagram. ID: '
-                . $resultado['id']
-            );
+        try {
+            if ($redSocial === 'instagram') {
+                $resultado = $instagramPublisher->publicarImagen(
+                    $datos['imagen'],
+                    $datos['texto']
+                );
+
+                $this->addFlash(
+                    'success',
+                    'La publicación se envió correctamente a Instagram. ID: '
+                    . $resultado['id']
+                );
+            } elseif ($redSocial === 'facebook') {
+                $resultado = $facebookPublisher->publicarImagen(
+                    $datos['imagen'],
+                    $datos['texto']
+                );
+
+                $this->addFlash(
+                    'success',
+                    'La publicación se envió correctamente a Facebook. ID: '
+                    . $resultado['id']
+                );
+            } else {
+                throw new \InvalidArgumentException(
+                    'Seleccioná una red social válida.'
+                );
+            }
         } catch (\Throwable $e) {
             $this->addFlash(
                 'danger',
-                'No se pudo publicar en Instagram: ' . $e->getMessage()
+                'No se pudo publicar en '
+                . ($redSocial === 'facebook' ? 'Facebook' : 'Instagram')
+                . ': ' . $e->getMessage()
             );
         }
+
 
         return $this->redirectToRoute(
             'app_actividades_index',

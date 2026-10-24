@@ -9,6 +9,8 @@ parameters:
 
     meta.instagram_user_id: '%env(META_INSTAGRAM_USER_ID)%'
     meta.instagram_access_token: '%env(META_INSTAGRAM_ACCESS_TOKEN)%'
+    meta.facebook_page_id: '%env(META_FACEBOOK_PAGE_ID)%'
+    meta.facebook_access_token: '%env(META_FACEBOOK_ACCESS_TOKEN)%'
 
 services:
     # Default configuration for services in this file
@@ -32,3 +34,11 @@ services:
             - '@http_client'
             - '%meta.instagram_user_id%'
             - '%meta.instagram_access_token%'
+
+    App\Service\FacebookPublisher:
+        autowire: false
+        autoconfigure: false
+        arguments:
+            - '@http_client'
+            - '%meta.facebook_page_id%'
+            - '%meta.facebook_access_token%'
