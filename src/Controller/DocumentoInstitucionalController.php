@@ -17,47 +17,75 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/documento/institucional')]
 final class DocumentoInstitucionalController extends AbstractController
 {
+    // Directorio privado donde se almacenan los documentos
+    private const DIRECTORIO_DOCUMENTOS = '/var/documentos';
+
+    /**
+     * Listado administrativo de documentos.
+     * Requiere autenticación y permisos.
+     */
     #[Route(name: 'app_documento_institucional_index', methods: ['GET'])]
-    public function index(DocumentoInstitucionalRepository $documentoInstitucionalRepository): Response
-    {   
+    public function index(
+        DocumentoInstitucionalRepository $repository
+    ): Response {
+
         if (
             !$this->isGranted('ROLE_ADMIN') &&
             !$this->isGranted('ROLE_DOCUMENTOS_INSTITUCIONALES')
         ) {
             throw $this->createAccessDeniedException();
         }
+
         return $this->render('documento_institucional/index.html.twig', [
-            'documento_institucionals' => $documentoInstitucionalRepository->findAll(),
+            'documento_institucionals' => $repository->findAll(),
         ]);
     }
 
+    /**
+     * Crear documento.
+     * Solamente administradores.
+     */
     #[Route('/new', name: 'app_documento_institucional_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function new(
-        Request $request, 
+        Request $request,
         EntityManagerInterface $entityManager,
         #[Autowire('%kernel.project_dir%')] string $projectDir
     ): Response {
+
         $documento = new DocumentoInstitucional();
+
         $form = $this->createForm(DocumentoInstitucionalType::class, $documento);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             /** @var UploadedFile|null $archivoPdf */
             $archivoPdf = $form->get('archivoPdf')->getData();
 
             if ($archivoPdf) {
+
                 $nuevoNombre = uniqid() . '.' . $archivoPdf->guessExtension();
-                $destino = $projectDir . '/public/uploads/documentos';
+
+                $destino = $projectDir . self::DIRECTORIO_DOCUMENTOS;
+
+                if (!is_dir($destino)) {
+                    mkdir($destino, 0775, true);
+                }
 
                 $archivoPdf->move($destino, $nuevoNombre);
+
                 $documento->setArchivo($nuevoNombre);
             }
 
             $entityManager->persist($documento);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_documento_institucional_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_documento_institucional_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('documento_institucional/new.html.twig', [
@@ -66,40 +94,60 @@ final class DocumentoInstitucionalController extends AbstractController
         ]);
     }
 
+    /**
+     * Editar documento.
+     * Solamente administradores.
+     */
     #[Route('/{id}/edit', name: 'app_documento_institucional_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function edit(
-        Request $request, 
-        DocumentoInstitucional $documento, 
+        Request $request,
+        DocumentoInstitucional $documento,
         EntityManagerInterface $entityManager,
         #[Autowire('%kernel.project_dir%')] string $projectDir
     ): Response {
+
         $form = $this->createForm(DocumentoInstitucionalType::class, $documento);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             /** @var UploadedFile|null $archivoPdf */
             $archivoPdf = $form->get('archivoPdf')->getData();
 
             if ($archivoPdf) {
-                // Borra el archivo anterior en disco si existe
+
+                $destino = $projectDir . self::DIRECTORIO_DOCUMENTOS;
+
+                if (!is_dir($destino)) {
+                    mkdir($destino, 0775, true);
+                }
+
+                // Eliminar archivo anterior
                 if ($documento->getArchivo()) {
-                    $rutaAnterior = $projectDir . '/public/uploads/documentos/' . $documento->getArchivo();
-                    if (file_exists($rutaAnterior)) {
+
+                    $rutaAnterior = $destino . '/' . basename($documento->getArchivo());
+
+                    if (is_file($rutaAnterior)) {
                         unlink($rutaAnterior);
                     }
                 }
 
+                // Guardar archivo nuevo
                 $nuevoNombre = uniqid() . '.' . $archivoPdf->guessExtension();
-                $destino = $projectDir . '/public/uploads/documentos';
 
                 $archivoPdf->move($destino, $nuevoNombre);
+
                 $documento->setArchivo($nuevoNombre);
             }
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_documento_institucional_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute(
+                'app_documento_institucional_index',
+                [],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('documento_institucional/edit.html.twig', [
@@ -108,19 +156,32 @@ final class DocumentoInstitucionalController extends AbstractController
         ]);
     }
 
+    /**
+     * Eliminar documento.
+     * Solamente administradores.
+     */
     #[Route('/{id}', name: 'app_documento_institucional_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(
-        Request $request, 
-        DocumentoInstitucional $documentoInstitucional, 
+        Request $request,
+        DocumentoInstitucional $documentoInstitucional,
         EntityManagerInterface $entityManager,
         #[Autowire('%kernel.project_dir%')] string $projectDir
     ): Response {
-        if ($this->isCsrfTokenValid('delete' . $documentoInstitucional->getId(), $request->getPayload()->getString('_token'))) {
-            // Elimina el archivo del disco al borrar el registro
+
+        if ($this->isCsrfTokenValid(
+            'delete' . $documentoInstitucional->getId(),
+            $request->getPayload()->getString('_token')
+        )) {
+
             if ($documentoInstitucional->getArchivo()) {
-                $rutaArchivo = $projectDir . '/public/uploads/documentos/' . $documentoInstitucional->getArchivo();
-                if (file_exists($rutaArchivo)) {
+
+                $rutaArchivo = $projectDir
+                    . self::DIRECTORIO_DOCUMENTOS
+                    . '/'
+                    . basename($documentoInstitucional->getArchivo());
+
+                if (is_file($rutaArchivo)) {
                     unlink($rutaArchivo);
                 }
             }
@@ -129,6 +190,68 @@ final class DocumentoInstitucionalController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_documento_institucional_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute(
+            'app_documento_institucional_index',
+            [],
+            Response::HTTP_SEE_OTHER
+        );
+    }
+
+    /**
+     * Descargar documento.
+     * Los públicos no requieren autenticación.
+     * Los privados requieren permisos.
+     */
+    #[Route('/{id}/descargar', name: 'app_documento_institucional_descargar', methods: ['GET'])]
+    public function descargar(
+        DocumentoInstitucional $documento,
+        #[Autowire('%kernel.project_dir%')] string $projectDir
+    ): Response {
+
+        // Verificar permisos para documentos privados
+        if (!$documento->isPublico()) {
+
+            if (
+                !$this->isGranted('ROLE_ADMIN') &&
+                !$this->isGranted('ROLE_DOCUMENTOS_INSTITUCIONALES')
+            ) {
+                throw $this->createAccessDeniedException();
+            }
+        }
+
+        if (!$documento->getArchivo()) {
+            throw $this->createNotFoundException('Documento no encontrado.');
+        }
+
+        $rutaArchivo = $projectDir
+            . self::DIRECTORIO_DOCUMENTOS
+            . '/'
+            . basename($documento->getArchivo());
+
+        if (!is_file($rutaArchivo)) {
+            throw $this->createNotFoundException('Documento no encontrado.');
+        }
+
+        return $this->file(
+            $rutaArchivo,
+            $documento->getNombre() . '.pdf'
+        );
+    }
+
+    /**
+     * Listado público de documentos.
+     * No requiere autenticación.
+     */
+    #[Route('/publicos', name: 'app_documento_institucional_publicos', methods: ['GET'])]
+    public function publicos(
+        DocumentoInstitucionalRepository $repository
+    ): Response {
+
+        return $this->render('documento_institucional/publicos.html.twig', [
+            'documentos' => $repository->findBy(
+                ['publico' => true],
+                ['nombre' => 'ASC']
+            ),
+        ]);
     }
 }

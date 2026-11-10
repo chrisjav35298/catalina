@@ -22,6 +22,9 @@ class DocumentoInstitucional
     #[ORM\Column(length: 100)]
     private ?string $archivo = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $publico = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,4 +65,16 @@ class DocumentoInstitucional
 
         return $this;
     }
+        public function isPublico(): bool
+    {
+        return $this->publico;
+    }
+
+    public function setPublico(bool $publico): self
+    {
+        $this->publico = $publico;
+
+        return $this;
+    }
+
 }

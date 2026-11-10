@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class DocumentoInstitucionalType extends AbstractType
 {
@@ -36,6 +37,11 @@ class DocumentoInstitucionalType extends AbstractType
                         'mimeTypesMessage' => 'Por favor sube un documento PDF válido',
                     ])
                 ],
+            ])
+            ->add('publico', CheckboxType::class, [
+                'label' => 'Permitir descarga pública',
+                'required' => false,
+                'help' => 'Si está marcado, cualquier visitante podrá descargar este documento.'
             ])
         ;
     }

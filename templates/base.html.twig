@@ -121,32 +121,39 @@
     {% endfor %}
 
 
-            <!-- Documentación Institucional -->
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DOCUMENTOS_INSTITUCIONALES') %}
+        <!-- Documentación Institucional -->
+        <a href="{{ path('app_documento_institucional_publicos') }}"
+            class="btn btn-outline-light btn-sm">
 
-                {# Usuario autorizado: acceso directo #}
-                <a href="{{ path('app_documento_institucional_index') }}"
-                   class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
+                <i class="fa-solid fa-folder-open me-2 text-warning"></i>
+                Documentación pública
 
-                    <i class="fa-solid fa-file-lines me-2 text-warning"></i>
-                    Documentación Institucional
+            </a>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DOCUMENTOS_INSTITUCIONALES') %}
 
-                </a>
+            {# Usuario autorizado: acceso directo #}
+            <a href="{{ path('app_documento_institucional_index') }}"
+                class="btn btn-outline-light btn-sm d-inline-flex align-items-center">
 
-            {% else %}
+                <i class="fa-solid fa-file-lines me-2 text-warning"></i>
+                Documentación Institucional
 
-                {# Usuario no autorizado: mostrar modal de login #}
-                <button type="button"
-                        class="btn btn-outline-light btn-sm d-inline-flex align-items-center"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalLoginDocumentos">
+            </a>
 
-                    <i class="fa-solid fa-file-lines me-2 text-warning"></i>
-                    Documentación Institucional
+        {% else %}
 
-                </button>
+            {# Usuario no autorizado: mostrar modal de login #}
+            <button type="button"
+                    class="btn btn-outline-light btn-sm d-inline-flex align-items-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalLoginDocumentos">
 
-            {% endif %}
+                <i class="fa-solid fa-file-lines me-2 text-warning"></i>
+                Documentación Institucional
+
+            </button>
+
+        {% endif %}
 
         </div>
     </footer>

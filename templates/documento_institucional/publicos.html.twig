@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        <i class="fa-solid fa-folder-open me-2"></i>
+        Documentación pública
+    </h2>
+
+    <div class="list-group">
+
+        {% for documento in documentos %}
+
+            <a href="{{ path('app_documento_institucional_descargar', {
+                id: documento.id
+            }) }}"
+               class="list-group-item list-group-item-action">
+
+                <i class="fa-solid fa-file-pdf text-danger me-2"></i>
+
+                {{ documento.nombre }}
+
+                {% if documento.descripcion %}
+                    <small class="text-muted d-block">
+                        {{ documento.descripcion }}
+                    </small>
+                {% endif %}
+
+            </a>
+
+        {% else %}
+
+            <p>No hay documentos públicos disponibles.</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
