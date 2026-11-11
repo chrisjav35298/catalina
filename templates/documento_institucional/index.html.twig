@@ -28,13 +28,18 @@
                         {{ doc.descripcion ?: 'Documentación oficial disponible para consulta pública.' }}
                     </p>
 
-                    <div class="pt-3 border-top d-flex gap-2">
-                        <a href="{{ asset('uploads/documentos/' ~ doc.archivo) }}" target="_blank" class="btn btn-outline-primary btn-sm flex-fill">
-                            Ver PDF
+                    <div class="pt-3 border-top">
+
+                        <a href="{{ path('app_documento_institucional_descargar', {
+                            id: doc.id
+                        }) }}"
+                        class="btn btn-primary btn-sm w-100">
+
+                            <i class="fa-solid fa-download me-2"></i>
+                            Descargar documento
+
                         </a>
-                        <a href="{{ asset('uploads/documentos/' ~ doc.archivo) }}" download class="btn btn-primary btn-sm flex-fill">
-                            Descargar
-                        </a>
+
                     </div>
                 </div>
             </div>
